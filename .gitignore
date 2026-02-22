@@ -1,0 +1,16 @@
+# Build artifacts
+*.dll
+*.so
+*.dylib
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tiled
+*.tiled-session
