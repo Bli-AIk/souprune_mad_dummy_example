@@ -11,11 +11,11 @@ dependencies = [
 
 [[package]]
 name = "souprune_api"
-version = "0.0.0"
+version = "0.1.1"
 
 [[package]]
 name = "souprune_sdk"
-version = "0.0.0"
+version = "0.1.1"
 dependencies = [
  "souprune_api",
 ]
