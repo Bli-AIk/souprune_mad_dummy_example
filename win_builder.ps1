@@ -48,6 +48,7 @@ param (
     [Switch]$Release,
     [Switch]$All,
     [Switch]$Linux,
+    [Switch]$Android,
     [Switch]$Interactive,
     [Switch]$Help,
     [Switch]$MSVC,
@@ -67,6 +68,7 @@ $CargoFlags = if ($Release) { "--release" } else { "" }
 $BuildWindowsMSVC = $false
 $BuildWindowsGNU = $false
 $BuildLinux = $false
+$BuildAndroid = $false
 
 function Write-ColorOutput {
     param([string]$Message, [string]$Color = "White")
@@ -108,6 +110,10 @@ function Write-Explanation {
     Write-Host "   用途: 在 Linux 系统上使用 (需要交叉编译)"
     Write-Host "   文件名: ${ModName}.so"
     Write-Host ""
+    Write-Host "📦 Android 版本 (_android.so)" -ForegroundColor Green
+    Write-Host "   用途: 在 Android 设备上运行 (需要 aarch64 NDK)"
+    Write-Host "   文件名: ${ModName}_android.so"
+    Write-Host ""
     Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
 }
 
@@ -135,6 +141,9 @@ function Show-Menu {
     Write-Host "  [6] 🪟+🐧 Windows MSVC + Linux"
     Write-Host "         Windows MSVC + Linux"
     Write-Host ""
+    Write-Host "  [7] 🤖 Android aarch64 版本"
+    Write-Host "         构建 Android 用的 .so 文件 (需要 Android NDK)"
+    Write-Host ""
     Write-Explanation
     
     Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Yellow
@@ -144,7 +153,7 @@ function Show-Menu {
     Write-Host "使用 -Help 参数可以查看命令行选项"
     Write-Host ""
     
-    $choice = Read-Host "请输入选项 (1-6) [直接回车 = 1]"
+    $choice = Read-Host "请输入选项 (1-7) [直接回车 = 1]"
     
     switch ($choice) {
         "1" { 
@@ -177,6 +186,11 @@ function Show-Menu {
             Write-Host ""
             Write-Host "已选择: Windows MSVC + Linux" -ForegroundColor Green
         }
+        "7" {
+            $script:BuildAndroid = $true
+            Write-Host ""
+            Write-Host "已选择: Android aarch64 版本" -ForegroundColor Green
+        }
         ""  { 
             $script:BuildWindowsMSVC = $true; $script:BuildWindowsGNU = $true; $script:BuildLinux = $true 
             Write-Host ""
@@ -205,6 +219,7 @@ if ($Help) {
     Write-Host "  -Release          构建 release (发布) 版本，性能更好"
     Write-Host "  -All              构建全套 (Win MSVC + Win GNU + Linux)"
     Write-Host "  -Linux            仅构建 Linux 版本"
+    Write-Host "  -Android          仅构建 Android aarch64 版本"
     Write-Host "  -MSVC             仅构建 Windows MSVC 版本"
     Write-Host "  -GNU              仅构建 Windows GNU 版本"
     Write-Host "  -Interactive      强制显示交互式菜单"
@@ -221,7 +236,7 @@ if ($Help) {
 }
 
 # Determine build targets
-$hasExplicitTarget = $All -or $MSVC -or $GNU -or $Linux
+$hasExplicitTarget = $All -or $MSVC -or $GNU -or $Linux -or $Android
 
 if ($Interactive -or (-not $hasExplicitTarget -and -not $IsInteractive)) {
     if (-not $IsInteractive) {
@@ -243,10 +258,11 @@ if ($Interactive -or (-not $hasExplicitTarget -and -not $IsInteractive)) {
         if ($GNU) { $BuildWindowsGNU = $true }
     }
     if ($Linux) { $BuildLinux = $true }
+    if ($Android) { $BuildAndroid = $true }
 }
 
 # If no target specified, show menu
-if (-not $BuildWindowsMSVC -and -not $BuildWindowsGNU -and -not $BuildLinux) {
+if (-not $BuildWindowsMSVC -and -not $BuildWindowsGNU -and -not $BuildLinux -and -not $BuildAndroid) {
     Show-Menu
 }
 
@@ -353,6 +369,7 @@ Write-Host ""
 if ($BuildWindowsMSVC) { Write-Host "  ✅ Windows MSVC 版本" -ForegroundColor Green } else { Write-Host "  ❌ Windows MSVC 版本" }
 if ($BuildWindowsGNU) { Write-Host "  ✅ Windows GNU 版本" -ForegroundColor Green } else { Write-Host "  ❌ Windows GNU 版本" }
 if ($BuildLinux) { Write-Host "  ✅ Linux 版本" -ForegroundColor Green } else { Write-Host "  ❌ Linux 版本" }
+if ($BuildAndroid) { Write-Host "  ✅ Android aarch64 版本" -ForegroundColor Green } else { Write-Host "  ❌ Android aarch64 版本" }
 Write-Host ""
 
 $count = 0
@@ -407,6 +424,62 @@ if ($BuildLinux) {
     Write-Host ""
 }
 
+if ($BuildAndroid) {
+    $count++
+    Write-Host "▶ [$count] 开始构建 Android aarch64 版本..." -ForegroundColor Green
+
+    $MissingDeps = $false
+
+    if (-not (Test-RustTarget "aarch64-linux-android")) {
+        Write-Warning "Rust target 'aarch64-linux-android' 未安装"
+        Write-Host "   运行: rustup target add aarch64-linux-android" -ForegroundColor Yellow
+        $MissingDeps = $true
+    }
+
+    # Detect Android NDK
+    $NdkHome = $env:ANDROID_NDK_HOME
+    if (-not $NdkHome -and $env:ANDROID_HOME) {
+        $NdkCandidates = Get-ChildItem (Join-Path $env:ANDROID_HOME "ndk") -Directory -ErrorAction SilentlyContinue | Sort-Object Name -Descending | Select-Object -First 1
+        if ($NdkCandidates) { $NdkHome = $NdkCandidates.FullName }
+    }
+    if (-not $NdkHome) {
+        # Try common Windows locations
+        $CommonPaths = @(
+            "$env:LOCALAPPDATA\Android\Sdk\ndk",
+            "$env:USERPROFILE\AppData\Local\Android\Sdk\ndk"
+        )
+        foreach ($p in $CommonPaths) {
+            if (Test-Path $p) {
+                $NdkCandidates = Get-ChildItem $p -Directory -ErrorAction SilentlyContinue | Sort-Object Name -Descending | Select-Object -First 1
+                if ($NdkCandidates) { $NdkHome = $NdkCandidates.FullName; break }
+            }
+        }
+    }
+
+    if (-not $NdkHome -or -not (Test-Path $NdkHome)) {
+        Write-Error "未找到 Android NDK。请设置 ANDROID_NDK_HOME 环境变量。"
+        $MissingDeps = $true
+    }
+
+    if (-not $MissingDeps) {
+        $HostTag = "windows-x86_64"
+        $NdkToolchain = Join-Path $NdkHome "toolchains\llvm\prebuilt\$HostTag"
+        if (-not (Test-Path $NdkToolchain)) {
+            Write-Error "找不到 NDK 工具链: $NdkToolchain"
+        } else {
+            $env:CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER = "$NdkToolchain\bin\aarch64-linux-android21-clang.cmd"
+            $env:CC_aarch64_linux_android = "$NdkToolchain\bin\aarch64-linux-android21-clang.cmd"
+            $env:AR_aarch64_linux_android = "$NdkToolchain\bin\llvm-ar.exe"
+
+            Build-Target "aarch64-linux-android" "libmod_example.so" "${ModName}_android.so"
+            Write-Host "✅ Android aarch64 版本构建完成! 🎉" -ForegroundColor Green
+        }
+    } else {
+        Write-Warning "缺少依赖，跳过 Android 构建"
+    }
+    Write-Host ""
+}
+
 Write-Host ""
 Write-Host "╔═══════════════════════════════════════════════════════════╗" -ForegroundColor Green
 Write-Host "║                                                           ║" -ForegroundColor Green
@@ -415,9 +488,10 @@ Write-Host "║                                                           ║" -
 Write-Host "╚═══════════════════════════════════════════════════════════╝" -ForegroundColor Green
 Write-Host ""
 Write-Host "📁 生成的文件:"
-if ($BuildWindowsMSVC) { Write-Host "   • ${ModName}_msvc.dll  (Windows MSVC)" }
-if ($BuildWindowsGNU) { Write-Host "   • ${ModName}_gnu.dll   (Windows GNU)" }
-if ($BuildLinux) { Write-Host "   • ${ModName}.so       (Linux)" }
+if ($BuildWindowsMSVC) { Write-Host "   • ${ModName}_msvc.dll     (Windows MSVC)" }
+if ($BuildWindowsGNU) { Write-Host "   • ${ModName}_gnu.dll      (Windows GNU)" }
+if ($BuildLinux) { Write-Host "   • ${ModName}.so           (Linux)" }
+if ($BuildAndroid) { Write-Host "   • ${ModName}_android.so   (Android aarch64)" }
 Write-Host ""
 Write-Host "💡 下一步: 现在可以直接启动游戏测试你的 Mod 了！" -ForegroundColor Yellow
 Write-Host ""
