@@ -67,10 +67,10 @@
 
     // Touch overlay configuration (optional)
     // 触控覆盖层配置（可选）
+    // platforms: list of OS names where touch overlay is shown
+    // Valid values: "android", "ios", "linux", "macos", "windows"
     touch_overlay: (
-        enabled: true,
+        platforms: ["android", "ios"],
         layout: "config/touch_layout.ron",
-        opacity: 0.5,
-        scale: 1.0,
     ),
 )
