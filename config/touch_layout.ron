@@ -1,0 +1,96 @@
+#![enable(implicit_some)]
+// Touch overlay layout configuration
+// 触控覆盖层布局配置
+//
+// Textures from: https://greatdocbrown.itch.io/gamepad-ui
+// Place texture files in: assets/textures/common/touch/
+
+(
+    opacity: 0.5,
+    scale: 1.0,
+
+    buttons: [
+        // ── D-Pad (bottom-left) ──
+
+        (
+            action: "Up",
+            texture: "textures/common/touch/dpad_up.png",
+            pressed_texture: "textures/common/touch/dpad_up_pressed.png",
+            label: "▲",
+            anchor: BottomLeft,
+            offset_x: 76.0,
+            offset_y: 184.0,
+            width: 52.0,
+            height: 52.0,
+        ),
+        (
+            action: "Down",
+            texture: "textures/common/touch/dpad_down.png",
+            pressed_texture: "textures/common/touch/dpad_down_pressed.png",
+            label: "▼",
+            anchor: BottomLeft,
+            offset_x: 76.0,
+            offset_y: 24.0,
+            width: 52.0,
+            height: 52.0,
+        ),
+        (
+            action: "Left",
+            texture: "textures/common/touch/dpad_left.png",
+            pressed_texture: "textures/common/touch/dpad_left_pressed.png",
+            label: "◀",
+            anchor: BottomLeft,
+            offset_x: 24.0,
+            offset_y: 104.0,
+            width: 52.0,
+            height: 52.0,
+        ),
+        (
+            action: "Right",
+            texture: "textures/common/touch/dpad_right.png",
+            pressed_texture: "textures/common/touch/dpad_right_pressed.png",
+            label: "▶",
+            anchor: BottomLeft,
+            offset_x: 128.0,
+            offset_y: 104.0,
+            width: 52.0,
+            height: 52.0,
+        ),
+
+        // ── Action Buttons (bottom-right, diamond layout) ──
+
+        (
+            action: "Confirm",
+            texture: "textures/common/touch/btn_confirm.png",
+            pressed_texture: "textures/common/touch/btn_confirm_pressed.png",
+            label: "Z",
+            anchor: BottomRight,
+            offset_x: 80.0,
+            offset_y: 24.0,
+            width: 56.0,
+            height: 56.0,
+        ),
+        (
+            action: "Cancel",
+            texture: "textures/common/touch/btn_cancel.png",
+            pressed_texture: "textures/common/touch/btn_cancel_pressed.png",
+            label: "X",
+            anchor: BottomRight,
+            offset_x: 24.0,
+            offset_y: 104.0,
+            width: 56.0,
+            height: 56.0,
+        ),
+        (
+            action: "Menu",
+            texture: "textures/common/touch/btn_menu.png",
+            pressed_texture: "textures/common/touch/btn_menu_pressed.png",
+            label: "C",
+            anchor: BottomRight,
+            offset_x: 136.0,
+            offset_y: 104.0,
+            width: 56.0,
+            height: 56.0,
+        ),
+    ],
+)
