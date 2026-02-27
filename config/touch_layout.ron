@@ -78,9 +78,9 @@
                 "textures/common/touch/xbox/x_3.png",
             ],
         ),
-        // Y = Menu (North / top)
+        // Y = (North / top) — no action bound
         (
-            action: "Menu",
+            action: "",
             anchor: BottomRight,
             offset_x: 112.0,
             offset_y: 204.0,
