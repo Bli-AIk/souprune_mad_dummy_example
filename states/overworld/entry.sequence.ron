@@ -7,5 +7,6 @@
             process_objects: true,
             setup_camera_bounds: true,
         ),
+        SetPlayer(Spawn(config_path: "states/overworld/players/player_behavior.ron")),
     ],
 )
