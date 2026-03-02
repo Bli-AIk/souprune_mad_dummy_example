@@ -8,13 +8,13 @@
     rules: [
         // Open backpack (only when in Normal state and no dialogue)
         (id: "overworld_open_backpack", event: ActionEvent(action: "Menu", kind: JustPressed),
-         conditions: ["$@overworld_state == 'Normal'", "$dialogue:active != true"],
-         actions: [Log(message: "Opening Backpack"), Custom(action_type: "SetOverworldState", params: { "state": "Backpack" })],
+         conditions: ["$@sequence_sub_state == 'Normal'", "$dialogue:active != true"],
+         actions: [Log(message: "Opening Backpack"), Custom(action_type: "SetSubState", params: { "state": "Backpack" })],
          priority: 0),
 
         // Dialogue lifecycle
         (id: "overworld_dialogue_started", event: Event("dialogue:started"),
-         actions: [Custom(action_type: "SetOverworldState", params: { "state": "Dialogue" })],
+         actions: [Custom(action_type: "SetSubState", params: { "state": "Dialogue" })],
          priority: 100),
 
         (id: "overworld_dialogue_ended", event: Event("dialogue:ended"),
@@ -23,7 +23,7 @@
              Set(key: "dialogue:simple_text_active", value: Bool(false)),
              Set(key: "dialogue:simple_text", value: String("")),
          ],
-         actions: [Custom(action_type: "SetOverworldState", params: { "state": "Normal" }), Custom(action_type: "DespawnView", params: {})],
+         actions: [Custom(action_type: "SetSubState", params: { "state": "Normal" }), Custom(action_type: "DespawnView", params: {})],
          priority: 100),
 
         // Demo trigger zone events
@@ -42,6 +42,6 @@
          actions: [Custom(action_type: "ExitChaseState", params: {})], outputs: ["chase_state_exited"], priority: 5),
 
         (id: "demo_start_battle", event: Event("demo_visit_updated"), conditions: ["$demo_area_visit_count == 6"],
-         actions: [Custom(action_type: "StartBattle", params: {})], outputs: ["battle_started"], priority: 5),
+         actions: [Custom(action_type: "SetMode", params: { "mode": "battle" })], outputs: ["battle_started"], priority: 5),
     ],
 )
