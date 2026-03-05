@@ -1,13 +1,4 @@
-// Dummy 敌人本地化文本
-
-// ACT 名称
-pub const EnemyDummyActCheck: String = "检查"
-pub const EnemyDummyActTalk: String = "交谈"
-pub const EnemyDummyActFlirt: String = "调情"
-pub const EnemyDummyActHug: String = "拥抱"
-
-// ACT 结果对话节点
-// 这些是 ACT 动作触发的多步对话
+// Dummy ACT 对话节点
 
 node act_check {
     text: "* DUMMY - ATK 0 DEF 0"

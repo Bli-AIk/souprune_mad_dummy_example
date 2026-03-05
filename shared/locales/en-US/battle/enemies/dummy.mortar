@@ -1,14 +1,5 @@
-// Dummy enemy localization text
-
-// ACT names
-pub const EnemyDummyActCheck: String = "Check"
-pub const EnemyDummyActTalk: String = "Talk"
-pub const EnemyDummyActFlirt: String = "Flirt"
-pub const EnemyDummyActHug: String = "Hug"
-
-// ACT result dialogue nodes
-// These are multi-step dialogues triggered by ACT actions
-// 这些是 ACT 动作触发的多步对话
+// Dummy ACT dialogue nodes
+// Dummy ACT 对话节点
 
 node act_check {
     text: "* DUMMY - ATK 0 DEF 0"
