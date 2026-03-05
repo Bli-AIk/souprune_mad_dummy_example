@@ -8,7 +8,7 @@
     rules: [
         // Open backpack (only when in Normal state and no dialogue)
         (id: "overworld_open_backpack", event: ActionEvent(action: "Menu", kind: JustPressed),
-         conditions: ["$@sequence_sub_state == 'Normal'", "$dialogue:active != true"],
+         conditions: ["$state:sequence_sub_state == 'Normal'", "$dialogue:active != true"],
          actions: [Log(message: "Opening Backpack"), Custom(action_type: "SetSubState", params: { "state": "Backpack" })],
          priority: 0),
 
