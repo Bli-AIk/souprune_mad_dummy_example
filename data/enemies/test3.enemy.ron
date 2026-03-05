@@ -1,0 +1,19 @@
+// Moldsmal enemy definition (4 ACT options)
+// 霉霉怪敌人定义 (4 个 ACT 选项)
+(
+    id: "moldsmal",
+    locale: (name: "{{battle/ui:ENEMY_MOLDSMAL}}", file: "enemies"),
+    stats: (hp: 150, attack: 6, defense: 0),
+    description: "Stereotypical: Curvaceously attractive, but no brains.",
+    mortar_path: "battle/enemies/moldsmal.mortar",
+    acts: [
+        (label: "{{battle/ui:ACT_MOLDSMAL_CHECK}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_check"),
+        (label: "{{battle/ui:ACT_MOLDSMAL_IMITATE}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_imitate"),
+        (label: "{{battle/ui:ACT_MOLDSMAL_FLIRT}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_flirt"),
+        (label: "{{battle/ui:ACT_MOLDSMAL_UNHUG}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_unhug"),
+    ],
+    mercies: [
+        (label: "{{battle/ui:MERCY_SPARE}}", sequence: "states/battle/mercy/end.sequence.ron"),
+        (label: "{{battle/ui:MERCY_FLEE}}", sequence: "states/battle/mercy/end.sequence.ron"),
+    ],
+)

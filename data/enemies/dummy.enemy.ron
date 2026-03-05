@@ -1,0 +1,19 @@
+// Dummy enemy definition
+// Dummy 敌人定义
+(
+    id: "dummy",
+    locale: (name: "Dummy", file: "enemies"),
+    stats: (hp: 100, attack: 0, defense: 0),
+    description: "A cotton heart and a button eye.",
+    mortar_path: "battle/enemies/dummy.mortar",
+    acts: [
+        (label: "EnemyDummyActCheck", sequence: "states/battle/common/narration.sequence.ron", param: "act_check"),
+        (label: "EnemyDummyActTalk", sequence: "states/battle/common/narration.sequence.ron", param: "act_talk"),
+        (label: "EnemyDummyActFlirt", sequence: "states/battle/acts/dummy/flirt.sequence.ron"),
+        (label: "EnemyDummyActHug", sequence: "states/battle/common/narration.sequence.ron", param: "act_hug"),
+    ],
+    mercies: [
+        (label: "{{battle/ui:MERCY_SPARE}}", sequence: "states/battle/mercy/spare.sequence.ron", param: "mercy_spare"),
+        (label: "{{battle/ui:MERCY_FLEE}}", sequence: "states/battle/mercy/end.sequence.ron"),
+    ],
+)

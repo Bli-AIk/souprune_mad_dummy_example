@@ -11,25 +11,23 @@
     chapters: [
         SetCamera(SetZoom(2.0)),
 
-        // Load all enemy FRE data (ACT options, behaviors) into local layer
-        // 加载所有敌人 FRE 数据（ACT 选项、行为）到本地层
-        LoadFre(files: [
-            "states/battle/enemies/dummy.fre.ron",
-            "states/battle/enemies/test1.fre.ron",
-            "states/battle/enemies/test2.fre.ron",
-            "states/battle/enemies/test3.fre.ron",
-            "states/battle/enemies/test4.fre.ron",
-            "states/battle/enemies/test5.fre.ron",
+        // Load enemy definitions from typed .enemy.ron files
+        // 从类型化 .enemy.ron 文件加载敌人定义
+        LoadEnemies(enemies: [
+            "data/enemies/dummy.enemy.ron",
+            "data/enemies/test1.enemy.ron",
+            "data/enemies/test2.enemy.ron",
+            "data/enemies/test3.enemy.ron",
+            "data/enemies/test4.enemy.ron",
+            "data/enemies/test5.enemy.ron",
         ]),
 
-        // Spawn battle UI view with enemy data bound directly from FRE file
-        // 生成战斗 UI 视图，敌人数据直接从 FRE 文件绑定
+        // Spawn battle UI view, bind enemy data from local layer (populated by LoadEnemies)
+        // 生成战斗 UI 视图，从本地层绑定敌人数据（由 LoadEnemies 填充）
         SpawnView(
             view_layout: "states/battle/view/undertale.view.ron",
             bindings: {
-                // Directly bind enemy data from FRE file (no LoadFre needed)
-                // 直接从 FRE 文件绑定敌人数据（无需 LoadFre）
-                "enemies": File("states/battle/enemies/demo_enemies.fre.ron"),
+                "enemies": LocalLayer,
             },
         ),
 

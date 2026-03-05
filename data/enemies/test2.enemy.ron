@@ -1,0 +1,18 @@
+// Whimsun enemy definition (3 ACT options)
+// 小哭虫敌人定义 (3 个 ACT 选项)
+(
+    id: "whimsun",
+    locale: (name: "{{battle/ui:ENEMY_WHIMSUN}}", file: "enemies"),
+    stats: (hp: 100, attack: 5, defense: 0),
+    description: "This monster is too sensitive to fight.",
+    mortar_path: "battle/enemies/whimsun.mortar",
+    acts: [
+        (label: "{{battle/ui:ACT_WHIMSUN_CHECK}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_check"),
+        (label: "{{battle/ui:ACT_WHIMSUN_CONSOLE}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_console"),
+        (label: "{{battle/ui:ACT_WHIMSUN_TERRORIZE}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_terrorize"),
+    ],
+    mercies: [
+        (label: "{{battle/ui:MERCY_SPARE}}", sequence: "states/battle/mercy/end.sequence.ron"),
+        (label: "{{battle/ui:MERCY_FLEE}}", sequence: "states/battle/mercy/end.sequence.ron"),
+    ],
+)

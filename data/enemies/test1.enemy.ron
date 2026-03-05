@@ -1,0 +1,17 @@
+// Froggit enemy definition (2 ACT options)
+// 蛙吉特敌人定义 (2 个 ACT 选项)
+(
+    id: "froggit",
+    locale: (name: "{{battle/ui:ENEMY_FROGGIT}}", file: "enemies"),
+    stats: (hp: 100, attack: 4, defense: 5),
+    description: "Life is difficult for this enemy.",
+    mortar_path: "battle/enemies/froggit.mortar",
+    acts: [
+        (label: "{{battle/ui:ACT_FROGGIT_CHECK}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_check"),
+        (label: "{{battle/ui:ACT_FROGGIT_COMPLIMENT}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_compliment"),
+    ],
+    mercies: [
+        (label: "{{battle/ui:MERCY_SPARE}}", sequence: "states/battle/mercy/spare.sequence.ron", param: "mercy_spare"),
+        (label: "{{battle/ui:MERCY_FLEE}}", sequence: "states/battle/mercy/end.sequence.ron"),
+    ],
+)
