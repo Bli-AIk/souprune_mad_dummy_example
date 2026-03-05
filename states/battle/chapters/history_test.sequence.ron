@@ -15,6 +15,7 @@
 // - 边界情况
 
 (
+    mode: "battle",
     chapters: [
         SetCamera(SetZoom(2.0)),
         // === Initial UI Setup ===

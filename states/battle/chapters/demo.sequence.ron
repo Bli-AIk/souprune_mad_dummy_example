@@ -2,6 +2,10 @@
 // Battle configuration with FRE data loading
 // 带有 FRE 数据加载的战斗配置
 (
+    // Sequence mode - activates battle-specific systems and input handling
+    // 序列模式 - 激活战斗相关的系统和输入处理
+    mode: "battle",
+
     // The sequence of chapters to execute
     // 要执行的章节序列
     chapters: [
