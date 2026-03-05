@@ -5,11 +5,18 @@ pub const HP: String = "HP"
 pub const ENEMY_APPEARED: String = "* 敌人出现了！"
 
 // 战斗敌人名称
+pub const ENEMY_DUMMY: String = "假人"
 pub const ENEMY_FROGGIT: String = "蛙吉特"
 pub const ENEMY_WHIMSUN: String = "小哭虫"
 pub const ENEMY_MOLDSMAL: String = "霉霉怪"
 pub const ENEMY_LOOX: String = "独眼怪"
 pub const ENEMY_VEGETOID: String = "蔬菜人"
+
+// ACT 选项标签 - 假人 (4 选项)
+pub const ACT_DUMMY_CHECK: String = "检查"
+pub const ACT_DUMMY_TALK: String = "交谈"
+pub const ACT_DUMMY_FLIRT: String = "调情"
+pub const ACT_DUMMY_HUG: String = "拥抱"
 
 // ACT 选项标签 - 蛙吉特 (2 选项)
 pub const ACT_FROGGIT_CHECK: String = "查看"
@@ -42,6 +49,10 @@ pub const ACT_VEGETOID_FLIRT: String = "调情"
 pub const ACT_VEGETOID_PAT: String = "轻拍"
 
 // ACT 结果旁白
+pub const ACT_DUMMY_CHECK_RESULT: String = "* DUMMY - 攻击 0 防御 0\n* 棉花心和纽扣眼。"
+pub const ACT_DUMMY_TALK_RESULT: String = "* 你和 Dummy 说话。\n* 它似乎不太擅长聊天。"
+pub const ACT_DUMMY_FLIRT_RESULT: String = "* 你向 Dummy 调情。\n* 它的脸红了...是染料吗？"
+pub const ACT_DUMMY_HUG_RESULT: String = "* 你拥抱了 Dummy。\n* ……"
 pub const ACT_FROGGIT_CHECK_RESULT: String = "* 蛙吉特 - 攻击 4 防御 5\n* 这只怪物的生活很艰难。"
 pub const ACT_FROGGIT_COMPLIMENT_RESULT: String = "* 蛙吉特不明白你说的话，但还是很高兴。"
 pub const ACT_WHIMSUN_CHECK_RESULT: String = "* 小哭虫 - 攻击 5 防御 0\n* 这只怪物太敏感了，无法战斗。"

@@ -12,11 +12,18 @@ node encounter_intro {
 }
 
 // Enemy names for battle
+pub const ENEMY_DUMMY: String = "Dummy"
 pub const ENEMY_FROGGIT: String = "Froggit"
 pub const ENEMY_WHIMSUN: String = "Whimsun"
 pub const ENEMY_MOLDSMAL: String = "Moldsmal"
 pub const ENEMY_LOOX: String = "Loox"
 pub const ENEMY_VEGETOID: String = "Vegetoid"
+
+// ACT option labels - Dummy (4 options)
+pub const ACT_DUMMY_CHECK: String = "Check"
+pub const ACT_DUMMY_TALK: String = "Talk"
+pub const ACT_DUMMY_FLIRT: String = "Flirt"
+pub const ACT_DUMMY_HUG: String = "Hug"
 
 // ACT option labels - Froggit (2 options)
 pub const ACT_FROGGIT_CHECK: String = "Check"
@@ -49,6 +56,10 @@ pub const ACT_VEGETOID_FLIRT: String = "Flirt"
 pub const ACT_VEGETOID_PAT: String = "Pat"
 
 // ACT result narrations
+pub const ACT_DUMMY_CHECK_RESULT: String = "* DUMMY - ATK 0 DEF 0\n* A cotton heart and a button eye."
+pub const ACT_DUMMY_TALK_RESULT: String = "* You talk to Dummy.\n* It doesn't seem like much of a conversation."
+pub const ACT_DUMMY_FLIRT_RESULT: String = "* You flirt with Dummy.\n* Its face is red... Is that dye?"
+pub const ACT_DUMMY_HUG_RESULT: String = "* You hug Dummy.\n* ..."
 pub const ACT_FROGGIT_CHECK_RESULT: String = "* FROGGIT - ATK 4 DEF 5\n* Life is difficult for this enemy."
 pub const ACT_FROGGIT_COMPLIMENT_RESULT: String = "* Froggit didn't understand what you said, but was flattered anyway."
 pub const ACT_WHIMSUN_CHECK_RESULT: String = "* WHIMSUN - ATK 5 DEF 0\n* This monster is too sensitive to fight."
