@@ -1,7 +1,7 @@
 //! Aimed Spear danmaku behavior - aims at player position at spawn time
 //! 自机狙长矛弹幕行为 - 在生成时瞄准玩家位置
 
-use souprune_sdk::{BulletContext, BulletOutput, DanmakuBehavior, Vec2};
+use souprune_sdk::prelude::*;
 
 /// Aimed spear that captures player position on spawn and moves toward it.
 /// The bullet moves in a straight line toward where the player WAS at spawn time.
@@ -47,7 +47,7 @@ impl DanmakuBehavior for AimedSpear {
         self.speed = ctx.get_float("speed").unwrap_or(200.0);
 
         // Calculate direction from spawn position to player position
-        let spawn_pos = ctx.spawn_position();
+        let spawn_pos = ctx.spawn_pos;
         let to_target = self.target_pos - spawn_pos;
         self.direction = to_target.normalize();
     }

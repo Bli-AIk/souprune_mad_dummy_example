@@ -1,7 +1,7 @@
 //! Gravity Drop danmaku behavior - falls with gravity and bounces
 //! 重力下落弹幕行为 - 受重力影响下落并反弹
 
-use souprune_sdk::{BulletContext, BulletOutput, DanmakuBehavior};
+use souprune_sdk::prelude::*;
 
 /// Gravity Drop Danmaku - falls with gravity and bounces off the bottom.
 /// 重力下落弹幕 - 受重力影响下落并在底部反弹。

@@ -1,7 +1,7 @@
 //! Red Soul behavior - standard movement mode
 //! 红魂行为 - 标准移动模式
 
-use souprune_sdk::{Action, Behavior, Context};
+use souprune_sdk::prelude::*;
 
 pub struct RedSoul {
     speed: f32,

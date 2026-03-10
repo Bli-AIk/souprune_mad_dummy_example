@@ -7,19 +7,16 @@
 mod behaviors;
 
 use behaviors::{AimedSpear, GravityDropDanmaku, RedSoul, SpiralHomingDanmaku, WaveBurstDanmaku};
-use souprune_sdk::{declare_behaviors, declare_danmaku};
+use souprune_sdk::prelude::*;
 
-// Register player behaviors
-// 注册玩家行为
-declare_behaviors!(
-    ("soul_red", RedSoul, || RedSoul::new()),
-);
-
-// Register danmaku behaviors
-// 注册弹幕行为
-declare_danmaku!(
-    ("aimed_spear", AimedSpear, || AimedSpear::new()),
-    ("spiral_homing", SpiralHomingDanmaku, || SpiralHomingDanmaku::new()),
-    ("wave_burst", WaveBurstDanmaku, || WaveBurstDanmaku::new()),
-    ("gravity_drop", GravityDropDanmaku, || GravityDropDanmaku::new()),
-);
+export_mod! {
+    behaviors: [
+        ("soul_red", RedSoul, || RedSoul::new()),
+    ],
+    danmaku: [
+        ("aimed_spear", AimedSpear, || AimedSpear::new()),
+        ("spiral_homing", SpiralHomingDanmaku, || SpiralHomingDanmaku::new()),
+        ("wave_burst", WaveBurstDanmaku, || WaveBurstDanmaku::new()),
+        ("gravity_drop", GravityDropDanmaku, || GravityDropDanmaku::new()),
+    ],
+}

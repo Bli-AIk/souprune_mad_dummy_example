@@ -1,7 +1,7 @@
 //! Wave Burst danmaku behavior - moves in sine wave pattern with burst acceleration
 //! 波动爆发弹幕行为 - 以正弦波模式移动并带有爆发加速
 
-use souprune_sdk::{BulletContext, BulletOutput, DanmakuBehavior, Vec2};
+use souprune_sdk::prelude::*;
 
 /// Wave Burst Danmaku - moves in sine wave pattern with initial burst speed.
 /// 波动爆发弹幕 - 以正弦波模式移动，初始有爆发速度。

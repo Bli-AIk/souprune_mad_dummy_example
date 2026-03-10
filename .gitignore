@@ -1,6 +1,7 @@
 # Build artifacts
 *.dll
 *.so
+*.wasm
 *.dylib
 
 # IDE

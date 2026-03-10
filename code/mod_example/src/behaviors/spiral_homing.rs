@@ -1,7 +1,7 @@
 //! Spiral Homing danmaku behavior - spirals outward while tracking the player
 //! 螺旋追踪弹幕行为 - 向外螺旋运动同时追踪玩家
 
-use souprune_sdk::{BulletContext, BulletOutput, DanmakuBehavior, Vec2};
+use souprune_sdk::prelude::*;
 
 /// Spiral Homing Danmaku - spirals outward while slowly homing toward the player.
 /// 螺旋追踪弹幕 - 向外螺旋运动同时缓慢追踪玩家。
@@ -59,7 +59,7 @@ impl DanmakuBehavior for SpiralHomingDanmaku {
         self.homing_delay = ctx.get_float("homing_delay").unwrap_or(0.5);
 
         // Calculate initial direction towards player
-        let to_player = ctx.player_pos.sub(&ctx.spawn_position());
+        let to_player = ctx.player_pos - ctx.spawn_pos;
         self.captured_direction = if to_player.length() > 0.001 {
             to_player.normalize()
         } else {
@@ -88,7 +88,7 @@ impl DanmakuBehavior for SpiralHomingDanmaku {
             let homing_t = ((ctx.elapsed - self.homing_delay) * self.homing_strength).min(1.0);
 
             // Calculate direction to current player
-            let current_to_player = ctx.player_pos.sub(&ctx.spawn_position());
+            let current_to_player = ctx.player_pos - ctx.spawn_pos;
             let target_direction = if current_to_player.length() > 0.001 {
                 current_to_player.normalize()
             } else {

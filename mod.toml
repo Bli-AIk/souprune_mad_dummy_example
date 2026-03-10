@@ -12,10 +12,10 @@ audios = "assets/audios"          # Audio resources / 音频资源目录
 [dependencies]
 # List dependencies here
 
-[soul_modes]
-# These IDs are now all provided by the same DLL below
-"soul_red" = "libmod_example.so"
-"soul_blue" = "libmod_example.so"
+[mod_library]
+# WASM component file, loaded by wasmtime at runtime
+# WASM 组件文件，运行时由 wasmtime 加载
+wasm = "mod_example.wasm"
 
 [game]
 global_rules = "global.fre.ron"
