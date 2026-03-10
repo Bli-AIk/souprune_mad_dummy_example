@@ -58,8 +58,8 @@ impl DanmakuBehavior for SpiralHomingDanmaku {
         self.homing_strength = ctx.get_float("homing_strength").unwrap_or(0.5);
         self.homing_delay = ctx.get_float("homing_delay").unwrap_or(0.5);
 
-        // Calculate initial direction towards player
-        let to_player = ctx.player_pos - ctx.spawn_pos;
+        // Calculate initial direction towards player from actual bullet position
+        let to_player = ctx.player_pos - ctx.spawn_position();
         self.captured_direction = if to_player.length() > 0.001 {
             to_player.normalize()
         } else {
@@ -87,8 +87,8 @@ impl DanmakuBehavior for SpiralHomingDanmaku {
         if ctx.elapsed > self.homing_delay {
             let homing_t = ((ctx.elapsed - self.homing_delay) * self.homing_strength).min(1.0);
 
-            // Calculate direction to current player
-            let current_to_player = ctx.player_pos - ctx.spawn_pos;
+            // Calculate direction to current player from actual bullet position
+            let current_to_player = ctx.player_pos - ctx.spawn_position();
             let target_direction = if current_to_player.length() > 0.001 {
                 current_to_player.normalize()
             } else {

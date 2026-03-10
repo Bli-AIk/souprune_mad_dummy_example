@@ -46,8 +46,8 @@ impl DanmakuBehavior for AimedSpear {
         // Get speed from named properties
         self.speed = ctx.get_float("speed").unwrap_or(200.0);
 
-        // Calculate direction from spawn position to player position
-        let spawn_pos = ctx.spawn_pos;
+        // Calculate direction from this bullet's actual position to player position
+        let spawn_pos = ctx.spawn_position();
         let to_target = self.target_pos - spawn_pos;
         self.direction = to_target.normalize();
     }
