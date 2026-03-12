@@ -14,6 +14,7 @@
 // 注意：导航由 battle/fre/bridge.rs 中的 battle_view_navigation_system 处理
 
 (
+    world_space: true,
     // Data dependencies declaration
     // 数据依赖声明
     requires: [
