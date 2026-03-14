@@ -18,9 +18,12 @@
     // Data dependencies declaration
     // 数据依赖声明
     requires: [
-        // Battle menu navigation rules - registered as View-scoped rules
-        // 战斗菜单导航规则 - 作为 View 作用域规则注册
-        File("states/battle/rules/battle_menu.fre.ron"),
+        // Battle menu rules — split into logical groups
+        // 战斗菜单规则 — 按逻辑分组拆分
+        File("states/battle/rules/menu_navigation.fre.ron"),
+        File("states/battle/rules/menu_confirm.fre.ron"),
+        File("states/battle/rules/menu_cancel.fre.ron"),
+        File("states/battle/rules/dialogue_stop.fre.ron"),
         
         // Dialogue rules (encounter intro, ACT narration)
         // 对话规则（遭遇开场、ACT 旁白）

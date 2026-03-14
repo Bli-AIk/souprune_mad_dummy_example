@@ -1,60 +1,102 @@
 #![enable(implicit_some)]
-// Backpack Navigation Rules - depth: 0=Menu, 1=ItemList, 2=ItemOptions, 3=Status
+// Backpack Navigation Rules
 
 (
     scope: View,
-    facts: { "depth": Int(0), "selection": Int(0), "interactable": Bool(true) },
+
+    enums: {
+        "depth": ["menu", "item_list", "item_options", "status"],
+    },
+
+    facts: {
+        "depth": Enum("menu"),
+        "selection": Int(0),
+        "interactable": Bool(true),
+    },
 
     rules: [
-        // Navigation
-        (event: ActionEvent(action: "Up", kind: JustPressed), conditions: ["$selection > 0"],
+        // --- Navigation ---
+
+        (event: ActionEvent(action: "Up", kind: JustPressed),
+         conditions: ["$selection > 0"],
          actions: [SetLocalFact("selection", Expr("$selection - 1")), PlaySound("choice")]),
 
-        (event: ActionEvent(action: "Down", kind: JustPressed), conditions: ["$depth == 0", "$selection < 1"],
+        (event: ActionEvent(action: "Down", kind: JustPressed),
+         conditions: ["$depth == 'menu'", "$selection < 1"],
          actions: [SetLocalFact("selection", Expr("$selection + 1")), PlaySound("choice")]),
 
-        (event: ActionEvent(action: "Down", kind: JustPressed), conditions: ["$depth == 1", "$selection < $player:inventory.len() - 1"],
+        (event: ActionEvent(action: "Down", kind: JustPressed),
+         conditions: ["$depth == 'item_list'", "$selection < $player:inventory.len() - 1"],
          actions: [SetLocalFact("selection", Expr("$selection + 1")), PlaySound("choice")]),
 
-        (event: ActionEvent(action: "Left", kind: JustPressed), conditions: ["$depth == 2", "$selection > 0"],
+        (event: ActionEvent(action: "Left", kind: JustPressed),
+         conditions: ["$depth == 'item_options'", "$selection > 0"],
          actions: [SetLocalFact("selection", Expr("$selection - 1")), PlaySound("choice")]),
 
-        (event: ActionEvent(action: "Right", kind: JustPressed), conditions: ["$depth == 2", "$selection < 2"],
+        (event: ActionEvent(action: "Right", kind: JustPressed),
+         conditions: ["$depth == 'item_options'", "$selection < 2"],
          actions: [SetLocalFact("selection", Expr("$selection + 1")), PlaySound("choice")]),
 
-        // Confirm: depth 0 ITEM -> depth 1
-        (event: ActionEvent(action: "Confirm", kind: JustPressed), conditions: ["$depth == 0", "$selection == 0"],
-         actions: [SetLocalFact("depth", Int(1)), SetLocalFact("selection", Int(0)), PlaySound("confirm")]),
+        // --- Confirm ---
 
-        // Confirm: depth 0 STAT -> depth 3
-        (event: ActionEvent(action: "Confirm", kind: JustPressed), conditions: ["$depth == 0", "$selection == 1"],
-         actions: [SetLocalFact("depth", Int(3)), SetLocalFact("selection", Int(0)), PlaySound("confirm")]),
+        // Menu: ITEM -> item list
+        (event: ActionEvent(action: "Confirm", kind: JustPressed),
+         conditions: ["$depth == 'menu'", "$selection == 0"],
+         actions: [
+            SetLocalFact("depth", Enum("item_list")),
+            SetLocalFact("selection", Int(0)),
+            PlaySound("confirm"),
+         ]),
 
-        // Confirm: depth 1 -> depth 2 (item options)
-        (event: ActionEvent(action: "Confirm", kind: JustPressed), conditions: ["$depth == 1"],
-         actions: [SetLocalFact("depth", Int(2)), SetLocalFact("selection", Int(0)), PlaySound("confirm")]),
+        // Menu: STAT -> status screen
+        (event: ActionEvent(action: "Confirm", kind: JustPressed),
+         conditions: ["$depth == 'menu'", "$selection == 1"],
+         actions: [
+            SetLocalFact("depth", Enum("status")),
+            SetLocalFact("selection", Int(0)),
+            PlaySound("confirm"),
+         ]),
 
-        // Confirm: depth 2 -> execute & return to depth 1
-        (event: ActionEvent(action: "Confirm", kind: JustPressed), conditions: ["$depth == 2"],
-         actions: [SetLocalFact("depth", Int(1)), PlaySound("confirm")]),
+        // Item list -> item options
+        (event: ActionEvent(action: "Confirm", kind: JustPressed),
+         conditions: ["$depth == 'item_list'"],
+         actions: [
+            SetLocalFact("depth", Enum("item_options")),
+            SetLocalFact("selection", Int(0)),
+            PlaySound("confirm"),
+         ]),
 
-        // Cancel: depth 0 -> close
-        (event: ActionEvent(action: "Cancel", kind: JustPressed), conditions: ["$depth == 0"],
-         actions: [SwitchState("Normal")], priority: 100),
+        // Item options -> execute & return to item list
+        (event: ActionEvent(action: "Confirm", kind: JustPressed),
+         conditions: ["$depth == 'item_options'"],
+         actions: [SetLocalFact("depth", Enum("item_list")), PlaySound("confirm")]),
 
-        (event: ActionEvent(action: "Menu", kind: JustPressed), conditions: ["$depth == 0"],
-         actions: [SwitchState("Normal")], priority: 100),
+        // --- Cancel ---
 
-        // Cancel: depth 1 -> depth 0
-        (event: ActionEvent(action: "Cancel", kind: JustPressed), conditions: ["$depth == 1"],
-         actions: [SetLocalFact("depth", Int(0)), SetLocalFact("selection", Int(0))]),
+        // Menu -> close backpack
+        (event: ActionEvent(action: "Cancel", kind: JustPressed),
+         conditions: ["$depth == 'menu'"],
+         actions: [SwitchState("Normal")],
+         priority: 100),
 
-        // Cancel: depth 2 -> depth 1
-        (event: ActionEvent(action: "Cancel", kind: JustPressed), conditions: ["$depth == 2"],
-         actions: [SetLocalFact("depth", Int(1))]),
+        (event: ActionEvent(action: "Menu", kind: JustPressed),
+         conditions: ["$depth == 'menu'"],
+         actions: [SwitchState("Normal")],
+         priority: 100),
 
-        // Cancel: depth 3 -> depth 0 with selection=1
-        (event: ActionEvent(action: "Cancel", kind: JustPressed), conditions: ["$depth == 3"],
-         actions: [SetLocalFact("depth", Int(0)), SetLocalFact("selection", Int(1))]),
+        // Item list -> menu
+        (event: ActionEvent(action: "Cancel", kind: JustPressed),
+         conditions: ["$depth == 'item_list'"],
+         actions: [SetLocalFact("depth", Enum("menu")), SetLocalFact("selection", Int(0))]),
+
+        // Item options -> item list
+        (event: ActionEvent(action: "Cancel", kind: JustPressed),
+         conditions: ["$depth == 'item_options'"],
+         actions: [SetLocalFact("depth", Enum("item_list"))]),
+
+        // Status -> menu (restore selection=1 for STAT)
+        (event: ActionEvent(action: "Cancel", kind: JustPressed),
+         conditions: ["$depth == 'status'"],
+         actions: [SetLocalFact("depth", Enum("menu")), SetLocalFact("selection", Int(1))]),
     ],
 )
