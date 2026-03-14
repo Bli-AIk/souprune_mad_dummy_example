@@ -1,0 +1,27 @@
+// Monster Candy — food item with conditional HP text
+
+node OnUse {
+    if get_player_hp() >= get_player_hp_max() {
+        text: "* You ate the Monster Candy."
+        text: "* Your HP was already maxed out."
+    } else {
+        text: "* You ate the Monster Candy."
+        text: $"* You recovered {get_heal_amount()} HP!"
+        with events: [
+            0, play_sound("audios/sfx/heal.wav")
+        ]
+    }
+}
+
+node OnCheck {
+    text: "* Has a distinct, non-licorice flavor."
+}
+
+node OnDrop {
+    text: "* You threw away the Monster Candy."
+}
+
+fn get_player_hp() -> Number
+fn get_player_hp_max() -> Number
+fn get_heal_amount() -> Number
+fn play_sound(file: String)

@@ -1,0 +1,17 @@
+// Tough Glove — weapon item
+
+node OnUse {
+    text: "* You equipped the Tough Glove."
+}
+
+node OnCheck {
+    text: "* A worn pink leather glove. For five-fingered folk."
+    text: $"* Weapon AT {get_weapon_damage()}"
+}
+
+node OnDrop {
+    text: "* You threw away the Tough Glove."
+    text: "* You feel your punches getting weaker."
+}
+
+fn get_weapon_damage() -> Number

@@ -11,6 +11,7 @@
     facts: {
         "depth": Enum("menu"),
         "selection": Int(0),
+        "item_list_selection": Int(0),
         "interactable": Bool(true),
     },
 
@@ -57,10 +58,11 @@
             PlaySound("confirm"),
          ]),
 
-        // Item list -> item options
+        // Item list -> item options (save item index for USE/CHECK/DROP)
         (event: ActionEvent(action: "Confirm", kind: JustPressed),
          conditions: ["$depth == 'item_list'"],
          actions: [
+            SetLocalFact("item_list_selection", Expr("$selection")),
             SetLocalFact("depth", Enum("item_options")),
             SetLocalFact("selection", Int(0)),
             PlaySound("confirm"),
@@ -68,8 +70,16 @@
 
         // Item options -> execute & return to item list
         (event: ActionEvent(action: "Confirm", kind: JustPressed),
-         conditions: ["$depth == 'item_options'"],
-         actions: [SetLocalFact("depth", Enum("item_list")), PlaySound("confirm")]),
+         conditions: ["$depth == 'item_options'", "$selection == 0"],
+         actions: [UseItem(index_expr: "$item_list_selection"), SetLocalFact("depth", Enum("item_list")), PlaySound("confirm")]),
+
+        (event: ActionEvent(action: "Confirm", kind: JustPressed),
+         conditions: ["$depth == 'item_options'", "$selection == 1"],
+         actions: [CheckItem(index_expr: "$item_list_selection"), SetLocalFact("depth", Enum("item_list")), PlaySound("confirm")]),
+
+        (event: ActionEvent(action: "Confirm", kind: JustPressed),
+         conditions: ["$depth == 'item_options'", "$selection == 2"],
+         actions: [DropItem(index_expr: "$item_list_selection"), SetLocalFact("depth", Enum("item_list")), PlaySound("confirm")]),
 
         // --- Cancel ---
 

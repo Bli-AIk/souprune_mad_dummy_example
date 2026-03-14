@@ -1,0 +1,45 @@
+// Default item text templates
+// Mod authors can override by providing per-item mortar scripts
+
+// --- Food ---
+node OnUseFoodDefault {
+    text: $"* You used the {get_item_name()}."
+    if get_heal_amount() > 0 {
+        text: $"* You recovered {get_heal_amount()} HP!"
+    }
+}
+
+// --- Weapon ---
+node OnUseWeaponDefault {
+    text: $"* You equipped the {get_item_name()}."
+}
+
+// --- Armor ---
+node OnUseArmorDefault {
+    text: $"* You equipped the {get_item_name()}."
+}
+
+// --- Key Item ---
+node OnUseKeyItemDefault {
+    text: $"* You used the {get_item_name()}."
+    text: "* But nothing happened."
+}
+
+// --- Check / Drop ---
+node OnCheckDefault {
+    text: $"* {get_item_description()}"
+}
+
+node OnDropDefault {
+    text: $"* You threw away the {get_item_name()}."
+}
+
+// Function declarations — bound by engine via MortarFunctionRegistry
+fn get_item_name() -> String
+fn get_item_description() -> String
+fn get_heal_amount() -> Number
+fn get_weapon_damage() -> Number
+fn get_armor_defense() -> Number
+fn get_player_hp() -> Number
+fn get_player_hp_max() -> Number
+fn play_sound(file: String)

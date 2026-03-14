@@ -6,6 +6,7 @@
         id: "monster_candy",
         locale: (name: "MONSTER_CANDY", file: "items"),
         description: "Has a distinct, non-licorice flavor.",
+        mortar: "items/monster_candy.mortar",
         item_type: Food(
             consumable: true,
             effects: [
@@ -41,6 +42,7 @@
         id: "tough_glove",
         locale: (name: "TOUGH_GLOVE", file: "items"),
         description: "A worn pink leather glove.",
+        mortar: "items/tough_glove.mortar",
         item_type: Weapon(
             damage: 5,
             on_hit_effects: [
@@ -65,5 +67,12 @@
         locale: (name: "BANDAGE", file: "items"),
         description: "It has already been used several times.",
         item_type: Armor(defense: 0),
+    ),
+    (
+        id: "cell_phone",
+        locale: (name: "CELL_PHONE", file: "items"),
+        description: "An old cell phone.",
+        mortar: "items/cell_phone.mortar",
+        item_type: KeyItem,
     ),
 ]
