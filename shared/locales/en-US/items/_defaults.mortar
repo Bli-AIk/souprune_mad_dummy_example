@@ -1,13 +1,12 @@
 // Default item text templates
 // Mod authors can override by providing per-item mortar scripts
-//
-// Variables are set by engine before node execution:
-//   item_name, item_description, heal_amount
+
+fn get_heal_amount() -> Number
 
 // --- Food ---
 node OnUseFoodDefault {
     text: $"* You used the {item_name}."
-    if heal_amount > 0 {
+    if get_heal_amount() > 0 {
         text: $"* You recovered {heal_amount} HP!"
     }
 }

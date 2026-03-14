@@ -1,9 +1,10 @@
 // Cell Phone — key item with conditional text
-//
-// Variables set by engine: in_ruins, missed_calls
+
+fn is_in_ruins() -> Bool
+fn get_missed_calls() -> Number
 
 node OnUse {
-    if in_ruins {
+    if is_in_ruins() {
         text: "* You called Toriel."
         text: "* She didn't pick up..."
     } else {
@@ -12,7 +13,7 @@ node OnUse {
 }
 
 node OnCheck {
-    if missed_calls > 0 {
+    if get_missed_calls() > 0 {
         text: $"* An old cell phone. {missed_calls} missed calls."
     } else {
         text: "* An old cell phone."

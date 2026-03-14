@@ -1,9 +1,10 @@
 // Monster Candy — food item with conditional HP text
-//
-// Variables set by engine: player_hp, player_hp_max, heal_amount
+
+fn get_player_hp() -> Number
+fn get_player_hp_max() -> Number
 
 node OnUse {
-    if hp_full {
+    if get_player_hp() >= get_player_hp_max() {
         text: "* You ate the Monster Candy."
         text: "* Your HP was already maxed out."
     } else {
