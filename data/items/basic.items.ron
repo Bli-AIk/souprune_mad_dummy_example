@@ -11,7 +11,7 @@
             consumable: true,
             effects: [
                 Heal(amount: 10),
-                PlayAudio(clip_path: "audios/sfx/heal.wav"),
+                PlayAudio(clip_path: "audios/sfx/snd_heal_c.wav"),
             ],
         ),
     ),
