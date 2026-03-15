@@ -5,8 +5,8 @@ fn get_missed_calls() -> Number
 
 node OnUse {
     if is_in_ruins() {
-        text: "* You called Toriel."
-        text: "* She didn't pick up..."
+        line: "* You called Toriel."
+        line: "* She didn't pick up..."
     } else {
         text: "* No signal."
     }

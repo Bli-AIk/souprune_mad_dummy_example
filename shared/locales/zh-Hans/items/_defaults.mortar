@@ -8,11 +8,11 @@ fn get_item_value() -> Number
 
 // --- 食物 ---
 node OnUseFoodDefault {
-    text: $"* 你吃掉了{item_name}。"
+    line: $"* 你吃掉了{item_name}。"
     if get_player_hp() >= get_player_hp_max() {
-        text: "* 你的HP已满。"
+        line: "* 你的HP已满。"
     } else {
-        text: $"* 你回复了 {heal_amount} HP！"
+        line: $"* 你回复了 {heal_amount} HP！"
     }
 }
 
@@ -28,8 +28,8 @@ node OnUseArmorDefault {
 
 // --- 关键物品 ---
 node OnUseKeyItemDefault {
-    text: $"* 你使用了{item_name}。"
-    text: "* 但是什么也没有发生。"
+    line: $"* 你使用了{item_name}。"
+    line: "* 但是什么也没有发生。"
 }
 
 // --- 调查 ---

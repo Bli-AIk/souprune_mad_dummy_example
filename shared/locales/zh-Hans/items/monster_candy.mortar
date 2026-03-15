@@ -5,11 +5,11 @@ fn get_player_hp_max() -> Number
 
 node OnUse {
     if get_player_hp() >= get_player_hp_max() {
-        text: "* 你吃掉了怪物糖果。"
-        text: "* 你的HP已满。"
+        line: "* 你吃掉了怪物糖果。"
+        line: "* 你的HP已满。"
     } else {
-        text: "* 你吃掉了怪物糖果。"
-        text: $"* 你回复了 {heal_amount} HP！"
+        line: "* 你吃掉了怪物糖果。"
+        line: $"* 你回复了 {heal_amount} HP！"
     }
 }
 

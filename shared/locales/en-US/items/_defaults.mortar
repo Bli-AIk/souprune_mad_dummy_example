@@ -8,11 +8,11 @@ fn get_item_value() -> Number
 
 // --- Food ---
 node OnUseFoodDefault {
-    text: $"* You ate the {item_name}."
+    line: $"* You ate the {item_name}."
     if get_player_hp() >= get_player_hp_max() {
-        text: "* Your HP was maxed out."
+        line: "* Your HP was maxed out."
     } else {
-        text: $"* You recovered {heal_amount} HP!"
+        line: $"* You recovered {heal_amount} HP!"
     }
 }
 
@@ -28,8 +28,8 @@ node OnUseArmorDefault {
 
 // --- Key Item ---
 node OnUseKeyItemDefault {
-    text: $"* You used the {item_name}."
-    text: "* But nothing happened."
+    line: $"* You used the {item_name}."
+    line: "* But nothing happened."
 }
 
 // --- Check ---

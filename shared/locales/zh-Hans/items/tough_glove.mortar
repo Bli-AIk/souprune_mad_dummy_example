@@ -5,13 +5,13 @@ node OnUse {
 }
 
 node OnCheck {
-    text: "* 一副破旧的粉色皮手套。给五指族用的。"
-    text: $"* 武器 AT {get_weapon_damage()}"
+    line: "* 一副破旧的粉色皮手套。给五指族用的。"
+    line: $"* 武器 AT {get_weapon_damage()}"
 }
 
 node OnDrop {
-    text: "* 坚韧手套被你扔掉了。"
-    text: "* 你感到拳头变弱了。"
+    line: "* 坚韧手套被你扔掉了。"
+    line: "* 你感到拳头变弱了。"
 }
 
 fn get_weapon_damage() -> Number
