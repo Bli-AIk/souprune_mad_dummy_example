@@ -14,7 +14,8 @@ node OnUse {
 }
 
 node OnCheck {
-    text: "* Has a distinct, non-licorice flavor."
+    line: "* Has a distinct,"
+    line: "  non-licorice flavor."
 }
 
 node OnDrop {

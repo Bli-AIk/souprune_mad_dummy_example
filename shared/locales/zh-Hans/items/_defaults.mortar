@@ -34,15 +34,18 @@ node OnUseKeyItemDefault {
 
 // --- 调查 ---
 node OnCheckFoodDefault {
-    text: $"* \"{item_name}\" - 治愈 {get_item_value()} HP"
+    line: $"* \"{item_name}\" - 治愈 {get_item_value()} HP"
+    line: $"* {item_description}"
 }
 
 node OnCheckWeaponDefault {
-    text: $"* \"{item_name}\" - 武器 AT {get_item_value()}"
+    line: $"* \"{item_name}\" - 武器 AT {get_item_value()}"
+    line: $"* {item_description}"
 }
 
 node OnCheckArmorDefault {
-    text: $"* \"{item_name}\" - 防具 DF {get_item_value()}"
+    line: $"* \"{item_name}\" - 防具 DF {get_item_value()}"
+    line: $"* {item_description}"
 }
 
 node OnCheckDefault {

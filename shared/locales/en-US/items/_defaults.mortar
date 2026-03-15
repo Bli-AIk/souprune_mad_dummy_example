@@ -34,15 +34,18 @@ node OnUseKeyItemDefault {
 
 // --- Check ---
 node OnCheckFoodDefault {
-    text: $"* \"{item_name}\" - Heals {get_item_value()} HP"
+    line: $"* \"{item_name}\" - Heals {get_item_value()} HP"
+    line: $"* {item_description}"
 }
 
 node OnCheckWeaponDefault {
-    text: $"* \"{item_name}\" - Weapon AT {get_item_value()}"
+    line: $"* \"{item_name}\" - Weapon AT {get_item_value()}"
+    line: $"* {item_description}"
 }
 
 node OnCheckArmorDefault {
-    text: $"* \"{item_name}\" - Armor DF {get_item_value()}"
+    line: $"* \"{item_name}\" - Armor DF {get_item_value()}"
+    line: $"* {item_description}"
 }
 
 node OnCheckDefault {
