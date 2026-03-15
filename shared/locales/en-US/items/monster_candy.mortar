@@ -6,7 +6,7 @@ fn get_player_hp_max() -> Number
 node OnUse {
     if get_player_hp() >= get_player_hp_max() {
         text: "* You ate the Monster Candy."
-        text: "* Your HP was already maxed out."
+        text: "* Your HP was maxed out."
     } else {
         text: "* You ate the Monster Candy."
         text: $"* You recovered {heal_amount} HP!"
@@ -18,5 +18,5 @@ node OnCheck {
 }
 
 node OnDrop {
-    text: "* You threw away the Monster Candy."
+    text: "* Monster Candy was thrown away."
 }

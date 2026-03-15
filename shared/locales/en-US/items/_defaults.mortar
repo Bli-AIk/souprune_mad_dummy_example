@@ -2,11 +2,16 @@
 // Mod authors can override by providing per-item mortar scripts
 
 fn get_heal_amount() -> Number
+fn get_player_hp() -> Number
+fn get_player_hp_max() -> Number
+fn get_item_value() -> Number
 
 // --- Food ---
 node OnUseFoodDefault {
-    text: $"* You used the {item_name}."
-    if get_heal_amount() > 0 {
+    text: $"* You ate the {item_name}."
+    if get_player_hp() >= get_player_hp_max() {
+        text: "* Your HP was maxed out."
+    } else {
         text: $"* You recovered {heal_amount} HP!"
     }
 }
@@ -27,11 +32,24 @@ node OnUseKeyItemDefault {
     text: "* But nothing happened."
 }
 
-// --- Check / Drop ---
+// --- Check ---
+node OnCheckFoodDefault {
+    text: $"* \"{item_name}\" - Heals {get_item_value()} HP"
+}
+
+node OnCheckWeaponDefault {
+    text: $"* \"{item_name}\" - Weapon AT {get_item_value()}"
+}
+
+node OnCheckArmorDefault {
+    text: $"* \"{item_name}\" - Armor DF {get_item_value()}"
+}
+
 node OnCheckDefault {
     text: $"* {item_description}"
 }
 
+// --- Drop ---
 node OnDropDefault {
-    text: $"* You threw away the {item_name}."
+    text: $"* {item_name} was thrown away."
 }

@@ -10,7 +10,7 @@ node OnCheck {
 }
 
 node OnDrop {
-    text: "* You threw away the Tough Glove."
+    text: "* Tough Glove was thrown away."
     text: "* You feel your punches getting weaker."
 }
 
