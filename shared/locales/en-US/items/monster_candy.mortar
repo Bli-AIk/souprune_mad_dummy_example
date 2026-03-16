@@ -13,7 +13,10 @@ node OnUse {
     }
 }
 
+fn get_item_value() -> Number
+
 node OnCheck {
+    line: $"* \"{item_name}\" - Heals {get_item_value()} HP"
     line: "* Has a distinct,"
     line: "  non-licorice flavor."
 }
