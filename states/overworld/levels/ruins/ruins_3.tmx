@@ -154,7 +154,7 @@
     <property name="has_mortar" type="bool" value="false"/>
     <property name="has_typewriter" type="bool" value="true"/>
     <property name="interactable" type="bool" value="true"/>
-    <property name="simple_text" value="* SMELL DANGER RATING"/>
+    <property name="simple_text" value="* (It fills you with \n  determination.)"/>
    </properties>
   </object>
  </objectgroup>

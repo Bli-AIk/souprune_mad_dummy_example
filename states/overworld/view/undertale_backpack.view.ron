@@ -51,7 +51,9 @@
                     transform: (
                         translation: (-9.5, 28.25, 1.0),
                     ),
-                    line_height: 1.375,
+                    line_height: 1.125,
+                    char_spacing: 1,
+                    word_spacing: -7.5,
                     conditional_style: (
                         condition: "player.inventory.is_empty",
                         color: (0.5, 0.5, 0.5, 1.0),
@@ -66,7 +68,9 @@
                     transform: (
                         translation: (-9.5, 10.25, 1.0),
                     ),
-                    line_height: 1.375,
+                     line_height: 1.125,
+                     char_spacing: 1,
+                     word_spacing: -7.5,
                 ),
             ],
             children: [

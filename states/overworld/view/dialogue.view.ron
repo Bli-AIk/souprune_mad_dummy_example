@@ -43,9 +43,11 @@
                     world_scale: (13.25, 13.25),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: (-130.5, 29.0, 1.0),
+                        translation: (-130.5, 27.85, 1.0),
                     ),
-                    line_height: 1.375,
+                    line_height: 1.125,
+                    char_spacing: 1,
+                    word_spacing: -7.5,
                 ),
             ],
         ),
