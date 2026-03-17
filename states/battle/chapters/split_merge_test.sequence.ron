@@ -1,0 +1,76 @@
+#![enable(implicit_some)]
+// Split/Merge Battle Box Test
+// 战斗框分裂/合并测试
+//
+// Demonstrates multi-battle-box support:
+// 1. Spawn UI and player
+// 2. Split the battle box vertically
+// 3. Wait, then merge back
+// 4. Split horizontally
+// 5. Wait, then merge again
+(
+    mode: "battle",
+    chapters: [
+        SetCamera(SetZoom(2.0)),
+
+        // Spawn battle UI
+        SpawnView(view_layout: "states/battle/view/undertale.view.ron"),
+        Wait(0.5),
+
+        // Shrink BattleBox to a compact size for the test
+        TweenViewElement(
+            selector: LocalName("BattleBox"),
+            target: BoxSize(to: (300.0, 200.0)),
+            duration: 0.6,
+            easing: QuadInOut,
+            wait_for_completion: true,
+        ),
+
+        // Spawn player in the battle box
+        SetPlayer(Spawn(
+            config_path: "states/battle/players/player.battle_player.ron",
+            position: (0.0, -40.0),
+        )),
+        Wait(1.0),
+
+        // === Phase 1: Vertical Split ===
+        // Split "main" box into "left" and "right" along vertical axis
+        SplitBattleBox(
+            source: "main",
+            result: ("left", "right"),
+            axis: Vertical,
+            position: 0.0,
+            gap: 20.0,
+        ),
+        Wait(3.0),
+
+        // === Phase 2: Merge back ===
+        // Merge "left" and "right" back into "main"
+        MergeBattleBoxes(
+            sources: ("left", "right"),
+            result: "main",
+        ),
+        Wait(2.0),
+
+        // === Phase 3: Horizontal Split ===
+        // Split "main" into "top" and "bottom" along horizontal axis
+        SplitBattleBox(
+            source: "main",
+            result: ("top", "bottom"),
+            axis: Horizontal,
+            position: 0.0,
+            gap: 15.0,
+        ),
+        Wait(3.0),
+
+        // === Phase 4: Merge again ===
+        MergeBattleBoxes(
+            sources: ("top", "bottom"),
+            result: "merged",
+        ),
+        Wait(2.0),
+
+        // Clean up
+        SetPlayer(Despawn),
+    ],
+)
