@@ -40,7 +40,7 @@
             result: ("left", "right"),
             axis: Vertical,
             position: 0.0,
-            gap: 20.0,
+            gap: 15.0,
         ),
         Wait(3.0),
 
