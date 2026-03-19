@@ -56,6 +56,7 @@
         MergeBattleBoxes(
             sources: ("left", "right"),
             result: "main",
+            gap_policy: Expands,
         ),
         Wait(1.0),
         Log(text: "Phase 3: horizontal split with Includes gap policy", level: Debug),
@@ -78,6 +79,7 @@
         MergeBattleBoxes(
             sources: ("top", "bottom"),
             result: "main",
+            gap_policy: Includes,
         ),
         Wait(1.0),
         Log(text: "Phase 5: animated vertical split", level: Debug),
@@ -102,7 +104,9 @@
         MergeBattleBoxes(
             sources: ("left_anim", "right_anim"),
             result: "main",
+            gap_policy: Expands,
             duration: 0.5,
+            easing: OutCubic,
         ),
         Wait(1.0),
         Log(text: "Phase 7: animated horizontal split with Includes", level: Debug),
@@ -121,12 +125,15 @@
             easing: OutCubic,
         ),
         Wait(3.0),
-        Log(text: "Phase 8: final merge"),
+        Log(text: "Phase 8: animated final merge with Includes"),
 
         // === Phase 8: Final Merge ===
         MergeBattleBoxes(
             sources: ("top_shrink", "bottom_shrink"),
             result: "final",
+            gap_policy: Includes,
+            duration: 0.6,
+            easing: OutCubic,
         ),
         Wait(2.0),
         Log(text: "split_merge_test: completed"),
