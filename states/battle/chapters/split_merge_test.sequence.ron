@@ -93,6 +93,7 @@
             gap: 25.0,
             gap_policy: Expands,
             duration: 0.8,
+            easing: OutCubic,
         ),
         Wait(3.0),
         Log(text: "Phase 6: animated merge back into main"),
@@ -116,7 +117,8 @@
             position: 20.0,  // Asymmetric split position
             gap: 20.0,
             gap_policy: Includes,
-            duration: 1.0,
+            duration: 0.5,
+            easing: OutCubic,
         ),
         Wait(3.0),
         Log(text: "Phase 8: final merge"),
