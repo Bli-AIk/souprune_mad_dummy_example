@@ -8,20 +8,23 @@
 // 3. Wait, then merge back
 // 4. Split horizontally
 // 5. Wait, then merge again
+// 6. Demonstrate gap_policy: Expands (default) vs Includes
+// 7. Demonstrate animated split with duration
+// 8. Demonstrate Log chapter syntax during phase transitions
 (
     mode: "battle",
     chapters: [
         SetCamera(SetZoom(2.0)),
-
+        Log(text: "split_merge_test: starting battle box split/merge demo"),
         // Spawn battle UI
         SpawnView(view_layout: "states/battle/view/undertale.view.ron"),
-        Wait(0.5),
+        Wait(0.1),
 
         // Shrink BattleBox to a compact size for the test
         TweenViewElement(
             selector: LocalName("BattleBox"),
             target: BoxSize(to: (300.0, 200.0)),
-            duration: 0.6,
+            duration: 0.3,
             easing: QuadInOut,
             wait_for_completion: true,
         ),
@@ -32,43 +35,99 @@
             position: (0.0, -40.0),
         )),
         Wait(1.0),
+        Log(text: "Phase 1: vertical split with Expands gap policy", level: Debug),
 
-        // === Phase 1: Vertical Split ===
-        // Split "main" box into "left" and "right" along vertical axis
+        // === Phase 1: Vertical Split (default: Expands) ===
+        // gap_policy: Expands (default) - two box widths sum to original, gap expands outward
+        // gap_policy: Expands（默认）— 两个框宽度之和等于原宽度，间隙向外扩展
         SplitBattleBox(
             source: "main",
             result: ("left", "right"),
             axis: Vertical,
             position: 0.0,
             gap: 15.0,
+            // gap_policy: Expands is default
+            gap_policy: Expands
         ),
         Wait(3.0),
+        Log(text: "Phase 2: merge left/right back into main"),
 
         // === Phase 2: Merge back ===
-        // Merge "left" and "right" back into "main"
         MergeBattleBoxes(
             sources: ("left", "right"),
             result: "main",
         ),
-        Wait(2.0),
+        Wait(1.0),
+        Log(text: "Phase 3: horizontal split with Includes gap policy", level: Debug),
 
-        // === Phase 3: Horizontal Split ===
-        // Split "main" into "top" and "bottom" along horizontal axis
+        // === Phase 3: Horizontal Split with gap_policy: Includes ===
+        // gap_policy: Includes - two box widths + gap = original width, total span preserved
+        // gap_policy: Includes — 两个框宽度 + gap = 原宽度，总跨度保持不变
         SplitBattleBox(
             source: "main",
             result: ("top", "bottom"),
             axis: Horizontal,
             position: 0.0,
-            gap: 15.0,
+            gap: 30.0,
+            gap_policy: Includes,
         ),
         Wait(3.0),
+        Log(text: "Phase 4: merge top/bottom back into main"),
 
         // === Phase 4: Merge again ===
         MergeBattleBoxes(
             sources: ("top", "bottom"),
-            result: "merged",
+            result: "main",
+        ),
+        Wait(1.0),
+        Log(text: "Phase 5: animated vertical split", level: Debug),
+
+        // === Phase 5: Animated Vertical Split ===
+        // duration > 0 enables smooth sliding animation
+        // duration > 0 启用平滑滑动动画
+        SplitBattleBox(
+            source: "main",
+            result: ("left_anim", "right_anim"),
+            axis: Vertical,
+            position: 0.0,
+            gap: 25.0,
+            gap_policy: Expands,
+            duration: 0.8,
+        ),
+        Wait(3.0),
+        Log(text: "Phase 6: animated merge back into main"),
+
+        // === Phase 6: Animated Merge ===
+        MergeBattleBoxes(
+            sources: ("left_anim", "right_anim"),
+            result: "main",
+            duration: 0.5,
+        ),
+        Wait(1.0),
+        Log(text: "Phase 7: animated horizontal split with Includes", level: Debug),
+
+        // === Phase 7: Animated Horizontal Split with Includes ===
+        // Combines animation with Includes policy for smooth width-shrinking effect
+        // 结合动画与 Includes 策略，实现平滑的宽度收缩效果
+        SplitBattleBox(
+            source: "main",
+            result: ("top_shrink", "bottom_shrink"),
+            axis: Horizontal,
+            position: 20.0,  // Asymmetric split position
+            gap: 20.0,
+            gap_policy: Includes,
+            duration: 1.0,
+        ),
+        Wait(3.0),
+        Log(text: "Phase 8: final merge"),
+
+        // === Phase 8: Final Merge ===
+        MergeBattleBoxes(
+            sources: ("top_shrink", "bottom_shrink"),
+            result: "final",
         ),
         Wait(2.0),
+        Log(text: "split_merge_test: completed"),
 
         // Clean up
         SetPlayer(Despawn),
