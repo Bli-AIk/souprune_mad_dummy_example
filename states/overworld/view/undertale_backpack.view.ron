@@ -146,7 +146,7 @@
             texts: [
                 (
                     id: "ItemLayerList",
-                    content: "{@player.inventory}",
+                    content: "{{data:player.inventory}}",
                     font: DeterminationSans,
                     world_scale: (13.25, 13.25),
                     color: (1.0, 1.0, 1.0, 1.0),
@@ -261,7 +261,7 @@
                 ),
                 (
                     id: "StatusLayerCombat",
-                    content: "{{overworld/ui:ATK}}  {@player.total_attack} ({@player.weapon_atk})            {{overworld/ui:EXP}}: {$player:exp}\n{{overworld/ui:DEF}}  {@player.total_defense} ({@player.armor_def})            {{overworld/ui:NEXT}}: {$player:next_exp}",
+                    content: "{{overworld/ui:ATK}}  {{data:player.total_attack}} ({{data:player.weapon_atk}})            {{overworld/ui:EXP}}: {$player:exp}\n{{overworld/ui:DEF}}  {{data:player.total_defense}} ({{data:player.armor_def}})            {{overworld/ui:NEXT}}: {$player:next_exp}",
                     font: DeterminationSans,
                     world_scale: (13.5, 13.5),
                     color: (1.0, 1.0, 1.0, 1.0),
@@ -272,7 +272,7 @@
                 ),
                 (
                     id: "StatusLayerEquipment",
-                    content: "{{overworld/ui:WEAPON}}: {@player.weapon}\n{{overworld/ui:ARMOR}}: {@player.armor}",
+                    content: "{{overworld/ui:WEAPON}}: {{data:player.weapon}}\n{{overworld/ui:ARMOR}}: {{data:player.armor}}",
                     font: DeterminationSans,
                     world_scale: (13.5, 13.5),
                     color: (1.0, 1.0, 1.0, 1.0),
