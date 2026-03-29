@@ -52,8 +52,6 @@
                         translation: (-9.5, 27.075, 1.0),
                     ),
                     line_height: 1.125,
-                    char_spacing: -2.5,
-                    word_spacing: -7.5,
                     conditional_style: (
                         condition: "player.inventory.is_empty",
                         color: (0.5, 0.5, 0.5, 1.0),
@@ -69,8 +67,6 @@
                         translation: (-9.5, 9.25, 1.0),
                     ),
                     line_height: 0.0,
-                    char_spacing: -2.75,
-                    word_spacing: -10.5,
                 ),
             ],
             children: [
@@ -261,13 +257,26 @@
                     word_spacing: -21.585,
                 ),
                 (
-                    id: "StatusLayerLvHp",
-                    content: "{{overworld/ui:LV}}   {$player:lv}\n{{overworld/ui:HP}}  {$player:hp} / {$player:hp_max}",
+                    id: "StatusLayerLv",
+                    content: "{{overworld/ui:LV}}   {$player:lv}",
                     font: DeterminationSans,
                     world_scale: (13.5, 13.5),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
                         translation: (-72.5, 58.5, 1.0),
+                    ),
+                    line_height: 0.975,
+                    char_spacing: -2.385,
+                    word_spacing: -6.5,
+                ),
+                (
+                    id: "StatusLayerHp",
+                    content: "{{overworld/ui:HP}}  {$player:hp} / {$player:hp_max}",
+                    font: DeterminationSans,
+                    world_scale: (13.5, 13.5),
+                    color: (1.0, 1.0, 1.0, 1.0),
+                    transform: (
+                        translation: (-72.5, 42.5, 1.0),
                     ),
                     line_height: 0.975,
                     char_spacing: -2.385,
