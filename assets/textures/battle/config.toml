@@ -38,6 +38,10 @@ path = "assets/textures/battle/view/mercy/true.png"
 name = "hpname"
 path = "assets/textures/battle/view/hpname.png"
 
+[[sprites]]
+name = "dumb_target"
+path = "assets/textures/battle/view/dumb_target.png"
+
 # Example sprites with flip settings
 [[sprites]]
 name = "example_sprite_flipped_x"
