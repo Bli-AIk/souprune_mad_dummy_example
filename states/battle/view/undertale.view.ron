@@ -250,8 +250,6 @@
                     word_spacing: -9.0,
                     visible_when: "$depth == 1 && $menu_context == 2",
                 ),
-                // Page indicator at bottom-right
-                // 页码指示器在右下角
                 (
                     id: "ItemPageText",
                     content: "PAGE {{item_page}}",
@@ -259,7 +257,7 @@
                     world_scale: (26.0, 26.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: (180.0, -30.0, 1.0),
+                        translation: (66.0, -14.5, 1.0),
                     ),
                     char_spacing: 3.0,
                     word_spacing: -9.0,
