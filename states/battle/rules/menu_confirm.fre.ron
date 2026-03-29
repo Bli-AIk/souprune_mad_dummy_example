@@ -31,10 +31,10 @@
          conditions: ["$interactable == true", "$depth == 'submenu'", "$menu_context == 'fight'"],
          actions: [SetLocalFact("selection_confirmed", Bool(true)), SetLocalFact("interactable", Bool(false)), SetLocalFact("pending_sequence", String("")), PlaySound("confirm"), EmitEvent("battle_action_executed")]),
 
-        // Submenu ITEM → execute with UseItem
+        // Submenu ITEM → execute with UseItem and show narration
         (event: ActionEvent(action: "Confirm", kind: JustPressed),
          conditions: ["$interactable == true", "$depth == 'submenu'", "$menu_context == 'item'"],
-         actions: [UseItem(index_expr: "$item_selection"), SetLocalFact("selection_confirmed", Bool(true)), SetLocalFact("interactable", Bool(false)), PlaySound("confirm"), EmitEvent("battle_action_executed")]),
+         actions: [UseItem(index_expr: "$item_selection"), SetLocalFact("pending_sequence", String("states/battle/common/item_narration.sequence.ron")), SetLocalFact("selection_confirmed", Bool(true)), SetLocalFact("interactable", Bool(false)), PlaySound("confirm"), EmitEvent("battle_action_executed")]),
 
         // ACT options → execute
         (event: ActionEvent(action: "Confirm", kind: JustPressed),
