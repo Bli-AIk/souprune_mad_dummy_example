@@ -163,7 +163,7 @@
                     transform: (
                         translation: (-64.25, 76.5, 1.0),
                     ),
-                    line_height: 1.2,
+                    line_height: 1.0,
                 ),
                 (
                     id: "ItemLayerOptionUse",
