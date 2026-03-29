@@ -577,9 +577,9 @@
             name: "AttackBar",
             visible_when: "$fight_target_visible == true",
             view_box: (
-                width: 8.0,
-                height: 130.0,
-                border_width: 3.0,
+                width: 6.0,
+                height: 120.0,
+                border_width: 4.25,
                 offset: (-274.0, -80.5, 11.0),
                 structure_file: "shared/view_structures/attack_bar.sdf.ron",
             ),
