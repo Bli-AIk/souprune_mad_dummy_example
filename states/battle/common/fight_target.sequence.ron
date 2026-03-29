@@ -4,10 +4,11 @@
 // Flow:
 //   1. Clear UI (stop dialogue, hide buttons, clear text)
 //   2. Show DumbTarget + AttackBar
-//   3. Sweep AttackBar from left to right (~1.5s)
-//   4. Fade out AttackBar (~0.4s)
-//   5. Collapse DumbTarget (scale X → 0 + fade, 0.5s)
-//   6. Clean up (hide elements, reset transforms)
+//   3. Sweep AttackBar left→right (1.5s total)
+//      During the LAST 0.5s of the sweep, simultaneously:
+//      - AttackBar fades out (alpha → 0)
+//      - DumbTarget linearly shrinks (scale X → 0) and fades out
+//   4. Clean up (hide elements, reset transforms)
 //
 // Timing reference: Undertale attack bar at ~11px/frame @ 30fps
 (chapters: [
@@ -29,41 +30,53 @@
     // 显示攻击目标 + 攻击条
     SetViewFact(key: "fight_target_visible", value: Bool(true)),
 
-    // Sweep AttackBar from left (-274) to right (272) across DumbTarget
-    // 攻击条从 DumbTarget 左侧扫到右侧
+    // Phase 1: bar sweeps to near the end (1.45s, ~97% of distance)
+    // 第一阶段：攻击条扫到接近终点（1.45 秒，约 97% 距离）
     TweenViewElement(
         selector: LocalName("AttackBar"),
-        target: Position(to: (272.0, -80.5, 11.0)),
-        duration: 1.5,
+        target: Position(to: (254.0, -80.5, 11.0)),
+        duration: 1.45,
         easing: Linear,
         wait_for_completion: true,
     ),
 
-    // Fade out AttackBar
-    // 攻击条渐出
-    TweenViewElement(
-        selector: LocalName("AttackBar"),
-        target: Alpha(to: 0.0),
-        duration: 0.4,
-        easing: Linear,
-        wait_for_completion: true,
-    ),
-
-    // Collapse DumbTarget: horizontal scale to 0 + fade out simultaneously
-    // DumbTarget 收缩：横向缩放到 0 并同时渐出
+    // Phase 2: remaining sweep (0.05s) + fade/collapse (0.4s) in parallel
+    // 第二阶段：剩余扫过（0.05 秒）+ 渐出/收缩（0.4 秒）并行
     Parallel([
+        // Bar finishes sweep
+        // 攻击条到达终点
+        TweenViewElement(
+            selector: LocalName("AttackBar"),
+            target: Position(to: (272.0, -80.5, 11.0)),
+            duration: 0.05,
+            easing: Linear,
+            wait_for_completion: true,
+        ),
+        // Bar fade out
+        // 攻击条渐出
+        TweenViewElement(
+            selector: LocalName("AttackBar"),
+            target: Alpha(to: 0.0),
+            duration: 0.4,
+            easing: Linear,
+            wait_for_completion: true,
+        ),
+        // DumbTarget horizontal scale collapse
+        // DumbTarget 横向缩放收缩
         TweenViewElement(
             selector: LocalName("DumbTarget"),
             target: Scale(to: (0.0, 1.0, 1.0)),
-            duration: 0.5,
-            easing: QuadIn,
+            duration: 0.4,
+            easing: Linear,
             wait_for_completion: true,
         ),
+        // DumbTarget fade out
+        // DumbTarget 渐出
         TweenViewElement(
             selector: LocalName("DumbTarget"),
             target: Alpha(to: 0.0),
-            duration: 0.5,
-            easing: QuadIn,
+            duration: 0.4,
+            easing: Linear,
             wait_for_completion: true,
         ),
     ]),
