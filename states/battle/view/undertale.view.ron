@@ -271,9 +271,9 @@
                             ),
                         ),
                         transform: (
-                            // Position: Y offset based on visible index (relative to view_offset)
-                            // 位置：Y偏移基于可见索引（相对于view_offset）
-                            translation: (-68.0, "31.25 - (@i - $enemy_view_offset) * 32.0", 10.0),
+                            // Position: X offset based on longest enemy name, Y offset based on visible index
+                            // 位置：X偏移基于最长敌人名字，Y偏移基于可见索引（相对于view_offset）
+                            translation: ("15 * max_strlen($enemy_names) - 125", "31.25 - (@i - $enemy_view_offset) * 32.0", 10.0),
                             // Width fixed, height fixed
                             scale: (100.75, 17.0, 1.0),
                         ),
