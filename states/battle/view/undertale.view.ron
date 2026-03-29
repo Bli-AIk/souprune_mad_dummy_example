@@ -118,9 +118,11 @@
                     world_scale: (26.0, 26.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: (-267.0, 50.0, 1.0),
+                        translation: (-267.5, 50.0, 1.0),
                     ),
-                    line_height: 1.2,
+                    line_height: 1.025,
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
                     // Show when dialogue is active and at main menu (depth 0), but not during narration
                     // 当对话激活且在主菜单（深度 0）时显示，但旁白显示时隐藏
                     visible_when: "$depth == 0 && $dialogue_visible == true && $narration_visible == false",
@@ -141,7 +143,9 @@
                     transform: (
                         translation: (-220.0, 50.0, 1.0),
                     ),
-                    line_height: 1.25,
+                    line_height: 1.025,
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
                     // Show in depth 1 for FIGHT(0), ACT(1), MERCY(3) when enemies exist
                     // 在深度 1 时显示，仅限战斗(0)、行动(1)、仁慈(3)模式，且敌人存在
                     visible_when: "$depth == 1 && ($menu_context == 0 || $menu_context == 1 || $menu_context == 3) && $enemy_names >= 1",
@@ -164,7 +168,9 @@
                     transform: (
                         translation: (-220.0, 50.0, 1.0),
                     ),
-                    line_height: 1.25,
+                    line_height: 1.025,
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
                     visible_when: "$depth == 2 && $menu_context == 1 && $narration_visible == false",
                 ),
                 // Right column: options 1, 3, 5, ... (start at 1, step 2)
@@ -176,9 +182,11 @@
                     world_scale: (26.0, 26.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: (50.0, 50.0, 1.0),
+                        translation: (35.75, 50.0, 1.0),
                     ),
-                    line_height: 1.25,
+                    line_height: 1.025,
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
                     visible_when: "$depth == 2 && $menu_context == 1 && $narration_visible == false",
                 ),
 
@@ -197,7 +205,9 @@
                     transform: (
                         translation: (-220.0, 50.0, 1.0),
                     ),
-                    line_height: 1.25,
+                    line_height: 1.025,
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
                     visible_when: "$depth == 2 && $menu_context == 3 && $narration_visible == false",
                 ),
 
@@ -214,9 +224,11 @@
                     world_scale: (26.0, 26.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: (-267.0, 50.0, 1.0),
+                        translation: (-267.5, 50.0, 1.0),
                     ),
-                    line_height: 1.2,
+                    line_height: 1.025,
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
                     visible_when: "$narration_visible == true",
                 ),
             ],
@@ -485,7 +497,7 @@
                     world_scale: (24.0, 24.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: (-290.0, -155.5, 1.0),
+                        translation: (-290.0, -156.5, 1.0),
                     ),
                 ),
                 (
@@ -495,7 +507,7 @@
                     world_scale: (24.0, 24.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: (-187.5, -155.5, 1.0),
+                        translation: (-187.5, -156.5, 1.0),
                     ),
                 ),
                 (
@@ -505,7 +517,7 @@
                     world_scale: (24.0, 24.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: (-148.5, -155.5, 1.0),
+                        translation: (-148.5, -156.5, 1.0),
                     ),
                 ),
                 (
@@ -515,7 +527,7 @@
                     world_scale: (24.0, 24.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: ("-5.5 + ($player:hp_max - 20) * 94.5 / 79", -155.5, 1.0),
+                        translation: ("-5.5 + ($player:hp_max - 20) * 94.5 / 79", -156.5, 1.0),
                     ),
                 ),
                 (
@@ -525,7 +537,7 @@
                     world_scale: (24.0, 24.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: ("33.5 + ($player:hp_max - 20) * 94.5 / 79", -155.5, 1.0),
+                        translation: ("33.5 + ($player:hp_max - 20) * 94.5 / 79", -156.5, 1.0),
                     ),
                 ),
                 (
@@ -535,7 +547,7 @@
                     world_scale: (24.0, 24.0),
                     color: (1.0, 1.0, 1.0, 1.0),
                     transform: (
-                        translation: ("57.5 + ($player:hp_max - 20) * 94.5 / 79", -155.5, 1.0),
+                        translation: ("57.5 + ($player:hp_max - 20) * 94.5 / 79", -156.5, 1.0),
                     ),
                 ),
             ],

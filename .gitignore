@@ -18,4 +18,4 @@ Thumbs.db
 
 ignore_music.wav
 
-assets/debug/*.png
+assets/debug/*

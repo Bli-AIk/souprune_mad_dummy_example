@@ -8,7 +8,9 @@ pub const ENEMY_APPEARED: String = "* Whimsun approached meekly!"
 // Battle intro narration node - displayed with typewriter effect at battle start
 // 战斗开场旁白节点 - 战斗开始时使用打字机效果显示
 node encounter_intro {
-    text: "* Whimsun approached meekly!"
+    line: "* UNDYNE 7 ATK 0 DEF"
+    line: "* The heroine that NEVER gives"
+    line: "  up."
 }
 
 // Enemy names for battle
