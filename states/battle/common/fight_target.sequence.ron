@@ -1,0 +1,90 @@
+// FIGHT target sequence — attack bar sweep + target collapse
+// FIGHT 攻击目标序列 — 攻击条扫描 + 目标收缩
+//
+// Flow:
+//   1. Clear UI (stop dialogue, hide buttons, clear text)
+//   2. Show DumbTarget + AttackBar
+//   3. Sweep AttackBar from left to right (~1.5s)
+//   4. Fade out AttackBar (~0.4s)
+//   5. Collapse DumbTarget (scale X → 0 + fade, 0.5s)
+//   6. Clean up (hide elements, reset transforms)
+//
+// Timing reference: Undertale attack bar at ~11px/frame @ 30fps
+(chapters: [
+    // Stop any playing dialogue
+    // 停止任何正在播放的对话
+    EmitFactEvent(event_id: "dialogue:stop"),
+
+    // Disable typewriter replay during fight animation
+    // 在战斗动画期间禁用打字机重播
+    SetViewFact(key: "dialogue:replay_on_resume", value: Bool(false)),
+
+    // Clear UI: hide menus, clear dialogue text
+    // 清除 UI：隐藏菜单，清除对话文本
+    SetViewFact(key: "depth", value: Int(0)),
+    SetViewFact(key: "buttons_visible", value: Bool(false)),
+    SetViewFact(key: "dialogue_text", value: String("")),
+
+    // Show DumbTarget + AttackBar
+    // 显示攻击目标 + 攻击条
+    SetViewFact(key: "fight_target_visible", value: Bool(true)),
+
+    // Sweep AttackBar from left (-274) to right (272) across DumbTarget
+    // 攻击条从 DumbTarget 左侧扫到右侧
+    TweenViewElement(
+        selector: LocalName("AttackBar"),
+        target: Position(to: (272.0, -80.5, 11.0)),
+        duration: 1.5,
+        easing: Linear,
+        wait_for_completion: true,
+    ),
+
+    // Fade out AttackBar
+    // 攻击条渐出
+    TweenViewElement(
+        selector: LocalName("AttackBar"),
+        target: Alpha(to: 0.0),
+        duration: 0.4,
+        easing: Linear,
+        wait_for_completion: true,
+    ),
+
+    // Collapse DumbTarget: horizontal scale to 0 + fade out simultaneously
+    // DumbTarget 收缩：横向缩放到 0 并同时渐出
+    Parallel([
+        TweenViewElement(
+            selector: LocalName("DumbTarget"),
+            target: Scale(to: (0.0, 1.0, 1.0)),
+            duration: 0.5,
+            easing: QuadIn,
+            wait_for_completion: true,
+        ),
+        TweenViewElement(
+            selector: LocalName("DumbTarget"),
+            target: Alpha(to: 0.0),
+            duration: 0.5,
+            easing: QuadIn,
+            wait_for_completion: true,
+        ),
+    ]),
+
+    // Hide elements
+    // 隐藏元素
+    SetViewFact(key: "fight_target_visible", value: Bool(false)),
+
+    // Reset transforms for next turn
+    // 重置变换以备下一回合
+    ModifyViewElement(
+        selector: LocalName("AttackBar"),
+        modification: Reset,
+    ),
+    ModifyViewElement(
+        selector: LocalName("DumbTarget"),
+        modification: Reset,
+    ),
+
+    // Restore UI state
+    // 恢复 UI 状态
+    SetViewFact(key: "buttons_visible", value: Bool(true)),
+    SetViewFact(key: "dialogue:replay_on_resume", value: Bool(true)),
+])

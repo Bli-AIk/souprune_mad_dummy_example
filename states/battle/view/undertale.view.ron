@@ -91,6 +91,9 @@
 
         // Typewriter resume behavior
         "dialogue:replay_on_resume": true,
+
+        // FIGHT target UI
+        "fight_target_visible": false,  // Whether DumbTarget + AttackBar are shown
     },
 
     roots: [
@@ -555,16 +558,30 @@
         ),
 
         // ========================================
-        // BATTLE UI
-        // 战斗 UI
+        // BATTLE UI — FIGHT Target
+        // 战斗 UI — FIGHT 攻击目标
         // ========================================
         (
             name: "DumbTarget",
+            visible_when: "$fight_target_visible == true",
             sprite: (
                 visual: "assets/textures/battle/view/dumb_target.png",
                 transform: (
                     translation: (-1, -80.5, 10.5),
                 ),
+            ),
+        ),
+        // Attack bar — vertical SDF bar that sweeps across DumbTarget
+        // 攻击条 — 在 DumbTarget 上方从左到右扫过的垂直 SDF 条
+        (
+            name: "AttackBar",
+            visible_when: "$fight_target_visible == true",
+            view_box: (
+                width: 8.0,
+                height: 130.0,
+                border_width: 3.0,
+                offset: (-274.0, -80.5, 11.0),
+                structure_file: "shared/view_structures/attack_bar.sdf.ron",
             ),
         ),
 

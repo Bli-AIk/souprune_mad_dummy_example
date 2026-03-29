@@ -1,0 +1,29 @@
+#![enable(implicit_some)]
+// Attack Bar Structure Definition
+// 攻击条结构定义
+//
+// A narrow vertical bar used in FIGHT targeting:
+// - Outer: Black SDF (larger, serves as outline)
+// - Inner: White SDF (smaller, the visible bar line)
+//
+// FIGHT 攻击条：外层黑色轮廓，内层白色条线
+(
+    layer_count: 2,
+    root: (
+        name: "AttackBarOuter",
+        sdf_type: Outer,
+        color_source: Custom((0.0, 0.0, 0.0, 1.0)),
+        z_offset: 0.0,
+        is_filler: false,
+        children: [
+            (
+                name: "AttackBarInner",
+                sdf_type: Inner,
+                color_source: White,
+                z_offset: 1.0,
+                is_filler: true,
+                children: [],
+            ),
+        ],
+    ),
+)

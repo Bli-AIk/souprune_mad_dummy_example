@@ -26,10 +26,10 @@
          conditions: ["$interactable == true", "$depth == 'submenu'", "$menu_context == 'mercy'"],
          actions: [SetLocalFact("current_enemy_id", Expr("$enemy_ids[$enemy_selection]")), SetLocalFact("mercy_count", Expr("$${current_enemy_id}.mercy_count")), SetLocalFact("mercy_labels", Expr("$${current_enemy_id}.mercy_labels")), SetLocalFact("mercy_sequences", Expr("$${current_enemy_id}.mercy_sequences")), SetLocalFact("mercy_params", Expr("$${current_enemy_id}.mercy_params")), SetLocalFact("depth", Enum("options")), SetLocalFact("mercy_selection", Int(0)), PlaySound("confirm")]),
 
-        // Submenu FIGHT → execute (no depth 2)
+        // Submenu FIGHT → show attack target animation
         (event: ActionEvent(action: "Confirm", kind: JustPressed),
          conditions: ["$interactable == true", "$depth == 'submenu'", "$menu_context == 'fight'"],
-         actions: [SetLocalFact("selection_confirmed", Bool(true)), SetLocalFact("interactable", Bool(false)), SetLocalFact("pending_sequence", String("")), PlaySound("confirm"), EmitEvent("battle_action_executed")]),
+         actions: [SetLocalFact("selection_confirmed", Bool(true)), SetLocalFact("interactable", Bool(false)), SetLocalFact("pending_sequence", String("states/battle/common/fight_target.sequence.ron")), PlaySound("confirm"), EmitEvent("battle_action_executed")]),
 
         // Submenu ITEM → execute with UseItem and show narration
         (event: ActionEvent(action: "Confirm", kind: JustPressed),
