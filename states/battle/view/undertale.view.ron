@@ -212,6 +212,61 @@
                 ),
 
                 // ========================================
+                // ITEM GRID (depth 1, ITEM mode)
+                // 物品网格（深度 1，物品模式）
+                // 2 columns layout: left column (even indices), right column (odd indices)
+                // Paginated: 4 items per page, page based on item_selection
+                // 2 列布局：左列（偶数索引），右列（奇数索引），按页分页
+                // ========================================
+                // Left column: page items 0, 2 (even indices within page)
+                // 左列：当前页物品 0, 2（页内偶数索引）
+                (
+                    id: "ItemGridLeft",
+                    content: "{|name, i| in $item_display_names[floor($item_selection/4)*4..floor($item_selection/4)*4+4 step 2] => \"* {name}\"}",
+                    font: DeterminationMono,
+                    world_scale: (26.0, 26.0),
+                    color: (1.0, 1.0, 1.0, 1.0),
+                    transform: (
+                        translation: (-220.0, 50.0, 1.0),
+                    ),
+                    line_height: 1.025,
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
+                    visible_when: "$depth == 1 && $menu_context == 2",
+                ),
+                // Right column: page items 1, 3 (odd indices within page)
+                // 右列：当前页物品 1, 3（页内奇数索引）
+                (
+                    id: "ItemGridRight",
+                    content: "{|name, i| in $item_display_names[floor($item_selection/4)*4+1..floor($item_selection/4)*4+4 step 2] => \"* {name}\"}",
+                    font: DeterminationMono,
+                    world_scale: (26.0, 26.0),
+                    color: (1.0, 1.0, 1.0, 1.0),
+                    transform: (
+                        translation: (35.75, 50.0, 1.0),
+                    ),
+                    line_height: 1.025,
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
+                    visible_when: "$depth == 1 && $menu_context == 2",
+                ),
+                // Page indicator at bottom-right
+                // 页码指示器在右下角
+                (
+                    id: "ItemPageText",
+                    content: "PAGE {{item_page}}",
+                    font: DeterminationMono,
+                    world_scale: (26.0, 26.0),
+                    color: (1.0, 1.0, 1.0, 1.0),
+                    transform: (
+                        translation: (180.0, -30.0, 1.0),
+                    ),
+                    char_spacing: 3.0,
+                    word_spacing: -9.0,
+                    visible_when: "$depth == 1 && $menu_context == 2 && $item_page_count > 1",
+                ),
+
+                // ========================================
                 // NARRATION TEXT
                 // 旁白文本
                 // ========================================
@@ -377,6 +432,30 @@
                         // Y position: row based on selection
                         // Y 位置：基于选择的行
                         "-45.5 - $mercy_selection * 32.0",
+                        "10.0",
+                    ),
+                ),
+            ),
+        ),
+
+        // ========================================
+        // ITEM SELECTION CURSOR (depth 1, ITEM mode)
+        // 物品选择光标（深度 1，物品模式）
+        // 2-column grid: left column at X=-248, right column at X=22
+        // 2 列网格：左列 X=-248，右列 X=22
+        // ========================================
+        (
+            name: "ItemSelectionCursor",
+            visible_when: "$depth == 1 && $interactable && $menu_context == 2",
+            sprite: (
+                visual: "common/view/heart",
+                color: (1.0, 0.0, 0.0, 1.0),
+                transform: (
+                    translation: (
+                        // X: left column (-248) if even selection within page, right column (22) if odd
+                        "if($item_selection % 2 == 0, -248.0, 22.0)",
+                        // Y: row based on (selection % 4) / 2
+                        "-45.5 - floor($item_selection % 4 / 2) * 32.0",
                         "10.0",
                     ),
                 ),
