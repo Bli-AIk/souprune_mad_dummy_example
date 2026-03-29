@@ -398,11 +398,7 @@
                 color: (1.0, 0.0, 0.0, 1.0),  // Red heart / 红心
                 transform: (
                     translation: (
-                        // X position: left column (-248) if even selection, right column (22) if odd
-                        // X 位置：偶数选择在左列 (-248)，奇数选择在右列 (22)
-                        "if($act_selection % 2 == 0, -248.0, 22.0)",
-                        // Y position: row based on selection / 2 (0,1 -> row 0; 2,3 -> row 1)
-                        // Y 位置：行基于 selection / 2（0,1 -> 第 0 行；2,3 -> 第 1 行）
+                        "if($act_selection % 2 == 0, -248.0, 11.5)",
                         "-45.5 - floor($act_selection / 2) * 32.0",
                         "10.0",
                     ),
@@ -450,9 +446,7 @@
                 color: (1.0, 0.0, 0.0, 1.0),
                 transform: (
                     translation: (
-                        // X: left column (-248) if even selection within page, right column (22) if odd
-                        "if($item_selection % 2 == 0, -248.0, 22.0)",
-                        // Y: row based on (selection % 4) / 2
+                        "if($item_selection % 2 == 0, -248.0, 0.0)",
                         "-45.5 - floor($item_selection % 4 / 2) * 32.0",
                         "10.0",
                     ),
