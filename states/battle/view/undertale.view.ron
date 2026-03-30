@@ -24,6 +24,10 @@
         File("states/battle/rules/menu_confirm.fre.ron"),
         File("states/battle/rules/menu_cancel.fre.ron"),
         File("states/battle/rules/dialogue_stop.fre.ron"),
+
+        // Fight hit sound rule
+        // 攻击命中音效规则
+        File("states/battle/rules/fight_hit.fre.ron"),
         
         // Dialogue rules (encounter intro, ACT narration)
         // 对话规则（遭遇开场、ACT 旁白）
