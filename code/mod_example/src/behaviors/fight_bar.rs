@@ -21,6 +21,11 @@ use souprune_sdk::prelude::*;
 ///
 /// Events emitted:
 ///   `fight:hit` — when player presses Confirm during sweep
+///
+/// Flash lasts `FLASH_DURATION` seconds after a hit, then the behavior
+/// signals full completion via `fight:bar_complete`.
+const FLASH_DURATION: f32 = 0.5;
+
 pub struct FightBarBehavior {
     sweep_x: f32,
     flash_elapsed: f32,
@@ -61,11 +66,12 @@ impl Behavior for FightBarBehavior {
             return;
         }
 
-        // Flash phase (after hit): toggle SDF colors until bar is deactivated
+        // Flash phase (after hit): toggle SDF colors for FLASH_DURATION
         if self.flash_active {
             if !active {
                 self.flash_active = false;
                 ctx.set_fact("fight:bar_flash_on", "false");
+                ctx.set_fact("fight:bar_complete", "true");
                 return;
             }
 
@@ -74,6 +80,14 @@ impl Behavior for FightBarBehavior {
                 .and_then(|s| s.parse().ok())
                 .unwrap_or(0.083);
             self.flash_elapsed += dt;
+
+            if self.flash_elapsed >= FLASH_DURATION {
+                self.flash_active = false;
+                ctx.set_fact("fight:bar_flash_on", "false");
+                ctx.set_fact("fight:bar_complete", "true");
+                return;
+            }
+
             let cycle = (self.flash_elapsed / flash_interval) as u32;
             let on = cycle % 2 != 0;
             ctx.set_fact("fight:bar_flash_on", if on { "true" } else { "false" });
@@ -113,6 +127,7 @@ impl Behavior for FightBarBehavior {
             ctx.set_fact("fight:bar_x", &format!("{}", right_edge));
             ctx.set_fact("fight:bar_done", "true");
             ctx.set_fact("fight:confirmed", "false");
+            ctx.set_fact("fight:bar_complete", "true");
             return;
         }
 

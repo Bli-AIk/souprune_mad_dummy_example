@@ -6,10 +6,9 @@
 //   2. Init facts + reset elements (BEFORE showing)
 //   3. Show DumbTarget + AttackBar
 //   4. Spawn FightBarBehavior (WASM mod drives bar sweep via facts)
-//   5. Wait for behavior to set fight:bar_done
-//   6. Pause (~0.6s, slash animation placeholder)
-//   7. Bar fade + target shrink/fade
-//   8. Hide elements + clean up state
+//   5. Wait for behavior to complete (flash done or bar miss)
+//   6. Bar instant hide + target shrink/fade
+//   7. Hide elements + clean up state
 //
 // Bar speed: 330 px/s by default (configurable via fight:bar_speed fact)
 // Pause duration: ~0.6s (UT slash damagetimer ≈ 18 frames @ 30 fps)
@@ -33,6 +32,7 @@
     ModifyFact(modifications: [
         Set(key: "fight:bar_done", value: Bool(false)),
         Set(key: "fight:confirmed", value: Bool(false)),
+        Set(key: "fight:bar_complete", value: Bool(false)),
         Set(key: "fight:bar_x", value: Float(-274.0)),
         Set(key: "fight:bar_flash_on", value: Bool(false)),
         Set(key: "fight:bar_active", value: Bool(true)),
@@ -57,31 +57,25 @@
     // 生成 FightBarBehavior — WASM 模组处理逐帧扫描、输入和闪烁
     SpawnBehavior(behavior_id: "fight_bar", context: Some("battle")),
 
-    // Wait for Z press or bar reaching the end
-    // 等待 Z 键按下或攻击条到达终点
-    AwaitFact(condition: "$fight:bar_done == true", local: false),
+    // Wait for behavior to complete (flash finishes or bar reaches end)
+    // 等待行为完成（闪烁结束或攻击条到达终点）
+    AwaitFact(condition: "$fight:bar_complete == true", local: false),
 
-    // Attack pause (slash animation placeholder, ~0.6s)
-    // 攻击停顿（斩击动画占位，约 0.6 秒）
-    Wait(0.6),
-
-    // Deactivate bar before tweens to stop flash fact mutations
-    // (prevents reconciliation from overwriting tween values)
-    // 在 tween 前停用攻击条以停止闪烁 fact 变更
-    // （防止协调系统覆盖 tween 值）
+    // Deactivate bar immediately
+    // 立即停用攻击条
     ModifyFact(modifications: [
         Set(key: "fight:bar_active", value: Bool(false)),
     ]),
 
-    // Collapse: bar fade + target shrink/fade
-    // 收尾：攻击条渐出 + 目标收缩/渐出
+    // Collapse: bar instant hide + target shrink/fade
+    // 收尾：攻击条立即消失 + 目标收缩/渐出
     Parallel([
-        // Bar fade out
-        // 攻击条渐出
+        // Bar instant hide (near-zero duration)
+        // 攻击条立即消失
         TweenViewElement(
             selector: LocalName("AttackBar"),
             target: Alpha(to: 0.0),
-            duration: 0.4,
+            duration: 0.01,
             easing: Linear,
             wait_for_completion: true,
         ),
@@ -114,6 +108,7 @@
     ModifyFact(modifications: [
         Set(key: "fight:bar_active", value: Bool(false)),
         Set(key: "fight:bar_done", value: Bool(false)),
+        Set(key: "fight:bar_complete", value: Bool(false)),
         Set(key: "fight:confirmed", value: Bool(false)),
         Set(key: "fight:bar_x", value: Float(-274.0)),
         Set(key: "fight:bar_flash_on", value: Bool(false)),
