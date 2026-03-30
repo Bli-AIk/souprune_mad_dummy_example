@@ -94,8 +94,6 @@
 
         // FIGHT target UI
         "fight_target_visible": false,  // Whether DumbTarget + AttackBar are shown
-        "fight:bar_x": -274.0,         // AttackBar X position (driven by FightBarBehavior)
-        "fight:bar_flash_on": false,   // Flash toggle for AttackBar SDF colors
     },
 
     roots: [
