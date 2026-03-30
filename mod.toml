@@ -19,7 +19,6 @@ wasm = "mod_example.wasm"
 
 [game]
 global_rules = "global.fre.ron"
-initial_map_path = "states/overworld/levels/ruins/ruins_3.tmx"
 initial_sequence_path = "states/overworld/entry.sequence.ron"
 initial_battle_path = "states/battle/chapters/demo.sequence.ron"
 player_behavior_path = "states/overworld/players/player_behavior.ron"
