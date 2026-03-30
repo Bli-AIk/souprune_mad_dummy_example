@@ -65,6 +65,14 @@
     // 攻击停顿（斩击动画占位，约 0.6 秒）
     Wait(0.6),
 
+    // Deactivate bar before tweens to stop flash fact mutations
+    // (prevents reconciliation from overwriting tween values)
+    // 在 tween 前停用攻击条以停止闪烁 fact 变更
+    // （防止协调系统覆盖 tween 值）
+    ModifyFact(modifications: [
+        Set(key: "fight:bar_active", value: Bool(false)),
+    ]),
+
     // Collapse: bar fade + target shrink/fade
     // 收尾：攻击条渐出 + 目标收缩/渐出
     Parallel([

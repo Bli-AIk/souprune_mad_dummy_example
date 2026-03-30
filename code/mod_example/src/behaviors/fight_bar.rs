@@ -61,13 +61,9 @@ impl Behavior for FightBarBehavior {
             return;
         }
 
-        // Flash phase (after hit): toggle SDF colors until target is hidden
+        // Flash phase (after hit): toggle SDF colors until bar is deactivated
         if self.flash_active {
-            let visible = ctx
-                .get_fact("fight_target_visible")
-                .map(|v| v == "true")
-                .unwrap_or(false);
-            if !visible {
+            if !active {
                 self.flash_active = false;
                 ctx.set_fact("fight:bar_flash_on", "false");
                 return;
