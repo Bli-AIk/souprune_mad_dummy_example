@@ -4,13 +4,14 @@
 // Flow:
 //   1. Clear UI (stop dialogue, hide buttons, clear text)
 //   2. Show DumbTarget + AttackBar
-//   3. Sweep AttackBar left→right (1.5s total)
-//      During the LAST 0.5s of the sweep, simultaneously:
-//      - AttackBar fades out (alpha → 0)
-//      - DumbTarget linearly shrinks (scale X → 0) and fades out
-//   4. Clean up (hide elements, reset transforms)
+//   3. Activate bar sweep system (fact-driven, 330 px/s)
+//   4. Wait for Z press (fight:bar_done)
+//   5. Pause (~0.6s, slash animation placeholder)
+//   6. Bar fade + target shrink/fade
+//   7. Clean up (hide elements, reset state)
 //
-// Timing reference: Undertale attack bar at ~11px/frame @ 30fps
+// Bar speed: 11 px/frame @ 30 fps = 330 px/s (matching UT original)
+// Pause duration: ~0.6s (UT slash damagetimer ≈ 18 frames @ 30 fps)
 (chapters: [
     // Stop any playing dialogue
     // 停止任何正在播放的对话
@@ -30,28 +31,25 @@
     // 显示攻击目标 + 攻击条
     SetViewFact(key: "fight_target_visible", value: Bool(true)),
 
-    // Phase 1: bar sweeps to near the end (1.45s, ~97% of distance)
-    // 第一阶段：攻击条扫到接近终点（1.45 秒，约 97% 距离）
-    TweenViewElement(
-        selector: LocalName("AttackBar"),
-        target: Position(to: (254.0, -80.5, 11.0)),
-        duration: 1.45,
-        easing: Linear,
-        wait_for_completion: true,
-    ),
+    // Activate per-frame bar sweep (handled by fight_bar_sweep_system)
+    // 启动逐帧攻击条滑动（由 fight_bar_sweep_system 驱动）
+    ModifyFact(modifications: [
+        Set(key: "fight:bar_done", value: Bool(false)),
+        Set(key: "fight:confirmed", value: Bool(false)),
+        Set(key: "fight:bar_active", value: Bool(true)),
+    ]),
 
-    // Phase 2: remaining sweep (0.05s) + fade/collapse (0.4s) in parallel
-    // 第二阶段：剩余扫过（0.05 秒）+ 渐出/收缩（0.4 秒）并行
+    // Wait for Z press or bar reaching the end
+    // 等待 Z 键按下或攻击条到达终点
+    AwaitFact(condition: "$fight:bar_done == true", local: false),
+
+    // Attack pause (slash animation placeholder, ~0.6s)
+    // 攻击停顿（斩击动画占位，约 0.6 秒）
+    Wait(0.6),
+
+    // Collapse: bar fade + target shrink/fade
+    // 收尾：攻击条渐出 + 目标收缩/渐出
     Parallel([
-        // Bar finishes sweep
-        // 攻击条到达终点
-        TweenViewElement(
-            selector: LocalName("AttackBar"),
-            target: Position(to: (272.0, -80.5, 11.0)),
-            duration: 0.05,
-            easing: Linear,
-            wait_for_completion: true,
-        ),
         // Bar fade out
         // 攻击条渐出
         TweenViewElement(
@@ -95,6 +93,14 @@
         selector: LocalName("DumbTarget"),
         modification: Reset,
     ),
+
+    // Clean up fight bar state
+    // 清理攻击条状态
+    ModifyFact(modifications: [
+        Set(key: "fight:bar_active", value: Bool(false)),
+        Set(key: "fight:bar_done", value: Bool(false)),
+        Set(key: "fight:confirmed", value: Bool(false)),
+    ]),
 
     // Restore UI state
     // 恢复 UI 状态
