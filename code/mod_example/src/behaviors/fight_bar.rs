@@ -46,10 +46,9 @@ impl FightBarBehavior {
 
 impl Behavior for FightBarBehavior {
     fn on_enter(&mut self, ctx: &mut Context) {
-        let start_x: f32 = ctx
-            .get_fact("fight:bar_start_x")
-            .and_then(|s| s.parse().ok())
-            .unwrap_or(-274.0);
+        let start_x = ctx
+            .get_fact_float("fight:bar_start_x")
+            .unwrap_or(-274.0) as f32;
         self.sweep_x = start_x;
         self.flash_elapsed = 0.0;
         self.flash_active = false;
@@ -57,10 +56,7 @@ impl Behavior for FightBarBehavior {
     }
 
     fn on_update(&mut self, ctx: &mut Context, dt: f32) {
-        let active = ctx
-            .get_fact("fight:bar_active")
-            .map(|v| v == "true")
-            .unwrap_or(false);
+        let active = ctx.get_fact_bool("fight:bar_active").unwrap_or(false);
 
         if !active && !self.flash_active {
             return;
@@ -70,27 +66,26 @@ impl Behavior for FightBarBehavior {
         if self.flash_active {
             if !active {
                 self.flash_active = false;
-                ctx.set_fact("fight:bar_flash_on", "false");
-                ctx.set_fact("fight:bar_complete", "true");
+                ctx.set_fact_bool("fight:bar_flash_on", false);
+                ctx.set_fact_bool("fight:bar_complete", true);
                 return;
             }
 
-            let flash_interval: f32 = ctx
-                .get_fact("fight:flash_interval")
-                .and_then(|s| s.parse().ok())
-                .unwrap_or(0.083);
+            let flash_interval = ctx
+                .get_fact_float("fight:flash_interval")
+                .unwrap_or(0.083) as f32;
             self.flash_elapsed += dt;
 
             if self.flash_elapsed >= FLASH_DURATION {
                 self.flash_active = false;
-                ctx.set_fact("fight:bar_flash_on", "false");
-                ctx.set_fact("fight:bar_complete", "true");
+                ctx.set_fact_bool("fight:bar_flash_on", false);
+                ctx.set_fact_bool("fight:bar_complete", true);
                 return;
             }
 
             let cycle = (self.flash_elapsed / flash_interval) as u32;
             let on = cycle % 2 != 0;
-            ctx.set_fact("fight:bar_flash_on", if on { "true" } else { "false" });
+            ctx.set_fact_bool("fight:bar_flash_on", on);
             return;
         }
 
@@ -99,18 +94,13 @@ impl Behavior for FightBarBehavior {
         }
 
         // Read configurable parameters from facts
-        let speed: f32 = ctx
-            .get_fact("fight:bar_speed")
-            .and_then(|s| s.parse().ok())
-            .unwrap_or(330.0);
-        let right_edge: f32 = ctx
-            .get_fact("fight:bar_right_edge")
-            .and_then(|s| s.parse().ok())
-            .unwrap_or(272.0);
-        let start_x: f32 = ctx
-            .get_fact("fight:bar_start_x")
-            .and_then(|s| s.parse().ok())
-            .unwrap_or(-274.0);
+        let speed = ctx.get_fact_float("fight:bar_speed").unwrap_or(330.0) as f32;
+        let right_edge = ctx
+            .get_fact_float("fight:bar_right_edge")
+            .unwrap_or(272.0) as f32;
+        let start_x = ctx
+            .get_fact_float("fight:bar_start_x")
+            .unwrap_or(-274.0) as f32;
 
         // Initialize sweep position on first active frame
         if self.sweep_x < start_x + 0.01 {
@@ -118,16 +108,16 @@ impl Behavior for FightBarBehavior {
         }
 
         self.sweep_x += speed * dt;
-        ctx.set_fact("fight:bar_x", &format!("{}", self.sweep_x));
+        ctx.set_fact_float("fight:bar_x", self.sweep_x as f64);
 
         // Miss: reached right edge without input
         if self.sweep_x >= right_edge {
             self.sweep_x = right_edge;
             self.sweep_done = true;
-            ctx.set_fact("fight:bar_x", &format!("{}", right_edge));
-            ctx.set_fact("fight:bar_done", "true");
-            ctx.set_fact("fight:confirmed", "false");
-            ctx.set_fact("fight:bar_complete", "true");
+            ctx.set_fact_float("fight:bar_x", right_edge as f64);
+            ctx.set_fact_bool("fight:bar_done", true);
+            ctx.set_fact_bool("fight:confirmed", false);
+            ctx.set_fact_bool("fight:bar_complete", true);
             return;
         }
 
@@ -136,13 +126,13 @@ impl Behavior for FightBarBehavior {
             self.sweep_done = true;
             self.flash_active = true;
             self.flash_elapsed = 0.0;
-            ctx.set_fact("fight:bar_done", "true");
-            ctx.set_fact("fight:confirmed", "true");
+            ctx.set_fact_bool("fight:bar_done", true);
+            ctx.set_fact_bool("fight:confirmed", true);
             ctx.emit_event("fight:hit");
         }
     }
 
     fn on_exit(&mut self, ctx: &mut Context) {
-        ctx.set_fact("fight:bar_flash_on", "false");
+        ctx.set_fact_bool("fight:bar_flash_on", false);
     }
 }

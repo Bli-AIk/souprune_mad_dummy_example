@@ -10,7 +10,7 @@ textures = "assets/textures"      # Texture/sprite resources / 图片资源目�
 audios = "assets/audios"          # Audio resources / 音频资源目录
 
 [dependencies]
-# List dependencies here
+undertale_preset = "0.1.0"
 
 [mod_library]
 # WASM component file, loaded by wasmtime at runtime
