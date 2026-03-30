@@ -4,13 +4,13 @@
 // Flow:
 //   1. Clear UI (stop dialogue, hide buttons, clear text)
 //   2. Show DumbTarget + AttackBar
-//   3. Activate bar sweep system (fact-driven, 330 px/s)
-//   4. Wait for Z press (fight:bar_done)
+//   3. Spawn FightBarBehavior (WASM mod drives bar sweep via facts)
+//   4. Wait for behavior to set fight:bar_done
 //   5. Pause (~0.6s, slash animation placeholder)
 //   6. Bar fade + target shrink/fade
 //   7. Clean up (hide elements, reset state)
 //
-// Bar speed: 11 px/frame @ 30 fps = 330 px/s (matching UT original)
+// Bar speed: 330 px/s by default (configurable via fight:bar_speed fact)
 // Pause duration: ~0.6s (UT slash damagetimer ≈ 18 frames @ 30 fps)
 (chapters: [
     // Stop any playing dialogue
@@ -31,13 +31,19 @@
     // 显示攻击目标 + 攻击条
     SetViewFact(key: "fight_target_visible", value: Bool(true)),
 
-    // Activate per-frame bar sweep (handled by fight_bar_sweep_system)
-    // 启动逐帧攻击条滑动（由 fight_bar_sweep_system 驱动）
+    // Initialize fight bar state and spawn the WASM behavior
+    // 初始化攻击条状态并生成 WASM 行为
     ModifyFact(modifications: [
         Set(key: "fight:bar_done", value: Bool(false)),
         Set(key: "fight:confirmed", value: Bool(false)),
+        Set(key: "fight:bar_x", value: Float(-274.0)),
+        Set(key: "fight:bar_flash_on", value: Bool(false)),
         Set(key: "fight:bar_active", value: Bool(true)),
     ]),
+
+    // Spawn FightBarBehavior — WASM mod handles per-frame sweep, input, and flash
+    // 生成 FightBarBehavior — WASM 模组处理逐帧扫描、输入和闪烁
+    SpawnBehavior(behavior_id: "fight_bar", context: Some("battle")),
 
     // Wait for Z press or bar reaching the end
     // 等待 Z 键按下或攻击条到达终点
@@ -79,8 +85,8 @@
         ),
     ]),
 
-    // Hide elements
-    // 隐藏元素
+    // Hide elements (this also stops flash via FightBarBehavior checking fight_target_visible)
+    // 隐藏元素（同时通过 FightBarBehavior 检查 fight_target_visible 停止闪烁）
     SetViewFact(key: "fight_target_visible", value: Bool(false)),
 
     // Reset transforms for next turn
@@ -100,6 +106,8 @@
         Set(key: "fight:bar_active", value: Bool(false)),
         Set(key: "fight:bar_done", value: Bool(false)),
         Set(key: "fight:confirmed", value: Bool(false)),
+        Set(key: "fight:bar_x", value: Float(-274.0)),
+        Set(key: "fight:bar_flash_on", value: Bool(false)),
     ]),
 
     // Restore UI state

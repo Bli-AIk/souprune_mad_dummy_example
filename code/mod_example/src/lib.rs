@@ -6,12 +6,16 @@
 
 mod behaviors;
 
-use behaviors::{AimedSpear, GravityDropDanmaku, RedSoul, SpiralHomingDanmaku, WaveBurstDanmaku};
+use behaviors::{
+    AimedSpear, FightBarBehavior, GravityDropDanmaku, RedSoul, SpiralHomingDanmaku,
+    WaveBurstDanmaku,
+};
 use souprune_sdk::prelude::*;
 
 export_mod! {
     behaviors: [
         ("soul_red", RedSoul, || RedSoul::new()),
+        ("fight_bar", FightBarBehavior, || FightBarBehavior::new()),
     ],
     danmaku: [
         ("aimed_spear", AimedSpear, || AimedSpear::new()),

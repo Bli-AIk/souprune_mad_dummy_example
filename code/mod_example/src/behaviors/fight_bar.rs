@@ -1,0 +1,133 @@
+//! FightBar behavior — WASM-side attack bar sweep logic
+//!
+//! 攻击条扫描行为 — WASM 侧实现
+
+use souprune_sdk::prelude::*;
+
+/// Per-frame attack bar behavior driven entirely by facts.
+///
+/// Configuration facts (read):
+///   `fight:bar_speed`      — sweep speed in px/s (default: 330.0)
+///   `fight:bar_right_edge` — X coordinate where the bar stops (default: 272.0)
+///   `fight:bar_start_x`    — starting X offset (default: -274.0)
+///   `fight:flash_interval` — seconds between flash color swaps (default: 0.083 ≈ 6Hz)
+///
+/// State facts (written):
+///   `fight:bar_active`   — set externally to start sweep; cleared when done
+///   `fight:bar_x`        — current bar X position (drives View offset)
+///   `fight:bar_done`     — true when sweep finishes (hit or miss)
+///   `fight:confirmed`    — true if player pressed Confirm (hit), false if missed
+///   `fight:bar_flash_on` — toggles for SDF FactToggle color swap after hit
+///
+/// Events emitted:
+///   `fight:hit` — when player presses Confirm during sweep
+pub struct FightBarBehavior {
+    sweep_x: f32,
+    flash_elapsed: f32,
+    flash_active: bool,
+    sweep_done: bool,
+}
+
+impl FightBarBehavior {
+    pub fn new() -> Self {
+        Self {
+            sweep_x: 0.0,
+            flash_elapsed: 0.0,
+            flash_active: false,
+            sweep_done: false,
+        }
+    }
+}
+
+impl Behavior for FightBarBehavior {
+    fn on_enter(&mut self, _ctx: &mut Context) {
+        self.sweep_x = 0.0;
+        self.flash_elapsed = 0.0;
+        self.flash_active = false;
+        self.sweep_done = false;
+    }
+
+    fn on_update(&mut self, ctx: &mut Context, dt: f32) {
+        let active = ctx
+            .get_fact("fight:bar_active")
+            .map(|v| v == "true")
+            .unwrap_or(false);
+
+        if !active && !self.flash_active {
+            return;
+        }
+
+        // Flash phase (after hit): toggle SDF colors until target is hidden
+        if self.flash_active {
+            let visible = ctx
+                .get_fact("fight_target_visible")
+                .map(|v| v == "true")
+                .unwrap_or(false);
+            if !visible {
+                self.flash_active = false;
+                ctx.set_fact("fight:bar_flash_on", "false");
+                return;
+            }
+
+            let flash_interval: f32 = ctx
+                .get_fact("fight:flash_interval")
+                .and_then(|s| s.parse().ok())
+                .unwrap_or(0.083);
+            self.flash_elapsed += dt;
+            let cycle = (self.flash_elapsed / flash_interval) as u32;
+            let on = cycle % 2 != 0;
+            ctx.set_fact("fight:bar_flash_on", if on { "true" } else { "false" });
+            return;
+        }
+
+        if self.sweep_done {
+            return;
+        }
+
+        // Read configurable parameters from facts
+        let speed: f32 = ctx
+            .get_fact("fight:bar_speed")
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(330.0);
+        let right_edge: f32 = ctx
+            .get_fact("fight:bar_right_edge")
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(272.0);
+        let start_x: f32 = ctx
+            .get_fact("fight:bar_start_x")
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(-274.0);
+
+        // Initialize sweep position on first active frame
+        if self.sweep_x < start_x + 0.01 {
+            self.sweep_x = start_x;
+        }
+
+        self.sweep_x += speed * dt;
+        ctx.set_fact("fight:bar_x", &format!("{}", self.sweep_x));
+
+        // Miss: reached right edge without input
+        if self.sweep_x >= right_edge {
+            self.sweep_x = right_edge;
+            self.sweep_done = true;
+            ctx.set_fact("fight:bar_x", &format!("{}", right_edge));
+            ctx.set_fact("fight:bar_done", "true");
+            ctx.set_fact("fight:confirmed", "false");
+            return;
+        }
+
+        // Hit: player pressed Confirm
+        if ctx.input().just_pressed(Action::Confirm) {
+            self.sweep_done = true;
+            self.flash_active = true;
+            self.flash_elapsed = 0.0;
+            ctx.set_fact("fight:bar_done", "true");
+            ctx.set_fact("fight:confirmed", "true");
+            ctx.emit_event("fight:hit");
+        }
+    }
+
+    fn on_exit(&mut self, ctx: &mut Context) {
+        ctx.set_fact("fight:bar_flash_on", "false");
+    }
+}

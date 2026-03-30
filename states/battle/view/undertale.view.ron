@@ -94,6 +94,8 @@
 
         // FIGHT target UI
         "fight_target_visible": false,  // Whether DumbTarget + AttackBar are shown
+        "fight:bar_x": -274.0,         // AttackBar X position (driven by FightBarBehavior)
+        "fight:bar_flash_on": false,   // Flash toggle for AttackBar SDF colors
     },
 
     roots: [
@@ -572,7 +574,9 @@
             ),
         ),
         // Attack bar — vertical SDF bar that sweeps across DumbTarget
+        // Position X is driven by `fight:bar_x` fact (set by FightBarBehavior WASM mod)
         // 攻击条 — 在 DumbTarget 上方从左到右扫过的垂直 SDF 条
+        // X 位置由 `fight:bar_x` fact 驱动（由 FightBarBehavior WASM 模组设置）
         (
             name: "AttackBar",
             visible_when: "$fight_target_visible == true",
@@ -580,7 +584,7 @@
                 width: 6.0,
                 height: 120.0,
                 border_width: 4.25,
-                offset: (-274.0, -80.5, 11.0),
+                offset: ("$fight:bar_x", -80.5, 11.0),
                 structure_file: "shared/view_structures/attack_bar.sdf.ron",
             ),
         ),
