@@ -1,22 +1,16 @@
-//! Example mod demonstrating the Souprune modding API.
-//! Contains player behaviors (RedSoul) and danmaku behaviors (AimedSpear, SpiralHoming, etc.).
+//! Example mod — mod-specific danmaku behaviors.
+//! RedSoul and FightBar are provided by `undertale_preset` dependency.
 //!
-//! 示例模组，演示 Souprune 模组 API。
-//! 包含玩家行为（红魂）和弹幕行为（自机狙长矛、螺旋追踪等）。
+//! 示例模组 — 模组特定弹幕行为。
+//! RedSoul 和 FightBar 由 `undertale_preset` 依赖提供。
 
 mod behaviors;
 
-use behaviors::{
-    AimedSpear, FightBarBehavior, GravityDropDanmaku, RedSoul, SpiralHomingDanmaku,
-    WaveBurstDanmaku,
-};
+use behaviors::{AimedSpear, GravityDropDanmaku, SpiralHomingDanmaku, WaveBurstDanmaku};
 use souprune_sdk::prelude::*;
 
 export_mod! {
-    behaviors: [
-        ("soul_red", RedSoul, || RedSoul::new()),
-        ("fight_bar", FightBarBehavior, || FightBarBehavior::new()),
-    ],
+    behaviors: [],
     danmaku: [
         ("aimed_spear", AimedSpear, || AimedSpear::new()),
         ("spiral_homing", SpiralHomingDanmaku, || SpiralHomingDanmaku::new()),
