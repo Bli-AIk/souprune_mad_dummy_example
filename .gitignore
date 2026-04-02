@@ -16,6 +16,4 @@ Thumbs.db
 # Tiled
 *.tiled-session
 
-ignore_music.wav
-
 assets/debug/*

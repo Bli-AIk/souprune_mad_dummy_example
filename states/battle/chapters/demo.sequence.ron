@@ -14,12 +14,7 @@
         // Load enemy definitions from typed .enemy.ron files
         // 从类型化 .enemy.ron 文件加载敌人定义
         LoadEnemies(enemies: [
-            "data/enemies/dummy.enemy.ron",
-            "data/enemies/test1.enemy.ron",
-            "data/enemies/test2.enemy.ron",
-            "data/enemies/test3.enemy.ron",
-            "data/enemies/test4.enemy.ron",
-            "data/enemies/test5.enemy.ron",
+            "data/enemies/mad_dummy.enemy.ron",
         ]),
 
         // Spawn battle UI view, bind enemy data from local layer (populated by LoadEnemies)
