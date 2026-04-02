@@ -1,0 +1,17 @@
+// Mad Dummy enemy definition
+// Mad Dummy 敌人定义
+(
+    id: "mad_dummy",
+    locale: (name: "{{battle/ui:ENEMY_MAD_DUMMY}}", file: "enemies"),
+    stats: (hp: 300, attack: 7, defense: 999),
+    description: "Possesses a mannequin.",
+    mortar_path: "battle/enemies/mad_dummy.mortar",
+    acts: [
+        (label: "{{battle/ui:ACT_MAD_DUMMY_CHECK}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_check"),
+        (label: "{{battle/ui:ACT_MAD_DUMMY_TALK}}", sequence: "states/battle/common/narration.sequence.ron", param: "act_talk"),
+    ],
+    mercies: [
+        (label: "{{battle/ui:MERCY_SPARE}}", sequence: "states/battle/mercy/spare.sequence.ron", param: "mercy_spare"),
+        (label: "{{battle/ui:MERCY_FLEE}}", sequence: "states/battle/mercy/end.sequence.ron"),
+    ],
+)

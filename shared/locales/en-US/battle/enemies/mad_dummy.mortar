@@ -1,0 +1,17 @@
+// Mad Dummy ACT dialogue nodes
+
+node act_check {
+    text: "* MAD DUMMY - ATK 7 DEF YES"
+    text: "* Possesses a mannequin."
+}
+
+node act_talk {
+    text: "* You talk to Mad Dummy."
+    text: "* ..."
+    text: "* It doesn't seem much for conversation."
+}
+
+// MERCY dialogue nodes
+node mercy_spare {
+    text: "* You can't spare Mad Dummy."
+}

@@ -1,0 +1,17 @@
+// Mad Dummy ACT 对话节点
+
+node act_check {
+    text: "* MAD DUMMY - 攻击 7 防御 YES"
+    text: "* 附身在人偶上。"
+}
+
+node act_talk {
+    text: "* 你和愤怒假人说话。"
+    text: "* ……"
+    text: "* 它似乎没什么好说的。"
+}
+
+// MERCY 对话节点
+node mercy_spare {
+    text: "* 你无法饶恕愤怒假人。"
+}
