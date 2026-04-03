@@ -1,0 +1,64 @@
+#![enable(implicit_some)]
+// Mad Dummy idle animation view layout
+// 愤怒假人待机动画视图布局
+//
+// UT coordinate conversion:
+//   UT (y-down): Head y=0, Torso y+35, Legs y+65, Base y+75
+//   SoupRune (y-up, relative to Base at 0): Base=0, Legs=10, Torso=40, Head=75
+//   Animation: rot = sin(t * 2.5) * 30  (t = snap(@time, 1/30) for 30fps feel)
+//   Head offsets: x -= rot/3, y -= rot/3
+//   Torso offset: y -= rot/4
+//   Note: rotation expressions not yet supported; translation-only swaying used
+
+(
+    world_space: true,
+    roots: [
+        (
+            name: "MadDummy_Base",
+            sprite: (
+                visual: "assets/textures/battle/mad_dummy/base/0.png",
+                transform: (
+                    translation: (0.0, 27.0, 0.0),
+                    scale: (2.0, 2.0, 2.0),
+                ),
+            ),
+            children: [
+                (
+                    name: "MadDummy_Legs",
+                    sprite: (
+                        visual: "assets/textures/battle/mad_dummy/leg/0.png",
+                        transform: (
+                            translation: (0.0, 10.0, 0.1),
+                        ),
+                    ),
+                ),
+                (
+                    name: "MadDummy_Torso",
+                    sprite: (
+                        visual: "assets/textures/battle/mad_dummy/torso/0.png",
+                        transform: (
+                            translation: (
+                                -5.0,
+                                "40.0 - sin(snap(@time, 1.0/30.0) * 2.5) * 7.5",
+                                0.2,
+                            ),
+                        ),
+                    ),
+                ),
+                (
+                    name: "MadDummy_Head",
+                    sprite: (
+                        visual: "assets/textures/battle/mad_dummy/head/0.png",
+                        transform: (
+                            translation: (
+                                "-5.0 - sin(snap(@time, 1.0/30.0) * 2.5) * 10.0",
+                                "75.0 - sin(snap(@time, 1.0/30.0) * 2.5) * 10.0",
+                                0.3,
+                            ),
+                        ),
+                    ),
+                ),
+            ],
+        ),
+    ],
+)
