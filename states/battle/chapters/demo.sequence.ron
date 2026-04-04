@@ -18,6 +18,7 @@
         ]),
 
         SpawnView(view_layout: "states/battle/view/mad_dummy.view.ron"),
+        SpawnView(view_layout: "states/battle/view/battle_bg.view.ron"),
 
         // Spawn battle UI view, bind enemy data from local layer (populated by LoadEnemies)
         // 生成战斗 UI 视图，从本地层绑定敌人数据（由 LoadEnemies 填充）
