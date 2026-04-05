@@ -18,11 +18,6 @@ undertale_preset = "0.1.0"
 wasm = "mod_example.wasm"
 
 [game]
-global_rules = "global.fre.ron"
 initial_sequence_path = "states/overworld/entry.sequence.ron"
 initial_battle_path = "states/battle/chapters/demo.sequence.ron"
-player_behavior_path = "states/overworld/players/player_behavior.ron"
-input_config_path = "config/input.ron"
-states_config = "config/states.ron"
-# Chase state configuration (optional - omit to disable chase functionality)
 chase_config = "states/overworld/chase_config.ron"
