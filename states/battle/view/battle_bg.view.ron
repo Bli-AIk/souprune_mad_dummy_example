@@ -14,7 +14,7 @@
                 visual: "assets/textures/battle/bg/0.png",
                 pivot: (0.0, 0.0),
                 transform: (
-                    translation: (-305.5, 230.5, -1.0),
+                    translation: (-305.5, -5.5, -1.0),
                     scale: (1.0, 1.0, 1.0),
                 ),
             ),
