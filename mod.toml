@@ -8,6 +8,7 @@ description = "An example mod for SoupRune."
 [resources]
 textures = "assets/textures"      # Texture/sprite resources / 图片资源目录
 audios = "assets/audios"          # Audio resources / 音频资源目录
+fonts = "assets/fonts"            # Font resources / 字体资源目录
 
 [dependencies]
 undertale_preset = "0.1.0"
