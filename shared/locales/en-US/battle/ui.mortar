@@ -15,10 +15,6 @@ pub const ENEMY_MAD_DUMMY: String = "Mad Dummy"
 pub const ACT_MAD_DUMMY_CHECK: String = "Check"
 pub const ACT_MAD_DUMMY_TALK: String = "Talk"
 
-// ACT result narrations
-pub const ACT_MAD_DUMMY_CHECK_RESULT: String = "* MAD DUMMY - ATK 7 DEF YES\n* Possesses a mannequin."
-pub const ACT_MAD_DUMMY_TALK_RESULT: String = "* You talk to Mad Dummy.\n* ...\n* It doesn't seem much for conversation."
-
 // MERCY option labels
 pub const MERCY_SPARE: String = "Spare"
 pub const MERCY_FLEE: String = "Flee"
