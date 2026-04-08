@@ -1,11 +1,21 @@
 #![enable(implicit_some)]
-// Demo FRE Rules for Overworld - chase state and danmaku demo
-// Walk into trigger zone: 2nd=chase, 3rd=danmaku, 5th=exit chase, 6th=battle
+// Demo FRE Rules for Overworld
+// - Dialogue lifecycle and interaction rules
+// - Chase/danmaku demo via trigger zone
+// - Button puzzle demo (2 buttons → open door)
 
 (
-    facts: { "demo_area_visit_count": Int(0) },
+    facts: {
+        "demo_area_visit_count": Int(0),
+        "button_0_pressed": Bool(false),
+        "button_1_pressed": Bool(false),
+    },
 
     rules: [
+        // ========================================
+        // Global Overworld Rules
+        // ========================================
+
         // Open backpack (only when in Normal state and no dialogue)
         (id: "overworld_open_backpack", event: ActionEvent(action: "Menu", kind: JustPressed),
          conditions: ["$state:sequence_sub_state == 'Normal'", "$dialogue:active != true"],
@@ -26,7 +36,49 @@
          actions: [Custom(action_type: "SetSubState", params: { "state": "Normal" }), Custom(action_type: "DespawnView", params: {})],
          priority: 100),
 
-        // Demo trigger zone events
+        // ========================================
+        // Demo Dialogue Interactions (migrated from Tiled properties)
+        // ========================================
+
+        // demo_talk: Mortar dialogue without typewriter
+        (id: "dialogue_interact_demo_talk", event: Event("interact_demo_talk"),
+         actions: [StartDialogue(
+             mortar: "overworld/dialogue.mortar",
+             node: "demo_talk",
+             typewriter: false,
+             focus: true,
+         )],
+         priority: 0),
+
+        // demo_talk_typewriter: Mortar dialogue with typewriter + voice
+        (id: "dialogue_interact_demo_talk_typewriter", event: Event("interact_demo_talk_typewriter"),
+         actions: [StartDialogue(
+             mortar: "overworld/dialogue.mortar",
+             node: "demo_talk",
+             typewriter: true,
+             focus: true,
+             voice: "audios/voice/voice_flowey_1.wav",
+         )],
+         priority: 0),
+
+        // demo_simple_talk: Simple text (no Mortar)
+        (id: "dialogue_interact_demo_simple_talk", event: Event("interact_demo_simple_talk"),
+         modifications: [
+             Set(key: "dialogue:has_typewriter", value: Bool(true)),
+             Set(key: "dialogue:pending_view", value: String("states/overworld/view/dialogue.view.ron")),
+             Set(key: "dialogue:has_focus", value: Bool(true)),
+             Set(key: "dialogue:voice", value: String("audios/voice/voice_monster.wav")),
+             Set(key: "dialogue:typewriter_speed", value: Float(0.08)),
+             Set(key: "dialogue:simple_text_active", value: Bool(true)),
+             Set(key: "dialogue:simple_text", value: String("* (It fills you with \\n  determination.)")),
+             Set(key: "dialogue:pending_start", value: Bool(true)),
+         ],
+         priority: 0),
+
+        // ========================================
+        // Demo Trigger Zone Events
+        // ========================================
+
         (id: "demo_increment_visit", event: Event("trigger_enter_demo_trigger"),
          modifications: [Increment(key: "demo_area_visit_count", amount: 1)],
          outputs: ["demo_visit_updated"], priority: 10),
@@ -43,5 +95,69 @@
 
         (id: "demo_start_battle", event: Event("demo_visit_updated"), conditions: ["$demo_area_visit_count == 6"],
          actions: [Custom(action_type: "SetMode", params: { "mode": "battle" })], outputs: ["battle_started"], priority: 5),
+
+        // ========================================
+        // Button Puzzle Rules
+        // ========================================
+
+        // Button 0: toggle pressed state + swap sprite (triggered by larger trigger zone)
+        (id: "puzzle_button_0_press", event: Event("interact_button_trigger_0"),
+         conditions: ["$button_0_pressed != true"],
+         modifications: [Set(key: "button_0_pressed", value: Bool(true))],
+         actions: [
+             Custom(action_type: "SetSprite", params: { "target": "button_0", "image": "states/overworld/levels/ruins/tiles/objects/switch_1.png" }),
+             Log(message: "Button 0 pressed"),
+         ],
+         outputs: ["puzzle_state_changed"], priority: 0),
+
+        (id: "puzzle_button_0_unpress", event: Event("interact_button_trigger_0"),
+         conditions: ["$button_0_pressed == true"],
+         modifications: [Set(key: "button_0_pressed", value: Bool(false))],
+         actions: [
+             Custom(action_type: "SetSprite", params: { "target": "button_0", "image": "states/overworld/levels/ruins/tiles/objects/switch_0.png" }),
+             Log(message: "Button 0 unpressed"),
+         ],
+         outputs: ["puzzle_state_changed"], priority: 0),
+
+        // Button 1: toggle pressed state + swap sprite (triggered by larger trigger zone)
+        (id: "puzzle_button_1_press", event: Event("interact_button_trigger_1"),
+         conditions: ["$button_1_pressed != true"],
+         modifications: [Set(key: "button_1_pressed", value: Bool(true))],
+         actions: [
+             Custom(action_type: "SetSprite", params: { "target": "button_1", "image": "states/overworld/levels/ruins/tiles/objects/faceswitch_1.png" }),
+             Log(message: "Button 1 pressed"),
+         ],
+         outputs: ["puzzle_state_changed"], priority: 0),
+
+        (id: "puzzle_button_1_unpress", event: Event("interact_button_trigger_1"),
+         conditions: ["$button_1_pressed == true"],
+         modifications: [Set(key: "button_1_pressed", value: Bool(false))],
+         actions: [
+             Custom(action_type: "SetSprite", params: { "target": "button_1", "image": "states/overworld/levels/ruins/tiles/objects/faceswitch_0.png" }),
+             Log(message: "Button 1 unpressed"),
+         ],
+         outputs: ["puzzle_state_changed"], priority: 0),
+
+        // Door opens when both buttons are pressed
+        (id: "puzzle_door_open", event: Event("puzzle_state_changed"),
+         conditions: ["$button_0_pressed == true", "$button_1_pressed == true"],
+         actions: [
+             Custom(action_type: "SetSprite", params: { "target": "block_0", "image": "states/overworld/levels/ruins/tiles/objects/spiketile_1.png" }),
+             Custom(action_type: "SetSprite", params: { "target": "block_1", "image": "states/overworld/levels/ruins/tiles/objects/spiketile_1.png" }),
+             Custom(action_type: "SetCollision", params: { "target": "block_main", "isEnabled": "false" }),
+             Log(message: "Door opened!"),
+         ],
+         priority: 10),
+
+        // Door closes when not both buttons are pressed
+        (id: "puzzle_door_close", event: Event("puzzle_state_changed"),
+         conditions: ["$button_0_pressed + $button_1_pressed != 2"],
+         actions: [
+             Custom(action_type: "SetSprite", params: { "target": "block_0", "image": "states/overworld/levels/ruins/tiles/objects/spiketile_0.png" }),
+             Custom(action_type: "SetSprite", params: { "target": "block_1", "image": "states/overworld/levels/ruins/tiles/objects/spiketile_0.png" }),
+             Custom(action_type: "SetCollision", params: { "target": "block_main", "isEnabled": "true" }),
+             Log(message: "Door closed"),
+         ],
+         priority: 5),
     ],
 )

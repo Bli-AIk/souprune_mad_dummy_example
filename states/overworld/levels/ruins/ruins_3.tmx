@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="37" height="12" tilewidth="20" tileheight="20" infinite="0" nextlayerid="10" nextobjectid="24">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="37" height="12" tilewidth="20" tileheight="20" infinite="0" nextlayerid="10" nextobjectid="26">
  <properties>
   <property name="backpack_ui" value="states/overworld/view/undertale_backpack.view.ron"/>
   <property name="rules_file" value="states/overworld/rules/demo.fre.ron"/>
@@ -121,39 +121,34 @@
     <property name="collision" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="17" name="demo_talk" x="380" y="40" width="20" height="40">
+  <object id="17" name="demo_talk" x="340" y="40" width="20" height="40">
    <properties>
-    <property name="dialogue_node" value="demo_talk"/>
-    <property name="dialogue_path" value="overworld/dialogue.mortar"/>
-    <property name="has_mortar" type="bool" value="true"/>
-    <property name="has_typewriter" type="bool" value="false"/>
     <property name="interactable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="18" name="demo_trigger" x="400" y="100" width="60" height="60">
+  <object id="18" name="demo_trigger" x="100" y="240" width="80" height="80">
    <properties>
     <property name="trigger" type="bool" value="true"/>
    </properties>
   </object>
   <object id="20" name="demo_talk_typewriter" x="360" y="40" width="20" height="40">
    <properties>
-    <property name="dialogue_node" value="demo_talk"/>
-    <property name="dialogue_path" value="overworld/dialogue.mortar"/>
-    <property name="dialogue_typewriter_speed" value="0.01"/>
-    <property name="dialogue_voice" value="audios/voice/voice_flowey_1.wav"/>
-    <property name="has_mortar" type="bool" value="true"/>
-    <property name="has_typewriter" type="bool" value="true"/>
     <property name="interactable" type="bool" value="true"/>
    </properties>
   </object>
   <object id="21" name="demo_simple_talk" x="400" y="40" width="20" height="40">
    <properties>
-    <property name="dialogue_typewriter_speed" value="0.08"/>
-    <property name="dialogue_voice" value="audios/voice/voice_monster.wav"/>
-    <property name="has_mortar" type="bool" value="false"/>
-    <property name="has_typewriter" type="bool" value="true"/>
     <property name="interactable" type="bool" value="true"/>
-    <property name="simple_text" value="* (It fills you with \n  determination.)"/>
+   </properties>
+  </object>
+  <object id="24" name="button_trigger_0" x="380" y="60" width="20" height="20">
+   <properties>
+    <property name="interactable" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="25" name="button_trigger_1" x="580" y="60" width="20" height="20">
+   <properties>
+    <property name="interactable" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>
