@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="37" height="12" tilewidth="20" tileheight="20" infinite="0" nextlayerid="9" nextobjectid="20">
+<map version="1.10" tiledversion="1.12.1" orientation="orthogonal" renderorder="right-down" width="37" height="12" tilewidth="20" tileheight="20" infinite="0" nextlayerid="10" nextobjectid="24">
  <properties>
   <property name="backpack_ui" value="states/overworld/view/undertale_backpack.view.ron"/>
-  <!--  <property name="bgm" value="ignore_music.wav"/> -->
   <property name="rules_file" value="states/overworld/rules/demo.fre.ron"/>
  </properties>
  <tileset firstgid="1" source="ruins.tsx"/>
@@ -156,6 +155,13 @@
     <property name="interactable" type="bool" value="true"/>
     <property name="simple_text" value="* (It fills you with \n  determination.)"/>
    </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="camera_bounds">
+  <object id="20" x="0" y="0" width="370" height="240"/>
+  <object id="21" x="0" y="240" width="320" height="320"/>
+  <object id="23" x="370" y="0" width="370" height="240">
+   <polygon points="0,0 170,0 170,-120 370,-120 370,0 370,240 0,240"/>
   </object>
  </objectgroup>
 </map>
