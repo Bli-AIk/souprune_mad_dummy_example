@@ -90,7 +90,7 @@
         Wait(10.0),
         Sequence([
             Wait(0.5),
-            SetPlayer(Despawn),// TODO: 实现这个功能
+            SetPlayer(Despawn),
         ]),
         TweenViewElement(
             selector: LocalName("BattleBox"),

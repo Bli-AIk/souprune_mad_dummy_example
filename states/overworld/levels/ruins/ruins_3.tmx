@@ -158,10 +158,6 @@
   </object>
  </objectgroup>
  <objectgroup id="9" name="camera_bounds">
-  <object id="20" x="0" y="0" width="370" height="240"/>
-  <object id="21" x="0" y="240" width="320" height="320"/>
-  <object id="23" x="370" y="0" width="370" height="240">
-   <polygon points="0,0 170,0 170,-120 370,-120 370,0 370,240 0,240"/>
-  </object>
+  <object id="20" x="0" y="0" width="740" height="240"/>
  </objectgroup>
 </map>
