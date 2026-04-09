@@ -1,8 +1,14 @@
 #![enable(implicit_some)]
 // Demo FRE Rules for Overworld
-// - Dialogue lifecycle and interaction rules
+// Overworld 示例 FRE 规则
+//
+// Game-mod-specific rules:
 // - Chase/danmaku demo via trigger zone
 // - Button puzzle demo (2 buttons → open door)
+//
+// Note: Dialogue lifecycle rules (backpack, dialogue started/ended) are now
+// in the preset's interaction.fre.ron, loaded via dependency chain.
+// Dialogue interaction rules are auto-generated from Tiled object properties.
 
 (
     facts: {
@@ -12,69 +18,6 @@
     },
 
     rules: [
-        // ========================================
-        // Global Overworld Rules
-        // ========================================
-
-        // Open backpack (only when in Normal state and no dialogue)
-        (id: "overworld_open_backpack", event: ActionEvent(action: "Menu", kind: JustPressed),
-         conditions: ["$state:sequence_sub_state == 'Normal'", "$dialogue:active != true"],
-         actions: [Log(message: "Opening Backpack"), Custom(action_type: "SetSubState", params: { "state": "Backpack" })],
-         priority: 0),
-
-        // Dialogue lifecycle
-        (id: "overworld_dialogue_started", event: Event("dialogue:started"),
-         actions: [Custom(action_type: "SetSubState", params: { "state": "Dialogue" })],
-         priority: 100),
-
-        (id: "overworld_dialogue_ended", event: Event("dialogue:ended"),
-         modifications: [
-             Set(key: "dialogue:has_focus", value: Bool(false)),
-             Set(key: "dialogue:simple_text_active", value: Bool(false)),
-             Set(key: "dialogue:simple_text", value: String("")),
-         ],
-         actions: [Custom(action_type: "SetSubState", params: { "state": "Normal" }), Custom(action_type: "DespawnView", params: {})],
-         priority: 100),
-
-        // ========================================
-        // Demo Dialogue Interactions (migrated from Tiled properties)
-        // ========================================
-
-        // demo_talk: Mortar dialogue without typewriter
-        (id: "dialogue_interact_demo_talk", event: Event("interact_demo_talk"),
-         actions: [StartDialogue(
-             mortar: "overworld/dialogue.mortar",
-             node: "demo_talk",
-             typewriter: false,
-             focus: true,
-         )],
-         priority: 0),
-
-        // demo_talk_typewriter: Mortar dialogue with typewriter + voice
-        (id: "dialogue_interact_demo_talk_typewriter", event: Event("interact_demo_talk_typewriter"),
-         actions: [StartDialogue(
-             mortar: "overworld/dialogue.mortar",
-             node: "demo_talk",
-             typewriter: true,
-             focus: true,
-             voice: "audios/voice/voice_flowey_1.wav",
-         )],
-         priority: 0),
-
-        // demo_simple_talk: Simple text (no Mortar)
-        (id: "dialogue_interact_demo_simple_talk", event: Event("interact_demo_simple_talk"),
-         modifications: [
-             Set(key: "dialogue:has_typewriter", value: Bool(true)),
-             Set(key: "dialogue:pending_view", value: String("states/overworld/view/dialogue.view.ron")),
-             Set(key: "dialogue:has_focus", value: Bool(true)),
-             Set(key: "dialogue:voice", value: String("audios/voice/voice_monster.wav")),
-             Set(key: "dialogue:typewriter_speed", value: Float(0.08)),
-             Set(key: "dialogue:simple_text_active", value: Bool(true)),
-             Set(key: "dialogue:simple_text", value: String("* (It fills you with \\n  determination.)")),
-             Set(key: "dialogue:pending_start", value: Bool(true)),
-         ],
-         priority: 0),
-
         // ========================================
         // Demo Trigger Zone Events
         // ========================================

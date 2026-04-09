@@ -113,42 +113,42 @@
   <object id="14" name="block_1" gid="285" x="701" y="179" width="18" height="18"/>
   <object id="15" name="block_main" x="700" y="140" width="20" height="40">
    <properties>
-    <property name="collision" type="bool" value="true"/>
+    <property name="kind" value="collision"/>
    </properties>
   </object>
   <object id="16" x="130" y="133" width="20" height="7">
    <properties>
-    <property name="collision" type="bool" value="true"/>
+    <property name="kind" value="collision"/>
    </properties>
   </object>
   <object id="17" name="demo_talk" x="340" y="40" width="20" height="40">
    <properties>
-    <property name="interactable" type="bool" value="true"/>
+    <property name="kind" value="confirm"/>
+    <property name="mortar" value="overworld/dialogue.mortar"/>
+    <property name="typewriter" type="bool" value="false"/>
    </properties>
   </object>
   <object id="18" name="demo_trigger" x="100" y="240" width="80" height="80">
    <properties>
-    <property name="trigger" type="bool" value="true"/>
+    <property name="kind" value="enter"/>
    </properties>
   </object>
   <object id="20" name="demo_talk_typewriter" x="360" y="40" width="20" height="40">
    <properties>
-    <property name="interactable" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="21" name="demo_simple_talk" x="400" y="40" width="20" height="40">
-   <properties>
-    <property name="interactable" type="bool" value="true"/>
+    <property name="kind" value="confirm"/>
+    <property name="mortar" value="overworld/dialogue.mortar"/>
+    <property name="mortar_node" value="demo_talk"/>
+    <property name="voice" value="audios/voice/voice_flowey_1.wav"/>
    </properties>
   </object>
   <object id="24" name="button_trigger_0" x="380" y="60" width="20" height="20">
    <properties>
-    <property name="interactable" type="bool" value="true"/>
+    <property name="kind" value="confirm"/>
    </properties>
   </object>
   <object id="25" name="button_trigger_1" x="580" y="60" width="20" height="20">
    <properties>
-    <property name="interactable" type="bool" value="true"/>
+    <property name="kind" value="confirm"/>
    </properties>
   </object>
  </objectgroup>

@@ -4,7 +4,6 @@
 
 (
     facts: {
-        "test_dialogue_shown": Bool(false),
         "test_mortar_shown": Bool(false),
         "battle:intro_shown": Bool(false),
     },
@@ -22,27 +21,6 @@
              Log(message: "Battle: Starting encounter intro"),
          ],
          priority: 100),
-
-        // Simple text narration test
-        (id: "test_simple_narration", event: Event("test_simple_narration"),
-         conditions: ["$test_dialogue_shown == false"],
-         modifications: [
-             Set(key: "dialogue:simple_text_active", value: Bool(true)),
-             Set(key: "dialogue:simple_text", value: String("* 这是一条测试旁白。\n* Your soul is filled with determination.")),
-             Set(key: "dialogue:has_typewriter", value: Bool(true)),
-             Set(key: "dialogue:has_focus", value: Bool(true)),
-             Set(key: "test_dialogue_shown", value: Bool(true)),
-         ],
-         priority: 10),
-
-        (id: "test_simple_narration_ended", event: Event("dialogue:ended"),
-         conditions: ["$dialogue:simple_text_active == true"],
-         modifications: [
-             Set(key: "dialogue:simple_text_active", value: Bool(false)),
-             Set(key: "dialogue:simple_text", value: String("")),
-             Set(key: "dialogue:has_focus", value: Bool(false)),
-         ],
-         priority: 10),
 
         // Mortar dialogue test
         (id: "test_mortar_dialogue", event: Event("test_mortar_dialogue"),
