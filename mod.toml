@@ -22,3 +22,5 @@ wasm = "mod_example.wasm"
 initial_sequence_path = "states/overworld/entry.sequence.ron"
 initial_battle_path = "states/battle/chapters/demo.sequence.ron"
 chase_config = "states/overworld/chase_config.ron"
+# rng_seed = 42  # Optional: fixed seed for deterministic random behavior (testing/replay)
+# battle_camera_zoom = 2.0  # Camera zoom when entering battle (default: 2.0)

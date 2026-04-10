@@ -5,14 +5,13 @@
     mode: "battle",
     chapters: [
         // === Mod-specific Init / Mod 特定初始化 ===
-        SetCamera(SetZoom(2.0)),
         SetBgm(path: "mus_dummybattle.ogg", fade_in: 0.5),
 
         LoadEnemies(enemies: [
             "data/enemies/mad_dummy.enemy.ron",
         ]),
-
         SpawnView(view_layout: "states/battle/view/mad_dummy.view.ron"),
+
         SpawnView(view_layout: "states/battle/view/battle_bg.view.ron"),
         SpawnView(
             view_layout: "states/battle/view/undertale.view.ron",
