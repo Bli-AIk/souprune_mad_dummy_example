@@ -1,0 +1,9 @@
+#![enable(implicit_some)]
+// Mad Dummy's basic attack turn — cotton ball danmaku
+// Mad Dummy 基本攻击回合 — 棉球弹幕
+(chapters: [
+    DanmakuPerformance(
+        performance: "states/battle/danmaku/demo_attack.performance.ron",
+        translation: Some((0.0, 50.0)),
+    ),
+])
