@@ -1,0 +1,66 @@
+#![enable(implicit_some)]
+// Mad Dummy — Cotton: Top Sweep (type2=0)
+// 顶部扫射：9 个棉花人偶从顶部边缘进入，停顿后发射自机狙棉花弹
+// UT 原版: con2=5, type2=0, turntimer=175 (5.8s)
+//
+// 流程:
+//   t=0.0  — 9 个棉花人偶从顶部边缘向下滑入 (不造成伤害)
+//   t=1.0  — 人偶到达战斗框边缘附近并停住
+//   t=1.3  — 人偶发射棉花弹 (Aimed at heart)，同时开始退出
+//   t=2.3  — 人偶退出屏幕
+(
+    prototypes: {
+        // 棉花人偶 — 纯视觉实体，不造成伤害
+        "dummy": (
+            visual: "battle/bullets/dummy_bullet",
+            frame_duration: 0.15,
+            collider: CircleCollider(0.1),
+            damage: 0.0,
+            lifetime: 3.0,
+            z_index: 14.0,
+        ),
+        // 棉花弹 — 实际伤害投射物
+        "cotton": (
+            visual: "battle/bullets/dummy_shot",
+            frame_duration: 0.08,
+            collider: BoxCollider(5.0, 5.0),
+            damage: 5.0,
+            lifetime: 4.0,
+            z_index: 15.0,
+        ),
+    },
+    behaviors: {
+        // 棉花弹：自机狙 (瞄准心脏，发射后方向固定)
+        "aim_heart": Aimed((
+            speed: 90.0,
+        )),
+
+        // 人偶进入动画：从上方 margin=250 滑入到约 margin=80 处
+        "enter_from_top": Tween((
+            target: PositionY,
+            duration: 0.7,
+            ease: QuadOut,
+            range: (0.0, -170.0),
+            delay: 0.0,
+        )),
+        // 人偶退出动画：返回上方 (抵消 enter 的 -170)
+        "exit_to_top": Tween((
+            target: PositionY,
+            duration: 0.5,
+            ease: QuadIn,
+            range: (0.0, 170.0),
+            delay: 1.3,
+        )),
+    },
+    timeline: [
+        // Phase 1: 棉花人偶从顶部进入
+        (t: 0.0, spawn: "dummy",
+         pattern: EdgeGenerator(count: 9, side: Top, spacing: 25.0, margin: 250.0),
+         apply: ["enter_from_top", "exit_to_top"]),
+
+        // Phase 2: 人偶到达后发射棉花弹
+        (t: 1.0, spawn: "cotton",
+         pattern: EdgeGenerator(count: 9, side: Top, spacing: 25.0, margin: 80.0),
+         apply: ["aim_heart"]),
+    ],
+)

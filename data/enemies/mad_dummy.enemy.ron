@@ -15,7 +15,10 @@
         (label: "{{battle/ui:MERCY_FLEE}}", sequence: "states/battle/mercy/end.sequence.ron"),
     ],
     turns: [
-        "states/battle/turns/mad_dummy_basic.sequence.ron",
+        "states/battle/turns/cotton_top_sweep.sequence.ron",
+        "states/battle/turns/cotton_surround.sequence.ron",
+        "states/battle/turns/cotton_side_pincer.sequence.ron",
+        "states/battle/turns/cotton_bottom_wave.sequence.ron",
     ],
     turn_strategy: Sequential,
 )

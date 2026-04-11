@@ -1,0 +1,87 @@
+#![enable(implicit_some)]
+// Mad Dummy — Cotton: Bottom Wave (type2=3)
+// 底部大波：18 个棉花人偶从底部双排进入，发射自机狙棉花弹
+// UT 原版: con2=5, type2=3, turntimer=200 (6.7s)
+//
+// 流程:
+//   t=0.0  — 第一排 9 个人偶从底部进入
+//   t=0.15 — 第二排 9 个人偶从底部进入 (错开位置)
+//   t=1.0  — 第一排发射棉花弹
+//   t=1.15 — 第二排发射棉花弹
+//   人偶随后退出
+(
+    prototypes: {
+        "dummy": (
+            visual: "battle/bullets/dummy_bullet",
+            frame_duration: 0.15,
+            collider: CircleCollider(0.1),
+            damage: 0.0,
+            lifetime: 3.5,
+            z_index: 14.0,
+        ),
+        "cotton": (
+            visual: "battle/bullets/dummy_shot",
+            frame_duration: 0.08,
+            collider: BoxCollider(5.0, 5.0),
+            damage: 5.0,
+            lifetime: 4.0,
+            z_index: 15.0,
+        ),
+    },
+    behaviors: {
+        "aim_heart": Aimed((speed: 90.0)),
+
+        // 第一排：从底部进入 (较近)
+        "enter_row1": Tween((
+            target: PositionY,
+            duration: 0.7,
+            ease: QuadOut,
+            range: (0.0, 150.0),
+            delay: 0.0,
+        )),
+        "exit_row1": Tween((
+            target: PositionY,
+            duration: 0.5,
+            ease: QuadIn,
+            range: (0.0, -150.0),
+            delay: 1.3,
+        )),
+
+        // 第二排：从底部进入 (稍远)
+        "enter_row2": Tween((
+            target: PositionY,
+            duration: 0.7,
+            ease: QuadOut,
+            range: (0.0, 120.0),
+            delay: 0.0,
+        )),
+        "exit_row2": Tween((
+            target: PositionY,
+            duration: 0.5,
+            ease: QuadIn,
+            range: (0.0, -120.0),
+            delay: 1.3,
+        )),
+    },
+    timeline: [
+        // Phase 1: 第一排人偶从底部进入
+        (t: 0.0, spawn: "dummy",
+         pattern: EdgeGenerator(count: 9, side: Bottom, spacing: 22.0, margin: 230.0),
+         apply: ["enter_row1", "exit_row1"]),
+
+        // Phase 1b: 第二排人偶从底部进入 (略延迟，更远处)
+        (t: 0.15, spawn: "dummy",
+         pattern: EdgeGenerator(count: 9, side: Bottom, spacing: 22.0, margin: 280.0),
+         apply: ["enter_row2", "exit_row2"]),
+
+        // Phase 2: 第一排发射棉花弹
+        (t: 0.85, spawn: "cotton",
+         pattern: EdgeGenerator(count: 9, side: Bottom, spacing: 22.0, margin: 80.0),
+         apply: ["aim_heart"]),
+
+        // Phase 2b: 第二排发射棉花弹
+        (t: 0.15, spawn: "cotton",
+         pattern: EdgeGenerator(count: 9, side: Bottom, spacing: 22.0, margin: 110.0),
+         apply: ["aim_heart"]),
+    ],
+)

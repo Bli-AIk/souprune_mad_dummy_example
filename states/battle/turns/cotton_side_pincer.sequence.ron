@@ -1,0 +1,8 @@
+#![enable(implicit_some)]
+// Mad Dummy turn — Cotton: Side Pincer
+(chapters: [
+    DanmakuPerformance(
+        performance: "states/battle/danmaku/cotton_side_pincer.performance.ron",
+        translation: (0.0, 50.0),
+    ),
+])
