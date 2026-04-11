@@ -4,6 +4,21 @@ pub const HP: String = "HP"
 // 战斗开场旁白
 pub const ENEMY_APPEARED: String = "* 愤怒假人挡住了去路！"
 
+node encounter_intro {
+    text: "* 愤怒假人挡住了去路！"
+}
+
+// 每回合旁白
+node flavor_1 {
+    text: "* 愤怒假人怒视着你。"
+}
+node flavor_2 {
+    text: "* 愤怒假人愤怒地颤抖着。"
+}
+node flavor_3 {
+    text: "* 假人。愤怒假人。"
+}
+
 // 敌人名称
 pub const ENEMY_MAD_DUMMY: String = "愤怒假人"
 

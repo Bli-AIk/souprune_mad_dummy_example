@@ -1,0 +1,55 @@
+#![enable(implicit_some)]
+// Demo mod: Per-turn narration sequence
+// 示例 mod：每回合旁白序列
+//
+// Turn 0 (encounter intro): fixed narration
+// Turn 1+: random flavor text from pool
+//
+// 第0回合（开场）：固定旁白
+// 第1回合+：从随机池中选择旁白
+//
+// Note: RandomPick is a queue-manipulation chapter and cannot be used inside
+// Conditional branches. Use "random then override" pattern instead.
+// 注意：RandomPick 是队列操作章节，不能用在 Conditional 分支内。
+// 使用"先随机后覆盖"模式替代。
+(chapters: [
+    // Show narration area (non-blocking mode)
+    // 显示旁白区域（非阻塞模式）
+    SetViewFact(key: "narration_visible", value: Bool(true)),
+    SetViewFact(key: "dialogue:replay_on_resume", value: Bool(true)),
+
+    // Step 1: Pick random flavor text (default for turn 1+)
+    // 第1步：随机选择旁白（用于第1回合+的默认值）
+    RandomPick(candidates: [
+        ModifyFact(modifications: [
+            Set(key: "dialogue:pending_mortar_node", value: String("flavor_1")),
+        ]),
+        ModifyFact(modifications: [
+            Set(key: "dialogue:pending_mortar_node", value: String("flavor_2")),
+        ]),
+        ModifyFact(modifications: [
+            Set(key: "dialogue:pending_mortar_node", value: String("flavor_3")),
+        ]),
+    ]),
+
+    // Step 2: Override with encounter intro on turn 0
+    // 第2步：第0回合覆盖为开场旁白
+    Conditional(
+        condition: Equals(key: "battle_turn_count", value: Int(0)),
+        then_branch: ModifyFact(modifications: [
+            Set(key: "dialogue:pending_mortar_node", value: String("encounter_intro")),
+        ]),
+    ),
+
+    // Step 3: Start the narration dialogue
+    // 第3步：启动旁白对话
+    ModifyFact(
+        modifications: [
+            Set(key: "dialogue:pending_mortar_path", value: String("battle/ui.mortar")),
+            Set(key: "dialogue:pending_start", value: Bool(true)),
+            Set(key: "dialogue:has_typewriter", value: Bool(true)),
+            Set(key: "dialogue:has_focus", value: Bool(false)),
+            Set(key: "dialogue:voice", value: String("audios/voice/voice_typewriter_default.wav")),
+        ],
+    ),
+])

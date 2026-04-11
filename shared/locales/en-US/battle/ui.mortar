@@ -8,6 +8,17 @@ node encounter_intro {
     text: "* Mad Dummy blocks the way!"
 }
 
+// Per-turn flavor text
+node flavor_1 {
+    text: "* Mad Dummy stares at you."
+}
+node flavor_2 {
+    text: "* Mad Dummy shakes angrily."
+}
+node flavor_3 {
+    text: "* Dummy. Mad Dummy."
+}
+
 // Enemy names
 pub const ENEMY_MAD_DUMMY: String = "Mad Dummy"
 

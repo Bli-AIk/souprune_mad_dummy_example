@@ -21,26 +21,15 @@
         AwaitFact(condition: "$view_rules_loaded == true", local: true),
         EmitFactEvent(event_id: "battle:show_intro"),
 
-        // Intro narration — non-blocking, shown alongside player menu
-        // In Undertale, encounter text plays while buttons are already interactive.
-
-        SetViewFact(key: "narration_visible", value: Bool(true)),
-        SetViewFact(key: "dialogue:replay_on_resume", value: Bool(true)),
-        ModifyFact(
-            modifications: [
-                Set(key: "dialogue:pending_mortar_path", value: String("battle/ui.mortar")),
-                Set(key: "dialogue:pending_mortar_node", value: String("encounter_intro")),
-                Set(key: "dialogue:pending_start", value: Bool(true)),
-                Set(key: "dialogue:has_typewriter", value: Bool(true)),
-                Set(key: "dialogue:has_focus", value: Bool(false)),
-                Set(key: "dialogue:voice", value: String("audios/voice/voice_typewriter_default.wav")),
-            ],
-        ),
-
         // === Delegate to preset battle loop / 委托给预设战斗循环 ===
+        // turn_narration: per-turn narration handled by demo_turn_narration.sequence.ron
+        // (turn 0 = encounter intro, turn 1+ = random flavor text)
         RunSequence(
             path: "states/battle/templates/undertale_battle.sequence.ron",
-            params: { "enemy_id": String("mad_dummy") },
+            params: {
+                "enemy_id": String("mad_dummy"),
+                "turn_narration": String("states/battle/chapters/demo_turn_narration.sequence.ron"),
+            },
         ),
     ],
 )
