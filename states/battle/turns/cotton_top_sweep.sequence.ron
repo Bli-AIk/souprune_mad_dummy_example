@@ -1,8 +1,32 @@
 #![enable(implicit_some)]
-// Mad Dummy turn — Cotton: Top Sweep
+// Mad Dummy turn — Cotton: Top Sweep (type2=0)
+// UT turntimer=175 (5.8s)
 (chapters: [
+    // Shrink battle box for danmaku
+    // 缩小战斗框
+    TweenViewElement(
+        selector: LocalName("BattleBox"),
+        target: BoxSize(to: (130, "@current")),
+        duration: 0.85,
+        easing: QuadInOut,
+        wait_for_completion: false,
+    ),
+
+    // Danmaku phase
+    // 弹幕阶段
     DanmakuPerformance(
         performance: "states/battle/danmaku/cotton_top_sweep.performance.ron",
         translation: (0.0, 50.0),
+    ),
+    Wait(5.0),
+
+    // Restore battle box
+    // 恢复战斗框
+    TweenViewElement(
+        selector: LocalName("BattleBox"),
+        target: BoxSize(to: (566, 130)),
+        duration: 0.6,
+        easing: QuadInOut,
+        wait_for_completion: false,
     ),
 ])

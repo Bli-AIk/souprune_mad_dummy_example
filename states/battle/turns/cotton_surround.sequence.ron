@@ -1,8 +1,26 @@
 #![enable(implicit_some)]
-// Mad Dummy turn — Cotton: Surround Attack
+// Mad Dummy turn — Cotton: Surround Attack (type2=1)
+// UT turntimer=240 (8s)
 (chapters: [
+    TweenViewElement(
+        selector: LocalName("BattleBox"),
+        target: BoxSize(to: (130, "@current")),
+        duration: 0.85,
+        easing: QuadInOut,
+        wait_for_completion: false,
+    ),
+
     DanmakuPerformance(
         performance: "states/battle/danmaku/cotton_surround.performance.ron",
         translation: (0.0, 50.0),
+    ),
+    Wait(7.0),
+
+    TweenViewElement(
+        selector: LocalName("BattleBox"),
+        target: BoxSize(to: (566, 130)),
+        duration: 0.6,
+        easing: QuadInOut,
+        wait_for_completion: false,
     ),
 ])
