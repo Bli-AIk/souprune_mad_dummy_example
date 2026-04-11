@@ -14,7 +14,6 @@
         performance: "states/battle/danmaku/cotton_side_pincer.performance.ron",
         translation: (0.0, 50.0),
     ),
-    Wait(6.0),
 
     TweenViewElement(
         selector: LocalName("BattleBox"),

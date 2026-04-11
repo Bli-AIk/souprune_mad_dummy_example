@@ -76,4 +76,5 @@
          pattern: EdgeGenerator(count: 5, side: Right, spacing: 25.0, margin: 80.0),
          apply: ["aim_heart"]),
     ],
+    duration: "@current + 5.0",
 )
