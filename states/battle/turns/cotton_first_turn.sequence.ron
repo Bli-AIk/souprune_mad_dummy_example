@@ -1,0 +1,32 @@
+#![enable(implicit_some)]
+// Mad Dummy turn — Cotton: First Turn (con2=0)
+// 第一回合弹幕 — 顶部 9 + 底部 18 棉花人偶
+// UT turntimer=360 (12s)
+(chapters: [
+    // Shrink battle box to combat square
+    // 缩小战斗框为正方形
+    TweenViewElement(
+        selector: LocalName("BattleBox"),
+        target: BoxSize(to: (130, "@current")),
+        duration: 0.85,
+        easing: QuadInOut,
+        wait_for_completion: false,
+    ),
+
+    // Danmaku phase
+    // 弹幕阶段
+    DanmakuPerformance(
+        performance: "states/battle/danmaku/cotton_first_turn.performance.ron",
+        translation: (0.0, 50.0),
+    ),
+
+    // Restore battle box to dialogue rectangle
+    // 恢复战斗框为对话矩形
+    TweenViewElement(
+        selector: LocalName("BattleBox"),
+        target: BoxSize(to: (566, 130)),
+        duration: 0.6,
+        easing: QuadInOut,
+        wait_for_completion: false,
+    ),
+])

@@ -1,0 +1,196 @@
+#![enable(implicit_some)]
+// Mad Dummy — Cotton: First Turn (con2=0)
+// 第一回合：9 个棉花人偶从顶部、18 个从底部同时进入，分批到达后发射自机狙棉花弹
+// UT 原版: con2=0, turntimer=360 (12s)
+//
+// 原版流程（所有人偶在 t=0 同时生成，因距离不同分批到达边界）：
+//   顶部 3 组 × 3: 分别在 ~0.2s / ~1.0s / ~1.7s 到达
+//   底部 3 组 × 6: 分别在 ~2.5s / ~2.9s / ~3.3s 到达
+//   每组到达后停顿 0.67s，发射自机狙棉花弹，然后退出
+//
+// 坐标换算 (GMS → SoupRune):
+//   战斗框 130×130, 半高 65px
+//   margin = 65 + GMS距边界距离
+//   顶部: GMS 向下 → Bevy PositionY 负方向
+//   底部: GMS 向上 → Bevy PositionY 正方向
+//   原版速度 4px/frame@30fps = 120px/s
+(
+    prototypes: {
+        // 棉花人偶 — 从顶部进入，朝下（纯视觉，不造成伤害）
+        "dummy_down": (
+            visual: "battle/bullets/dummy_bullet/down.png",
+            collider: CircleCollider(0.1),
+            damage: 0.0,
+            lifetime: 6.0,
+            z_index: 14.0,
+        ),
+        // 棉花人偶 — 从底部进入，朝上（纯视觉，不造成伤害）
+        "dummy_up": (
+            visual: "battle/bullets/dummy_bullet/up.png",
+            collider: CircleCollider(0.1),
+            damage: 0.0,
+            lifetime: 6.0,
+            z_index: 14.0,
+        ),
+        // 棉花弹 — 自机狙，实际伤害投射物
+        "cotton": (
+            visual: "battle/bullets/dummy_shot",
+            frame_duration: 0.08,
+            collider: BoxCollider(5.0, 5.0),
+            damage: 5.0,
+            lifetime: 4.0,
+            z_index: 15.0,
+        ),
+    },
+    behaviors: {
+        "aim_heart": Aimed((speed: 90.0)),
+
+        // === 顶部 Group 1: 距边界 40px, margin=105, 行程 25px, 0.21s ===
+        "top1_enter": Tween((
+            target: PositionY,
+            duration: 0.21,
+            ease: Linear,
+            range: (0.0, -25.0),
+        )),
+        "top1_exit": Tween((
+            target: PositionY,
+            duration: 1.0,
+            ease: Linear,
+            range: (0.0, 120.0),
+            delay: 0.88,
+        )),
+
+        // === 顶部 Group 2: 距边界 130px, margin=195, 行程 115px, 0.96s ===
+        "top2_enter": Tween((
+            target: PositionY,
+            duration: 0.96,
+            ease: Linear,
+            range: (0.0, -115.0),
+        )),
+        "top2_exit": Tween((
+            target: PositionY,
+            duration: 1.0,
+            ease: Linear,
+            range: (0.0, 120.0),
+            delay: 1.63,
+        )),
+
+        // === 顶部 Group 3: 距边界 220px, margin=285, 行程 205px, 1.71s ===
+        "top3_enter": Tween((
+            target: PositionY,
+            duration: 1.71,
+            ease: Linear,
+            range: (0.0, -205.0),
+        )),
+        "top3_exit": Tween((
+            target: PositionY,
+            duration: 1.0,
+            ease: Linear,
+            range: (0.0, 120.0),
+            delay: 2.38,
+        )),
+
+        // === 底部 Group 1: 距边界 310px, margin=375, 行程 295px, 2.46s ===
+        "bot1_enter": Tween((
+            target: PositionY,
+            duration: 2.46,
+            ease: Linear,
+            range: (0.0, 295.0),
+        )),
+        "bot1_exit": Tween((
+            target: PositionY,
+            duration: 1.0,
+            ease: Linear,
+            range: (0.0, -120.0),
+            delay: 3.13,
+        )),
+
+        // === 底部 Group 2: 距边界 360px, margin=425, 行程 345px, 2.88s ===
+        "bot2_enter": Tween((
+            target: PositionY,
+            duration: 2.88,
+            ease: Linear,
+            range: (0.0, 345.0),
+        )),
+        "bot2_exit": Tween((
+            target: PositionY,
+            duration: 1.0,
+            ease: Linear,
+            range: (0.0, -120.0),
+            delay: 3.55,
+        )),
+
+        // === 底部 Group 3: 距边界 410px, margin=475, 行程 395px, 3.29s ===
+        "bot3_enter": Tween((
+            target: PositionY,
+            duration: 3.29,
+            ease: Linear,
+            range: (0.0, 395.0),
+        )),
+        "bot3_exit": Tween((
+            target: PositionY,
+            duration: 1.0,
+            ease: Linear,
+            range: (0.0, -120.0),
+            delay: 3.96,
+        )),
+    },
+    timeline: [
+        // ── Phase 1: 所有棉花人偶在 t=0 同时生成 ──
+
+        // 顶部 Group 1 (3 人偶, 距边界最近)
+        (t: 0.0, absolute: true, spawn: "dummy_down",
+         pattern: EdgeGenerator(count: 3, side: Top, spacing: 50.0, margin: 105.0),
+         apply: ["top1_enter", "top1_exit"]),
+        // 顶部 Group 2 (3 人偶)
+        (t: 0.0, absolute: true, spawn: "dummy_down",
+         pattern: EdgeGenerator(count: 3, side: Top, spacing: 50.0, margin: 195.0),
+         apply: ["top2_enter", "top2_exit"]),
+        // 顶部 Group 3 (3 人偶, 距边界最远)
+        (t: 0.0, absolute: true, spawn: "dummy_down",
+         pattern: EdgeGenerator(count: 3, side: Top, spacing: 50.0, margin: 285.0),
+         apply: ["top3_enter", "top3_exit"]),
+
+        // 底部 Group 1 (6 人偶)
+        (t: 0.0, absolute: true, spawn: "dummy_up",
+         pattern: EdgeGenerator(count: 6, side: Bottom, spacing: 12.0, margin: 375.0),
+         apply: ["bot1_enter", "bot1_exit"]),
+        // 底部 Group 2 (6 人偶)
+        (t: 0.0, absolute: true, spawn: "dummy_up",
+         pattern: EdgeGenerator(count: 6, side: Bottom, spacing: 12.0, margin: 425.0),
+         apply: ["bot2_enter", "bot2_exit"]),
+        // 底部 Group 3 (6 人偶)
+        (t: 0.0, absolute: true, spawn: "dummy_up",
+         pattern: EdgeGenerator(count: 6, side: Bottom, spacing: 12.0, margin: 475.0),
+         apply: ["bot3_enter", "bot3_exit"]),
+
+        // ── Phase 2: 各组到达边界后发射棉花弹 ──
+
+        // 顶部 Group 1 cotton (到达 0.21s + 停顿 0.67s = 0.88s)
+        (t: 0.88, absolute: true, spawn: "cotton",
+         pattern: EdgeGenerator(count: 3, side: Top, spacing: 50.0, margin: 80.0),
+         apply: ["aim_heart"]),
+        // 顶部 Group 2 cotton (到达 0.96s + 停顿 0.67s = 1.63s)
+        (t: 1.63, absolute: true, spawn: "cotton",
+         pattern: EdgeGenerator(count: 3, side: Top, spacing: 50.0, margin: 80.0),
+         apply: ["aim_heart"]),
+        // 顶部 Group 3 cotton (到达 1.71s + 停顿 0.67s = 2.38s)
+        (t: 2.38, absolute: true, spawn: "cotton",
+         pattern: EdgeGenerator(count: 3, side: Top, spacing: 50.0, margin: 80.0),
+         apply: ["aim_heart"]),
+
+        // 底部 Group 1 cotton (到达 2.46s + 停顿 0.67s = 3.13s)
+        (t: 3.13, absolute: true, spawn: "cotton",
+         pattern: EdgeGenerator(count: 6, side: Bottom, spacing: 12.0, margin: 80.0),
+         apply: ["aim_heart"]),
+        // 底部 Group 2 cotton (到达 2.88s + 停顿 0.67s = 3.55s)
+        (t: 3.55, absolute: true, spawn: "cotton",
+         pattern: EdgeGenerator(count: 6, side: Bottom, spacing: 12.0, margin: 80.0),
+         apply: ["aim_heart"]),
+        // 底部 Group 3 cotton (到达 3.29s + 停顿 0.67s = 3.96s)
+        (t: 3.96, absolute: true, spawn: "cotton",
+         pattern: EdgeGenerator(count: 6, side: Bottom, spacing: 12.0, margin: 80.0),
+         apply: ["aim_heart"]),
+    ],
+    duration: "@current + 8.0",
+)
