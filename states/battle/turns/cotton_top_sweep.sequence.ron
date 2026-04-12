@@ -4,7 +4,7 @@
 (chapters: [
     // Shrink battle box for danmaku
     // 缩小战斗框
-    TweenViewElement(
+    SetViewElement(
         selector: LocalName("BattleBox"),
         target: BoxSize(to: (130, "@current")),
         duration: 0.85,
@@ -21,7 +21,7 @@
 
     // Restore battle box
     // 恢复战斗框
-    TweenViewElement(
+    SetViewElement(
         selector: LocalName("BattleBox"),
         target: BoxSize(to: (566, 130)),
         duration: 0.6,

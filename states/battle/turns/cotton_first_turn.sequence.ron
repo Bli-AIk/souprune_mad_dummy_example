@@ -3,9 +3,16 @@
 // 第一回合弹幕 — 顶部 9 + 底部 18 棉花人偶
 // UT turntimer=360 (12s)
 (chapters: [
+    // Set anchor to bottom-center so resizing keeps bottom edge fixed
+    // 设置锚点为底部中心，使缩放时底边不动
+    SetViewElement(
+        selector: LocalName("BattleBox"),
+        target: Anchor(0.0, -1.0),
+    ),
+
     // Shrink battle box width to 175 (keep height)
     // 缩小战斗框宽度到 175（保持高度不变）
-    TweenViewElement(
+    SetViewElement(
         selector: LocalName("BattleBox"),
         target: BoxSize(to: (175, "@current")),
         duration: 0.85,
@@ -13,9 +20,9 @@
         wait_for_completion: true,
     ),
 
-    // Expand height to 175 (anchor on ViewBox keeps bottom edge fixed)
-    // 高度扩展到 175（ViewBox 的 anchor 保持底边不动）
-    TweenViewElement(
+    // Expand height to 175 (anchor keeps bottom edge fixed)
+    // 高度扩展到 175（锚点保持底边不动）
+    SetViewElement(
         selector: LocalName("BattleBox"),
         target: BoxSize(to: ("@current", 175)),
         duration: 0.85,
@@ -32,7 +39,7 @@
 
     // Restore battle box to dialogue rectangle
     // 恢复战斗框为对话矩形
-    TweenViewElement(
+    SetViewElement(
         selector: LocalName("BattleBox"),
         target: BoxSize(to: (566, 130)),
         duration: 0.6,

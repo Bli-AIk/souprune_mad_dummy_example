@@ -2,7 +2,7 @@
 // Mad Dummy turn — Cotton: Side Pincer (type2=2)
 // UT turntimer=200 (6.7s)
 (chapters: [
-    TweenViewElement(
+    SetViewElement(
         selector: LocalName("BattleBox"),
         target: BoxSize(to: (130, "@current")),
         duration: 0.85,
@@ -15,7 +15,7 @@
         translation: (0.0, 50.0),
     ),
 
-    TweenViewElement(
+    SetViewElement(
         selector: LocalName("BattleBox"),
         target: BoxSize(to: (566, 130)),
         duration: 0.6,
