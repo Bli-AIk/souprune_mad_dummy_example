@@ -10,10 +10,9 @@
 //   t=2.3  — 人偶退出屏幕
 (
     prototypes: {
-        // 棉花人偶 — 纯视觉实体，不造成伤害
+        // 棉花人偶 — 纯视觉实体，不造成伤害（从顶部进入，朝下）
         "dummy": (
-            visual: "battle/bullets/dummy_bullet",
-            frame_duration: 0.15,
+            visual: "battle/bullets/dummy_bullet/down.png",
             collider: CircleCollider(0.1),
             damage: 0.0,
             lifetime: 3.0,
