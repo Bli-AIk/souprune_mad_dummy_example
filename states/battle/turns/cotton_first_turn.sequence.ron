@@ -3,14 +3,24 @@
 // 第一回合弹幕 — 顶部 9 + 底部 18 棉花人偶
 // UT turntimer=360 (12s)
 (chapters: [
-    // Shrink battle box to combat square
-    // 缩小战斗框为正方形
+    // Shrink battle box width to 175 (keep height)
+    // 缩小战斗框宽度到 175（保持高度不变）
     TweenViewElement(
         selector: LocalName("BattleBox"),
-        target: BoxSize(to: (130, "@current")),
+        target: BoxSize(to: (175, "@current")),
         duration: 0.85,
         easing: QuadInOut,
-        wait_for_completion: false,
+        wait_for_completion: true,
+    ),
+
+    // Expand height to 175 with bottom edge fixed
+    // 以底边为轴，高度扩展到 175
+    TweenViewElement(
+        selector: LocalName("BattleBox"),
+        target: BoxSize(to: ("@current", 175), anchor: (0.0, -1.0)),
+        duration: 0.85,
+        easing: QuadInOut,
+        wait_for_completion: true,
     ),
 
     // Danmaku phase
