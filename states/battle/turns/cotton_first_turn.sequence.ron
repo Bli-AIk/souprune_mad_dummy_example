@@ -20,11 +20,11 @@
         wait_for_completion: true,
     ),
 
-    // Expand height to 175 (anchor keeps bottom edge fixed)
-    // 高度扩展到 175（锚点保持底边不动）
+    // Expand height to 180 (anchor keeps bottom edge fixed)
+    // 高度扩展到 180（锚点保持底边不动）
     SetViewElement(
         selector: LocalName("BattleBox"),
-        target: BoxSize(to: ("@current", 175)),
+        target: BoxSize(to: ("@current", 180)),
         duration: 0.85,
         easing: QuadInOut,
         wait_for_completion: true,
@@ -44,6 +44,11 @@
         target: BoxSize(to: (566, 130)),
         duration: 0.6,
         easing: QuadInOut,
-        wait_for_completion: false,
+        wait_for_completion: true,
+    ),
+    
+    SetViewElement(
+        selector: LocalName("BattleBox"),
+        target: Anchor(0.0, 0.0),
     ),
 ])
