@@ -45,83 +45,83 @@
         "aim_heart": Aimed((speed: 90.0)),
 
         // === Top Group 1: 45px outside, travel=49px, 0.41s ===
-        "top1_enter": Tween((target: PositionY, duration: 0.41, ease: Linear, range: (0.0, -49.0))),
-        "top1_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, range: (0.0, 120.0), delay: 1.08)),
+        "top1_enter": Tween((target: PositionY, duration: 0.41, ease: Linear, to: -49.0)),
+        "top1_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, to: 120.0, delay: 1.08)),
 
         // === Top Group 2: 135px outside, travel=139px, 1.16s ===
-        "top2_enter": Tween((target: PositionY, duration: 1.16, ease: Linear, range: (0.0, -139.0))),
-        "top2_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, range: (0.0, 120.0), delay: 1.83)),
+        "top2_enter": Tween((target: PositionY, duration: 1.16, ease: Linear, to: -139.0)),
+        "top2_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, to: 120.0, delay: 1.83)),
 
         // === Top Group 3: 225px outside, travel=229px, 1.91s ===
-        "top3_enter": Tween((target: PositionY, duration: 1.91, ease: Linear, range: (0.0, -229.0))),
-        "top3_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, range: (0.0, 120.0), delay: 2.58)),
+        "top3_enter": Tween((target: PositionY, duration: 1.91, ease: Linear, to: -229.0)),
+        "top3_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, to: 120.0, delay: 2.58)),
 
         // === Bottom Group 1: 310px outside, travel=332px, 2.77s ===
-        "bot1_enter": Tween((target: PositionY, duration: 2.77, ease: Linear, range: (0.0, 332.0))),
-        "bot1_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, range: (0.0, -120.0), delay: 3.44)),
+        "bot1_enter": Tween((target: PositionY, duration: 2.77, ease: Linear, to: 332.0)),
+        "bot1_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, to: -120.0, delay: 3.44)),
 
         // === Bottom Group 2: 360px outside, travel=382px, 3.18s ===
-        "bot2_enter": Tween((target: PositionY, duration: 3.18, ease: Linear, range: (0.0, 382.0))),
-        "bot2_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, range: (0.0, -120.0), delay: 3.85)),
+        "bot2_enter": Tween((target: PositionY, duration: 3.18, ease: Linear, to: 382.0)),
+        "bot2_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, to: -120.0, delay: 3.85)),
 
         // === Bottom Group 3: 410px outside, travel=432px, 3.60s ===
-        "bot3_enter": Tween((target: PositionY, duration: 3.60, ease: Linear, range: (0.0, 432.0))),
-        "bot3_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, range: (0.0, -120.0), delay: 4.27)),
+        "bot3_enter": Tween((target: PositionY, duration: 3.60, ease: Linear, to: 432.0)),
+        "bot3_exit":  Tween((target: PositionY, duration: 1.0,  ease: Linear, to: -120.0, delay: 4.27)),
     },
     timeline: [
         // ── Phase 1: 所有棉花人偶在 t=0 同时生成 ──
 
         // 顶部 Group 1 (3 dummies, 最近)
-        (t: 0.0, absolute: true, spawn: "dummy_down",
+        (t: 0.0, time_mode: Absolute, spawn: "dummy_down",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 3, side: Top, spacing: 55.0, outside_margin: 45.0),
          apply: ["top1_enter", "top1_exit"]),
         // 顶部 Group 2
-        (t: 0.0, absolute: true, spawn: "dummy_down",
+        (t: 0.0, time_mode: Absolute, spawn: "dummy_down",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 3, side: Top, spacing: 55.0, outside_margin: 135.0),
          apply: ["top2_enter", "top2_exit"]),
         // 顶部 Group 3 (最远)
-        (t: 0.0, absolute: true, spawn: "dummy_down",
+        (t: 0.0, time_mode: Absolute, spawn: "dummy_down",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 3, side: Top, spacing: 55.0, outside_margin: 225.0),
          apply: ["top3_enter", "top3_exit"]),
 
         // 底部 Group 1 (6 dummies)
-        (t: 0.0, absolute: true, spawn: "dummy_up",
+        (t: 0.0, time_mode: Absolute, spawn: "dummy_up",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 6, side: Bottom, spacing: 20.0, outside_margin: 310.0),
          apply: ["bot1_enter", "bot1_exit"]),
         // 底部 Group 2
-        (t: 0.0, absolute: true, spawn: "dummy_up",
+        (t: 0.0, time_mode: Absolute, spawn: "dummy_up",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 6, side: Bottom, spacing: 20.0, outside_margin: 360.0),
          apply: ["bot2_enter", "bot2_exit"]),
         // 底部 Group 3
-        (t: 0.0, absolute: true, spawn: "dummy_up",
+        (t: 0.0, time_mode: Absolute, spawn: "dummy_up",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 6, side: Bottom, spacing: 20.0, outside_margin: 410.0),
          apply: ["bot3_enter", "bot3_exit"]),
 
         // ── Phase 2: 各组到达 + 停顿 0.667s 后发射棉花弹 ──
 
         // Top 1 cotton (0.41 + 0.667 = 1.08s) — 在边缘内 4px 处发射
-        (t: 1.08, absolute: true, spawn: "cotton",
+        (t: 1.08, time_mode: Absolute, spawn: "cotton",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 3, side: Top, spacing: 55.0, outside_margin: -4.0),
          apply: ["aim_heart"]),
         // Top 2 cotton (1.16 + 0.667 = 1.83s)
-        (t: 1.83, absolute: true, spawn: "cotton",
+        (t: 1.83, time_mode: Absolute, spawn: "cotton",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 3, side: Top, spacing: 55.0, outside_margin: -4.0),
          apply: ["aim_heart"]),
         // Top 3 cotton (1.91 + 0.667 = 2.58s)
-        (t: 2.58, absolute: true, spawn: "cotton",
+        (t: 2.58, time_mode: Absolute, spawn: "cotton",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 3, side: Top, spacing: 55.0, outside_margin: -4.0),
          apply: ["aim_heart"]),
 
         // Bot 1 cotton (2.77 + 0.667 = 3.44s) — 在边缘内 22px 处发射
-        (t: 3.44, absolute: true, spawn: "cotton",
+        (t: 3.44, time_mode: Absolute, spawn: "cotton",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 6, side: Bottom, spacing: 20.0, outside_margin: -22.0),
          apply: ["aim_heart"]),
         // Bot 2 cotton (3.18 + 0.667 = 3.85s)
-        (t: 3.85, absolute: true, spawn: "cotton",
+        (t: 3.85, time_mode: Absolute, spawn: "cotton",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 6, side: Bottom, spacing: 20.0, outside_margin: -22.0),
          apply: ["aim_heart"]),
         // Bot 3 cotton (3.60 + 0.667 = 4.27s)
-        (t: 4.27, absolute: true, spawn: "cotton",
+        (t: 4.27, time_mode: Absolute, spawn: "cotton",
          pattern: BoxEdgeGenerator(box_name: "BattleBox", count: 6, side: Bottom, spacing: 20.0, outside_margin: -22.0),
          apply: ["aim_heart"]),
     ],

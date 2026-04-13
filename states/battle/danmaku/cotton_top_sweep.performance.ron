@@ -39,7 +39,7 @@
             target: PositionY,
             duration: 0.7,
             ease: QuadOut,
-            range: (0.0, -170.0),
+            to: -170.0,
             delay: 0.0,
         )),
         // 人偶退出动画：返回上方 (抵消 enter 的 -170)
@@ -47,7 +47,7 @@
             target: PositionY,
             duration: 0.5,
             ease: QuadIn,
-            range: (0.0, 170.0),
+            to: 170.0,
             delay: 1.3,
         )),
     },

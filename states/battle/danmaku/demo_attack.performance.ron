@@ -125,7 +125,7 @@
             target: Opacity,
             duration: 2.0,
             ease: QuadOut,
-            range: (0.0, 1.0),
+            to: 1.0,
             delay: 0.0,
         )),
 
@@ -171,9 +171,9 @@
     // === Timeline ===
     // === 时间线 ===
     // This section defines the sequence of bullet spawns and their associated patterns and behaviors.
-    // Time values are relative by default (delta from previous event). Set `absolute: true` for absolute time.
+    // Time values are relative by default (delta from previous event). Set `time_mode: Absolute` for absolute time.
     // 这一部分定义了弹幕生成的顺序及其相关的模式和行为。
-    // 时间值默认为相对时间（与上一事件的时间差）。设置 `absolute: true` 使用绝对时间。
+    // 时间值默认为相对时间（与上一事件的时间差）。设置 `time_mode: Absolute` 使用绝对时间。
     timeline: [
         // Step 1: Spear linear attack from left (t=0.0) - 长矛线性攻击 (persistent)
         // 第一步：从左侧发起的长矛线性攻击 (t=0.0) - 持续型
@@ -214,7 +214,7 @@
                     target: Scale,
                     duration: 1.0,
                     ease: QuadOut,
-                    range: (0.5, 1.0),
+                    from: 0.5, to: 1.0,
                     delay: 0.0,
                 )),
             ],
