@@ -66,14 +66,16 @@ cd example_mod
 ```
 example_mod/
 ├── mod.toml              # Mod configuration
-├── assets/               # Textures, audio, etc.
-├── code/                 # C# source code
-├── config/               # Input and state configs
-├── shared/               # Shared resources (dialogue, items, locales)
-├── states/               # Overworld and battle states
-├── build.sh              # Build script (Unix)
-├── build.ps1             # Build script (Windows)
-└── global.fre.ron        # Global FRE rules
+├── runtime/              # Runtime WASM mod
+├── content/              # Vessel content guest
+├── .build/               # Built runtime/content wasm artifacts
+├── app/                  # Project flow and input config
+├── battle/               # Battle content
+├── overworld/            # Overworld content (if used)
+├── actors/               # Actor definitions (if used)
+├── narrative/            # Dialogue and narrative config
+├── view/                 # View structures and touch layout
+└── assets/               # Textures, audio, maps, locales, etc.
 ```
 
 ## Contributing

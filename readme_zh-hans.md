@@ -66,14 +66,16 @@ cd example_mod
 ```
 example_mod/
 ├── mod.toml              # 模组配置
-├── assets/               # 纹理、音频等资源
-├── code/                 # C# 源代码
-├── config/               # 输入和状态配置
-├── shared/               # 共享资源（对话、物品、本地化）
-├── states/               # 大地图和战斗状态
-├── build.sh              # 构建脚本 (Unix)
-├── build.ps1             # 构建脚本 (Windows)
-└── global.fre.ron        # 全局 FRE 规则
+├── runtime/              # 运行时 WASM mod
+├── content/              # Vessel 内容 guest
+├── .build/               # runtime/content 构建产物
+├── app/                  # 项目流程与输入配置
+├── battle/               # 战斗内容
+├── overworld/            # 大地图内容（如适用）
+├── actors/               # 实体定义（如适用）
+├── narrative/            # 对话与叙事配置
+├── view/                 # 视图结构与触控布局
+└── assets/               # 纹理、音频、地图、本地化等资源
 ```
 
 ## 贡献

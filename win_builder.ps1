@@ -60,7 +60,7 @@ $ErrorActionPreference = "Stop"
 # Configuration
 $ScriptDir = $PSScriptRoot
 $ModName = Split-Path $ScriptDir -Leaf
-$ModSourceDir = Join-Path $ScriptDir "code\mod_example"
+$ModSourceDir = Join-Path $ScriptDir "runtime"
 $DestinationDir = $ScriptDir
 $BuildMode = if ($Release) { "release" } else { "debug" }
 $CargoFlags = if ($Release) { "--release" } else { "" }
@@ -377,7 +377,7 @@ $count = 0
 if ($BuildWindowsMSVC) {
     $count++
     Write-Host "▶ [$count] 开始构建 Windows MSVC 版本..." -ForegroundColor Green
-    Build-Target "x86_64-pc-windows-msvc" "mod_example.dll" "${ModName}_msvc.dll"
+    Build-Target "x86_64-pc-windows-msvc" "runtime.dll" "${ModName}_msvc.dll"
     Write-Host "✅ Windows MSVC 版本构建完成! 🎉" -ForegroundColor Green
     Write-Host ""
 }
@@ -388,7 +388,7 @@ if ($BuildWindowsGNU) {
     
     if (Test-RustTarget "x86_64-pc-windows-gnu") {
         if ((Test-Command "gcc") -or (Test-Command "x86_64-w64-mingw32-gcc")) {
-            Build-Target "x86_64-pc-windows-gnu" "mod_example.dll" "${ModName}_gnu.dll" "RUSTFLAGS" "-C target-feature=+crt-static"
+            Build-Target "x86_64-pc-windows-gnu" "runtime.dll" "${ModName}_gnu.dll" "RUSTFLAGS" "-C target-feature=+crt-static"
             Write-Host "✅ Windows GNU 版本构建完成! 🎉" -ForegroundColor Green
         } else {
             Write-Warning "跳过 GNU 构建: 未找到 GCC/MinGW linker"
@@ -410,7 +410,7 @@ if ($BuildLinux) {
         
         if ($hasCrossCompiler) {
             $env:RUSTFLAGS = "-C linker=x86_64-linux-gnu-gcc"
-            Build-Target "x86_64-unknown-linux-gnu" "libmod_example.so" "$ModName.so"
+            Build-Target "x86_64-unknown-linux-gnu" "libruntime.so" "$ModName.so"
             Write-Host "✅ Linux 版本构建完成! 🎉" -ForegroundColor Green
         } else {
             Write-Warning "跳过 Linux 构建: 未找到 Linux 交叉编译器"
@@ -471,7 +471,7 @@ if ($BuildAndroid) {
             $env:CC_aarch64_linux_android = "$NdkToolchain\bin\aarch64-linux-android21-clang.cmd"
             $env:AR_aarch64_linux_android = "$NdkToolchain\bin\llvm-ar.exe"
 
-            Build-Target "aarch64-linux-android" "libmod_example.so" "${ModName}_android.so"
+            Build-Target "aarch64-linux-android" "libruntime.so" "${ModName}_android.so"
             Write-Host "✅ Android aarch64 版本构建完成! 🎉" -ForegroundColor Green
         }
     } else {

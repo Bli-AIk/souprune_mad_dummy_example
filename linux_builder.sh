@@ -35,7 +35,7 @@ set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 MOD_NAME="$(basename "$SCRIPT_DIR")"
-MOD_SOURCE_DIR="$SCRIPT_DIR/code/mod_example"
+MOD_SOURCE_DIR="$SCRIPT_DIR/runtime"
 DESTINATION_DIR="$SCRIPT_DIR"
 
 BUILD_MODE="debug"
@@ -339,7 +339,7 @@ COUNT=0
 if [ "$BUILD_LINUX" = true ]; then
     COUNT=$((COUNT + 1))
     echo -e "${GREEN}▶ [$COUNT] 开始构建 Linux 版本...${NC}"
-    build_target "" "libmod_example.so" "${MOD_NAME}.so"
+    build_target "" "libruntime.so" "${MOD_NAME}.so"
     print_success "Linux 版本构建完成! 🎉"
     echo
 fi
@@ -351,7 +351,7 @@ if [ "$BUILD_WIN_MSVC" = true ]; then
     if command -v cargo-xwin >/dev/null 2>&1; then
         if check_rust_target "x86_64-pc-windows-msvc"; then
             export RUSTFLAGS=""
-            build_target "x86_64-pc-windows-msvc" "mod_example.dll" "${MOD_NAME}_msvc.dll" "cargo xwin build"
+            build_target "x86_64-pc-windows-msvc" "runtime.dll" "${MOD_NAME}_msvc.dll" "cargo xwin build"
             print_success "Windows MSVC 版本构建完成! 🎉"
         else
             print_warning "跳过 MSVC 构建 (缺少 Rust Target: x86_64-pc-windows-msvc)"
@@ -381,7 +381,7 @@ if [ "$BUILD_WIN_GNU" = true ]; then
     
     if [ "$MISSING_DEPS" = false ]; then
         export RUSTFLAGS="-C target-feature=+crt-static"
-        build_target "x86_64-pc-windows-gnu" "mod_example.dll" "${MOD_NAME}_gnu.dll"
+        build_target "x86_64-pc-windows-gnu" "runtime.dll" "${MOD_NAME}_gnu.dll"
         print_success "Windows GNU 版本构建完成! 🎉"
     else
         print_error "缺少依赖，跳过 GNU 构建"
@@ -430,7 +430,7 @@ if [ "$BUILD_ANDROID" = true ]; then
             export CC_aarch64_linux_android="$NDK_TOOLCHAIN/bin/aarch64-linux-android21-clang"
             export AR_aarch64_linux_android="$NDK_TOOLCHAIN/bin/llvm-ar"
 
-            build_target "aarch64-linux-android" "libmod_example.so" "${MOD_NAME}_android.so"
+            build_target "aarch64-linux-android" "libruntime.so" "${MOD_NAME}_android.so"
             print_success "Android aarch64 版本构建完成! 🎉"
         fi
     else
