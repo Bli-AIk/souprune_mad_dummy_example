@@ -16,4 +16,6 @@ Thumbs.db
 # Tiled
 *.tiled-session
 
-assets/debug/*
+assets/debug/**/*.png
+
+target/

@@ -21,6 +21,11 @@ wasm = ".build/runtime.wasm"
 [content_library]
 wasm = ".build/content.wasm"
 managed_paths = [
+    "battle/danmaku/demo_attack.performance.ron",
+    "battle/danmaku/cotton_top_sweep.performance.ron",
+    "battle/danmaku/cotton_surround.performance.ron",
+    "battle/danmaku/cotton_side_pincer.performance.ron",
+    "battle/danmaku/cotton_bottom_wave.performance.ron",
     "battle/danmaku/cotton_first_turn.performance.ron",
 ]
 
