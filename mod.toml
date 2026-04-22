@@ -21,12 +21,29 @@ wasm = ".build/runtime.wasm"
 [content_library]
 wasm = ".build/content.wasm"
 managed_paths = [
-    "battle/danmaku/demo_attack.performance.ron",
-    "battle/danmaku/cotton_top_sweep.performance.ron",
-    "battle/danmaku/cotton_surround.performance.ron",
-    "battle/danmaku/cotton_side_pincer.performance.ron",
+    "actors/enemies/mad_dummy.enemy.ron",
+    "battle/chapters/demo.sequence.ron",
+    "battle/chapters/demo_turn_narration.sequence.ron",
     "battle/danmaku/cotton_bottom_wave.performance.ron",
     "battle/danmaku/cotton_first_turn.performance.ron",
+    "battle/danmaku/cotton_side_pincer.performance.ron",
+    "battle/danmaku/cotton_surround.performance.ron",
+    "battle/danmaku/cotton_top_sweep.performance.ron",
+    "battle/danmaku/demo_attack.performance.ron",
+    "battle/rules/dialogue_test.fre.ron",
+    "battle/turns/cotton_bottom_wave.sequence.ron",
+    "battle/turns/cotton_first_turn.sequence.ron",
+    "battle/turns/cotton_side_pincer.sequence.ron",
+    "battle/turns/cotton_surround.sequence.ron",
+    "battle/turns/cotton_top_sweep.sequence.ron",
+    "battle/view/battle_bg.view.ron",
+    "battle/view/mad_dummy.view.ron",
+    "overworld/characters/frisk.character.ron",
+    "overworld/characters/frisk/animations.animation_config.ron",
+    "overworld/chase_config.ron",
+    "overworld/danmaku/demo_attack_ow.performance.ron",
+    "overworld/entry.sequence.ron",
+    "overworld/rules/demo.fre.ron",
 ]
 
 [game]

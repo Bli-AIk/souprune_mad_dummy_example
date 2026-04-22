@@ -5,6 +5,12 @@
 use souprune_schema::danmaku::*;
 use souprune_vessel::prelude::*;
 
+#[derive(Clone, Copy)]
+struct DemoAttackStyle {
+    scale: f32,
+    z_index: f32,
+}
+
 fn custom_behavior(id: &str, props: &[(&str, f32)]) -> BulletBehavior {
     BulletBehavior::Custom {
         id: id.to_string(),
@@ -39,51 +45,54 @@ fn scale_pop() -> BulletBehavior {
     })
 }
 
-fn spear_prototype() -> BulletPrototype {
+fn spear_prototype(style: DemoAttackStyle) -> BulletPrototype {
     BulletPrototype {
         visual: "spear".to_string(),
         collider: rect(3.0, 12.0),
         damage: 2.0,
         lifetime: 4.0,
-        z_index: 15.0,
+        z_index: style.z_index,
+        scale: style.scale,
         hit_behavior: HitBehaviorPreset::Persistent,
         ..Default::default()
     }
 }
 
-fn pellet_prototype() -> BulletPrototype {
+fn pellet_prototype(style: DemoAttackStyle) -> BulletPrototype {
     BulletPrototype {
         visual: "flowey_pellet".to_string(),
         collider: rect(6.0, 6.0),
         damage: 1.0,
         lifetime: 3.0,
-        z_index: 15.0,
+        z_index: style.z_index,
+        scale: style.scale,
         frame_duration: Some(0.05),
         ..Default::default()
     }
 }
 
-fn tinted_pellet(hit_behavior: HitBehaviorPreset, hex: &str) -> BulletPrototype {
+fn tinted_pellet(
+    style: DemoAttackStyle,
+    hit_behavior: HitBehaviorPreset,
+    hex: &str,
+) -> BulletPrototype {
     BulletPrototype {
         hit_behavior,
         color_tint: ColorTint {
             hex: hex.to_string(),
             rgba: None,
         },
-        ..pellet_prototype()
+        ..pellet_prototype(style)
     }
 }
 
-/// Build the demo attack performance used by `example_mod`.
-///
-/// 构建 `example_mod` 使用的演示攻击演出。
-pub fn demo_attack() -> DanmakuPerformance {
+fn build_demo_attack(style: DemoAttackStyle) -> DanmakuPerformance {
     performance! {
         prototypes {
-            "spear" => spear_prototype(),
-            "pellet" => pellet_prototype(),
-            "pellet_orange" => tinted_pellet(HitBehaviorPreset::DamageWhenStationary, "#FCA600"),
-            "pellet_blue" => tinted_pellet(HitBehaviorPreset::DamageWhenMoving, "#40FEFE"),
+            "spear" => spear_prototype(style),
+            "pellet" => pellet_prototype(style),
+            "pellet_orange" => tinted_pellet(style, HitBehaviorPreset::DamageWhenStationary, "#FCA600"),
+            "pellet_blue" => tinted_pellet(style, HitBehaviorPreset::DamageWhenMoving, "#40FEFE"),
         }
         behaviors {
             "move_right" => linear((1.0, 0.0), 200.0),
@@ -144,4 +153,24 @@ pub fn demo_attack() -> DanmakuPerformance {
                 .build(),
         ]
     }
+}
+
+/// Build the demo attack performance used by `example_mod`.
+///
+/// 构建 `example_mod` 使用的演示攻击演出。
+pub fn demo_attack() -> DanmakuPerformance {
+    build_demo_attack(DemoAttackStyle {
+        scale: 1.0,
+        z_index: 15.0,
+    })
+}
+
+/// Build the overworld-scaled demo attack performance used by `example_mod`.
+///
+/// 构建 `example_mod` 在大地图里使用的缩放版演示攻击演出。
+pub fn demo_attack_overworld() -> DanmakuPerformance {
+    build_demo_attack(DemoAttackStyle {
+        scale: 0.5,
+        z_index: 100.0,
+    })
 }

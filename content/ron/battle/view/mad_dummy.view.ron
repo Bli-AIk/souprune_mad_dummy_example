@@ -1,0 +1,79 @@
+#![enable(implicit_some)]
+// Mad Dummy idle animation view layout
+// 愤怒假人待机动画视图布局
+//
+// UT source: obj_maddum_drawer (mode=0, idle)
+//   rotter += 0.8/frame (30fps) → rotter/6 = 4.0 rad/s
+//   rot = sin(rotter/6) * 30 * rotmod   (idle rotmod=0.1 → rot ∈ [-3, +3]°)
+//
+//   GMS draw_sprite_ext (rotation CCW, same as Bevy):
+//     Base:  (x+5, y-75),            rotation = -rot
+//     Torso: (x,   y-115 + rot/4),   rotation = rot/2
+//     Legs:  (x+5, y-85),            rotation = rot/3
+//     Head:  (x-rot/3, y-150+rot/3), rotation = rot
+//
+//   coordinate_system: YDown — 直接使用 GMS 坐标，加载时自动转换为 Bevy y-up。
+//   Positions are GMS offsets from object origin (x, y).
+
+(
+    world_space: true,
+    coordinate_system: YDown,
+    roots: [
+        (
+            name: "MadDummy_Base",
+            sprite: (
+                visual: "assets/textures/battle/mad_dummy/base/0.png",
+                pivot: (0.476, 0.0),
+                transform: (
+                    translation: (5.0, -75.0, 0.0),
+                    scale: (2.0, 2.0, 2.0),
+                    rotation: "-sin(snap(@time, 1.0/30.0) * 4.0) * 3.0",
+                ),
+            ),
+        ),
+        (
+            name: "MadDummy_Legs",
+            sprite: (
+                visual: "assets/textures/battle/mad_dummy/leg/0.png",
+                pivot: (0.48, 0.462),
+                transform: (
+                    translation: (5.0, -85.0, 0.1),
+                    scale: (2.0, 2.0, 2.0),
+                    rotation: "sin(snap(@time, 1.0/30.0) * 4.0) * 1.0",
+                ),
+            ),
+        ),
+        (
+            name: "MadDummy_Torso",
+            sprite: (
+                visual: "assets/textures/battle/mad_dummy/torso/0.png",
+                pivot: (0.474, 0.5),
+                transform: (
+                    translation: (
+                        0.0,
+                        "-115.0 + sin(snap(@time, 1.0/30.0) * 4.0) * 0.75",
+                        0.2,
+                    ),
+                    scale: (2.0, 2.0, 2.0),
+                    rotation: "sin(snap(@time, 1.0/30.0) * 4.0) * 1.5",
+                ),
+            ),
+        ),
+        (
+            name: "MadDummy_Head",
+            sprite: (
+                visual: "assets/textures/battle/mad_dummy/head/0.png",
+                pivot: (0.516, 0.471),
+                transform: (
+                    translation: (
+                        "-sin(snap(@time, 1.0/30.0) * 4.0) * 1.0",
+                        "-150.0 + sin(snap(@time, 1.0/30.0) * 4.0) * 1.0",
+                        0.3,
+                    ),
+                    scale: (2.0, 2.0, 2.0),
+                    rotation: "sin(snap(@time, 1.0/30.0) * 4.0) * 3.0",
+                ),
+            ),
+        ),
+    ],
+)

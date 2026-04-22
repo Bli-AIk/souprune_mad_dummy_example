@@ -1,0 +1,23 @@
+#![enable(implicit_some)]
+// Battle background — green wall behind the enemy (spr_battlebg_0)
+// 战斗背景 — 怪物身后的绿色墙壁
+//
+// GMS room_battle: obj_battlebg at (0, 0), origin (0, 0), scale 1x
+// Sprite: 609×236 px
+
+(
+    world_space: true,
+    roots: [
+        (
+            name: "BattleBG",
+            sprite: (
+                visual: "assets/textures/battle/bg/0.png",
+                pivot: (0.0, 0.0),
+                transform: (
+                    translation: (-305.5, -5.5, -1.0),
+                    scale: (1.0, 1.0, 1.0),
+                ),
+            ),
+        ),
+    ],
+)

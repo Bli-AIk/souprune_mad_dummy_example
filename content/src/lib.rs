@@ -7,12 +7,18 @@ use souprune_vessel::prelude::*;
 
 mod demo_attack;
 mod performances;
+mod static_assets;
 
 vessel_guest! {
     fn build(reg: &mut Registry) -> Result<()> {
+        static_assets::emit_all(&mut reg)?;
         reg.emit_ron(
             "battle/danmaku/demo_attack.performance.ron",
             &demo_attack::demo_attack(),
+        )?;
+        reg.emit_ron(
+            "overworld/danmaku/demo_attack_ow.performance.ron",
+            &demo_attack::demo_attack_overworld(),
         )?;
         reg.emit_ron(
             "battle/danmaku/cotton_top_sweep.performance.ron",
