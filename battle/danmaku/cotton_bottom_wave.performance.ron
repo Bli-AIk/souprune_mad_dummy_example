@@ -18,23 +18,6 @@
 
 (
     prototypes: {
-        "dummy": (
-            visual: "battle/bullets/dummy_bullet/up.png",
-            collider: CircleCollider(0.1),
-            damage: 0.0,
-            lifetime: 3.5,
-            z_index: 14.0,
-            scale: 1.0,
-            rotation: 0.0,
-            hit_behavior: Default,
-            color_tint: (
-                hex: "",
-                rgba: None,
-            ),
-            flip_x: false,
-            flip_y: false,
-            frame_duration: None,
-        ),
         "cotton": (
             visual: "battle/bullets/dummy_shot",
             collider: BoxCollider(5.0, 5.0),
@@ -52,11 +35,33 @@
             flip_y: false,
             frame_duration: Some(0.08),
         ),
+        "dummy": (
+            visual: "battle/bullets/dummy_bullet/up.png",
+            collider: CircleCollider(0.1),
+            damage: 0.0,
+            lifetime: 3.5,
+            z_index: 14.0,
+            scale: 1.0,
+            rotation: 0.0,
+            hit_behavior: Default,
+            color_tint: (
+                hex: "",
+                rgba: None,
+            ),
+            flip_x: false,
+            flip_y: false,
+            frame_duration: None,
+        ),
     },
     behaviors: {
-        "aim_heart": Aimed((
-            speed: 90.0,
-            angle_offset: 0.0,
+        "enter_row2": Tween((
+            target: PositionY,
+            duration: 0.7,
+            ease: QuadOut,
+            from: 0.0,
+            to: 120.0,
+            delay: 0.0,
+            mode: Relative,
         )),
         "exit_row2": Tween((
             target: PositionY,
@@ -67,14 +72,9 @@
             delay: 1.3,
             mode: Relative,
         )),
-        "enter_row1": Tween((
-            target: PositionY,
-            duration: 0.7,
-            ease: QuadOut,
-            from: 0.0,
-            to: 150.0,
-            delay: 0.0,
-            mode: Relative,
+        "aim_heart": Aimed((
+            speed: 90.0,
+            angle_offset: 0.0,
         )),
         "exit_row1": Tween((
             target: PositionY,
@@ -85,12 +85,12 @@
             delay: 1.3,
             mode: Relative,
         )),
-        "enter_row2": Tween((
+        "enter_row1": Tween((
             target: PositionY,
             duration: 0.7,
             ease: QuadOut,
             from: 0.0,
-            to: 120.0,
+            to: 150.0,
             delay: 0.0,
             mode: Relative,
         )),

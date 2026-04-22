@@ -1,6 +1,6 @@
-//! Bootstrapped code asset for `battle/turns/cotton_side_pincer.sequence.ron`.
+//! Bootstrapped code asset for `battle/turns/cotton_surround.sequence.ron`.
 //!
-//! `battle/turns/cotton_side_pincer.sequence.ron` 的 bootstrap 代码资产。
+//! `battle/turns/cotton_surround.sequence.ron` 的 bootstrap 代码资产。
 
 use anyhow::Result;
 use souprune_schema::sequence::*;
@@ -11,7 +11,7 @@ use souprune_vessel::prelude::*;
 ///
 /// 发射当前 bootstrap 资产。
 pub fn emit(reg: &mut Registry) -> Result<()> {
-    reg.emit_ron("battle/turns/cotton_side_pincer.sequence.ron", &asset())?;
+    reg.emit_auto(file!(), &asset())?;
     Ok(())
 }
 
@@ -35,7 +35,7 @@ pub fn asset() -> SequenceAsset {
                 wait_for_completion: false,
             },
             Chapter::DanmakuPerformance {
-                performance: "battle/danmaku/cotton_side_pincer.performance.ron".into(),
+                performance: "battle/danmaku/cotton_surround.performance.ron".into(),
                 translation: Some((0.0, 50.0)),
             },
             Chapter::SetViewElement {

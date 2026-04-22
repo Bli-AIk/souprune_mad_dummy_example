@@ -20,8 +20,8 @@
     scope: Local,
     enums: {},
     facts: {
-        "battle:intro_shown": Bool(false),
         "test_mortar_shown": Bool(false),
+        "battle:intro_shown": Bool(false),
     },
     rules: [
         (

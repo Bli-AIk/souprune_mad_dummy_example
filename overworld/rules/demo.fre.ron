@@ -168,8 +168,8 @@
                 Custom(
                     action_type: "SetSprite",
                     params: {
-                        "target": "button_0",
                         "image": "assets/maps/ruins/tiles/objects/switch_0.png",
+                        "target": "button_0",
                     },
                 ),
                 Log(
@@ -269,8 +269,8 @@
                 Custom(
                     action_type: "SetSprite",
                     params: {
-                        "target": "block_1",
                         "image": "assets/maps/ruins/tiles/objects/spiketile_1.png",
+                        "target": "block_1",
                     },
                 ),
                 Custom(
@@ -307,15 +307,15 @@
                 Custom(
                     action_type: "SetSprite",
                     params: {
-                        "image": "assets/maps/ruins/tiles/objects/spiketile_0.png",
                         "target": "block_1",
+                        "image": "assets/maps/ruins/tiles/objects/spiketile_0.png",
                     },
                 ),
                 Custom(
                     action_type: "SetCollision",
                     params: {
-                        "target": "block_main",
                         "isEnabled": "true",
+                        "target": "block_main",
                     },
                 ),
                 Log(

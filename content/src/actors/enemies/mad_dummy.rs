@@ -10,7 +10,7 @@ use souprune_vessel::prelude::*;
 ///
 /// 发射当前 bootstrap 资产。
 pub fn emit(reg: &mut Registry) -> Result<()> {
-    reg.emit_ron("actors/enemies/mad_dummy.enemy.ron", &asset())?;
+    reg.emit_auto(file!(), &asset())?;
     Ok(())
 }
 
