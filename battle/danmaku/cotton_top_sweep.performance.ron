@@ -63,6 +63,10 @@
             delay: 0.0,
             mode: Relative,
         )),
+        "aim_heart": Aimed((
+            speed: 90.0,
+            angle_offset: 0.0,
+        )),
         "exit_to_top": Tween((
             target: PositionY,
             duration: 0.5,
@@ -71,10 +75,6 @@
             to: 170.0,
             delay: 1.3,
             mode: Relative,
-        )),
-        "aim_heart": Aimed((
-            speed: 90.0,
-            angle_offset: 0.0,
         )),
     },
     timeline: [

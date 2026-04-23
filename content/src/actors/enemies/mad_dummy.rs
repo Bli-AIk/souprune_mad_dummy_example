@@ -1,22 +1,16 @@
-//! Bootstrapped code asset for `actors/enemies/mad_dummy.enemy.ron`.
+//! Code representation of `actors/enemies/mad_dummy.enemy.ron`.
 //!
-//! `actors/enemies/mad_dummy.enemy.ron` 的 bootstrap 代码资源。
+//! `actors/enemies/mad_dummy.enemy.ron` 的代码表示。
 
 use anyhow::Result;
 use souprune_schema::enemy::*;
 use souprune_vessel::prelude::*;
 
-/// Emit this bootstrapped asset.
-///
-/// 生成当前 bootstrap 资源。
 pub fn emit(reg: &mut Registry) -> Result<()> {
     reg.emit_auto(file!(), &asset())?;
     Ok(())
 }
 
-/// Build the typed asset value.
-///
-/// 构建该资源的类型化值。
 pub fn asset() -> EnemyDef {
     EnemyDef {
         id: "mad_dummy".into(),
