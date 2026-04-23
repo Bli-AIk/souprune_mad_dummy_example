@@ -3,7 +3,6 @@
 //! `example_mod` 的参考 Vessel 生成演出。
 
 use souprune_schema::danmaku::*;
-use souprune_vessel::prelude::*;
 use std::collections::HashMap;
 
 /// Physics constants from the original UT engine.
@@ -97,29 +96,38 @@ fn battle_box_edge_event(
 ///
 /// 构建 `cotton_top_sweep` 演出。
 pub fn cotton_top_sweep() -> DanmakuPerformance {
-    performance! {
-        prototypes {
-            "dummy" => dummy_prototype("battle/bullets/dummy_bullet/down.png", 3.0),
-            "cotton" => cotton_prototype(),
-        }
-        behaviors {
-            "aim_heart" => BulletBehavior::aimed(90.0),
-            "enter_from_top" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.7,
-                Easing::QuadOut,
-                -170.0,
-                0.0,
+    DanmakuPerformance {
+        prototypes: HashMap::from([
+            (
+                "dummy".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/down.png", 3.0),
             ),
-            "exit_to_top" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.5,
-                Easing::QuadIn,
-                170.0,
-                1.3,
+            ("cotton".to_string(), cotton_prototype()),
+        ]),
+        behaviors: HashMap::from([
+            ("aim_heart".to_string(), BulletBehavior::aimed(90.0)),
+            (
+                "enter_from_top".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.7,
+                    Easing::QuadOut,
+                    -170.0,
+                    0.0,
+                ),
             ),
-        }
-        timeline [
+            (
+                "exit_to_top".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.5,
+                    Easing::QuadIn,
+                    170.0,
+                    1.3,
+                ),
+            ),
+        ]),
+        timeline: vec![
             TimelineEvent::delta(
                 0.0,
                 "dummy",
@@ -132,8 +140,8 @@ pub fn cotton_top_sweep() -> DanmakuPerformance {
                 SpawnPattern::edge(EdgeSide::Top, 9, 25.0, 80.0),
                 ["aim_heart"],
             ),
-        ]
-        duration: DurationExpr::Expr("@current + 4.0".into()),
+        ],
+        duration: Some(5.0),
     }
 }
 
@@ -141,74 +149,110 @@ pub fn cotton_top_sweep() -> DanmakuPerformance {
 ///
 /// 构建 `cotton_surround` 演出。
 pub fn cotton_surround() -> DanmakuPerformance {
-    performance! {
-        prototypes {
-            "dummy_right" => dummy_prototype("battle/bullets/dummy_bullet/right.png", 3.0),
-            "dummy_left" => dummy_prototype("battle/bullets/dummy_bullet/left.png", 3.0),
-            "dummy_down" => dummy_prototype("battle/bullets/dummy_bullet/down.png", 3.0),
-            "dummy_up" => dummy_prototype("battle/bullets/dummy_bullet/up.png", 3.0),
-            "cotton" => cotton_prototype(),
-        }
-        behaviors {
-            "aim_heart" => BulletBehavior::aimed(90.0),
-            "enter_from_left" => relative_tween(
-                DanmakuTweenTarget::PositionX,
-                0.7,
-                Easing::QuadOut,
-                170.0,
-                0.0,
+    DanmakuPerformance {
+        prototypes: HashMap::from([
+            (
+                "dummy_right".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/right.png", 3.0),
             ),
-            "exit_to_left" => relative_tween(
-                DanmakuTweenTarget::PositionX,
-                0.5,
-                Easing::QuadIn,
-                -170.0,
-                1.3,
+            (
+                "dummy_left".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/left.png", 3.0),
             ),
-            "enter_from_right" => relative_tween(
-                DanmakuTweenTarget::PositionX,
-                0.7,
-                Easing::QuadOut,
-                -170.0,
-                0.0,
+            (
+                "dummy_down".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/down.png", 3.0),
             ),
-            "exit_to_right" => relative_tween(
-                DanmakuTweenTarget::PositionX,
-                0.5,
-                Easing::QuadIn,
-                170.0,
-                1.3,
+            (
+                "dummy_up".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/up.png", 3.0),
             ),
-            "enter_from_top" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.7,
-                Easing::QuadOut,
-                -170.0,
-                0.0,
+            ("cotton".to_string(), cotton_prototype()),
+        ]),
+        behaviors: HashMap::from([
+            ("aim_heart".to_string(), BulletBehavior::aimed(90.0)),
+            (
+                "enter_from_left".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionX,
+                    0.7,
+                    Easing::QuadOut,
+                    170.0,
+                    0.0,
+                ),
             ),
-            "exit_to_top" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.5,
-                Easing::QuadIn,
-                170.0,
-                1.3,
+            (
+                "exit_to_left".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionX,
+                    0.5,
+                    Easing::QuadIn,
+                    -170.0,
+                    1.3,
+                ),
             ),
-            "enter_from_bottom" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.7,
-                Easing::QuadOut,
-                170.0,
-                0.0,
+            (
+                "enter_from_right".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionX,
+                    0.7,
+                    Easing::QuadOut,
+                    -170.0,
+                    0.0,
+                ),
             ),
-            "exit_to_bottom" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.5,
-                Easing::QuadIn,
-                -170.0,
-                1.3,
+            (
+                "exit_to_right".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionX,
+                    0.5,
+                    Easing::QuadIn,
+                    170.0,
+                    1.3,
+                ),
             ),
-        }
-        timeline [
+            (
+                "enter_from_top".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.7,
+                    Easing::QuadOut,
+                    -170.0,
+                    0.0,
+                ),
+            ),
+            (
+                "exit_to_top".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.5,
+                    Easing::QuadIn,
+                    170.0,
+                    1.3,
+                ),
+            ),
+            (
+                "enter_from_bottom".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.7,
+                    Easing::QuadOut,
+                    170.0,
+                    0.0,
+                ),
+            ),
+            (
+                "exit_to_bottom".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.5,
+                    Easing::QuadIn,
+                    -170.0,
+                    1.3,
+                ),
+            ),
+        ]),
+        timeline: vec![
             TimelineEvent::delta(
                 0.0,
                 "dummy_right",
@@ -257,8 +301,8 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 SpawnPattern::edge(EdgeSide::Bottom, 5, 25.0, 80.0),
                 ["aim_heart"],
             ),
-        ]
-        duration: DurationExpr::Expr("@current + 6.0".into()),
+        ],
+        duration: Some(7.0),
     }
 }
 
@@ -266,44 +310,62 @@ pub fn cotton_surround() -> DanmakuPerformance {
 ///
 /// 构建 `cotton_side_pincer` 演出。
 pub fn cotton_side_pincer() -> DanmakuPerformance {
-    performance! {
-        prototypes {
-            "dummy_right" => dummy_prototype("battle/bullets/dummy_bullet/right.png", 3.0),
-            "dummy_left" => dummy_prototype("battle/bullets/dummy_bullet/left.png", 3.0),
-            "cotton" => cotton_prototype(),
-        }
-        behaviors {
-            "aim_heart" => BulletBehavior::aimed(90.0),
-            "enter_from_left" => relative_tween(
-                DanmakuTweenTarget::PositionX,
-                0.7,
-                Easing::QuadOut,
-                170.0,
-                0.0,
+    DanmakuPerformance {
+        prototypes: HashMap::from([
+            (
+                "dummy_right".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/right.png", 3.0),
             ),
-            "exit_to_left" => relative_tween(
-                DanmakuTweenTarget::PositionX,
-                0.5,
-                Easing::QuadIn,
-                -170.0,
-                1.3,
+            (
+                "dummy_left".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/left.png", 3.0),
             ),
-            "enter_from_right" => relative_tween(
-                DanmakuTweenTarget::PositionX,
-                0.7,
-                Easing::QuadOut,
-                -170.0,
-                0.0,
+            ("cotton".to_string(), cotton_prototype()),
+        ]),
+        behaviors: HashMap::from([
+            ("aim_heart".to_string(), BulletBehavior::aimed(90.0)),
+            (
+                "enter_from_left".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionX,
+                    0.7,
+                    Easing::QuadOut,
+                    170.0,
+                    0.0,
+                ),
             ),
-            "exit_to_right" => relative_tween(
-                DanmakuTweenTarget::PositionX,
-                0.5,
-                Easing::QuadIn,
-                170.0,
-                1.3,
+            (
+                "exit_to_left".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionX,
+                    0.5,
+                    Easing::QuadIn,
+                    -170.0,
+                    1.3,
+                ),
             ),
-        }
-        timeline [
+            (
+                "enter_from_right".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionX,
+                    0.7,
+                    Easing::QuadOut,
+                    -170.0,
+                    0.0,
+                ),
+            ),
+            (
+                "exit_to_right".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionX,
+                    0.5,
+                    Easing::QuadIn,
+                    170.0,
+                    1.3,
+                ),
+            ),
+        ]),
+        timeline: vec![
             TimelineEvent::delta(
                 0.0,
                 "dummy_right",
@@ -328,8 +390,8 @@ pub fn cotton_side_pincer() -> DanmakuPerformance {
                 SpawnPattern::edge(EdgeSide::Right, 5, 25.0, 80.0),
                 ["aim_heart"],
             ),
-        ]
-        duration: DurationExpr::Expr("@current + 5.0".into()),
+        ],
+        duration: Some(6.0),
     }
 }
 
@@ -337,43 +399,58 @@ pub fn cotton_side_pincer() -> DanmakuPerformance {
 ///
 /// 构建 `cotton_bottom_wave` 演出。
 pub fn cotton_bottom_wave() -> DanmakuPerformance {
-    performance! {
-        prototypes {
-            "dummy" => dummy_prototype("battle/bullets/dummy_bullet/up.png", 3.5),
-            "cotton" => cotton_prototype(),
-        }
-        behaviors {
-            "aim_heart" => BulletBehavior::aimed(90.0),
-            "enter_row1" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.7,
-                Easing::QuadOut,
-                150.0,
-                0.0,
+    DanmakuPerformance {
+        prototypes: HashMap::from([
+            (
+                "dummy".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/up.png", 3.5),
             ),
-            "exit_row1" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.5,
-                Easing::QuadIn,
-                -150.0,
-                1.3,
+            ("cotton".to_string(), cotton_prototype()),
+        ]),
+        behaviors: HashMap::from([
+            ("aim_heart".to_string(), BulletBehavior::aimed(90.0)),
+            (
+                "enter_row1".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.7,
+                    Easing::QuadOut,
+                    150.0,
+                    0.0,
+                ),
             ),
-            "enter_row2" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.7,
-                Easing::QuadOut,
-                120.0,
-                0.0,
+            (
+                "exit_row1".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.5,
+                    Easing::QuadIn,
+                    -150.0,
+                    1.3,
+                ),
             ),
-            "exit_row2" => relative_tween(
-                DanmakuTweenTarget::PositionY,
-                0.5,
-                Easing::QuadIn,
-                -120.0,
-                1.3,
+            (
+                "enter_row2".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.7,
+                    Easing::QuadOut,
+                    120.0,
+                    0.0,
+                ),
             ),
-        }
-        timeline [
+            (
+                "exit_row2".to_string(),
+                relative_tween(
+                    DanmakuTweenTarget::PositionY,
+                    0.5,
+                    Easing::QuadIn,
+                    -120.0,
+                    1.3,
+                ),
+            ),
+        ]),
+        timeline: vec![
             TimelineEvent::delta(
                 0.0,
                 "dummy",
@@ -398,8 +475,8 @@ pub fn cotton_bottom_wave() -> DanmakuPerformance {
                 SpawnPattern::edge(EdgeSide::Bottom, 9, 22.0, 110.0),
                 ["aim_heart"],
             ),
-        ]
-        duration: DurationExpr::Expr("@current + 4.85".into()),
+        ],
+        duration: Some(6.0),
     }
 }
 
@@ -515,23 +592,31 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
         ));
     }
 
-    performance! {
-        prototypes {
-            "dummy_down" => dummy_prototype("battle/bullets/dummy_bullet/down.png", 6.0),
-            "dummy_up" => dummy_prototype("battle/bullets/dummy_bullet/up.png", 6.0),
-            "cotton" => cotton_prototype(),
-        }
-        behaviors {
-            "aim_heart" => BulletBehavior::aimed(COTTON_SPEED),
-            ..top_behaviors,
-            ..bot_behaviors,
-        }
-        timeline [
-            ..top_dummy_events,
-            ..bot_dummy_events,
-            ..top_fire_events,
-            ..bot_fire_events,
-        ]
-        duration: DurationExpr::Expr("@current + 8.0".into()),
+    let mut behaviors =
+        HashMap::from([("aim_heart".to_string(), BulletBehavior::aimed(COTTON_SPEED))]);
+    behaviors.extend(top_behaviors);
+    behaviors.extend(bot_behaviors);
+
+    let mut timeline = Vec::new();
+    timeline.extend(top_dummy_events);
+    timeline.extend(bot_dummy_events);
+    timeline.extend(top_fire_events);
+    timeline.extend(bot_fire_events);
+
+    DanmakuPerformance {
+        prototypes: HashMap::from([
+            (
+                "dummy_down".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/down.png", 6.0),
+            ),
+            (
+                "dummy_up".to_string(),
+                dummy_prototype("battle/bullets/dummy_bullet/up.png", 6.0),
+            ),
+            ("cotton".to_string(), cotton_prototype()),
+        ]),
+        behaviors,
+        timeline,
+        duration: Some(12.27),
     }
 }
