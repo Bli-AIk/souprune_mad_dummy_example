@@ -18,6 +18,40 @@
 
 (
     prototypes: {
+        "pellet": (
+            visual: "flowey_pellet",
+            collider: BoxCollider(6.0, 6.0),
+            damage: 1.0,
+            lifetime: 3.0,
+            z_index: 15.0,
+            scale: 1.0,
+            rotation: 0.0,
+            hit_behavior: Default,
+            color_tint: (
+                hex: "",
+                rgba: None,
+            ),
+            flip_x: false,
+            flip_y: false,
+            frame_duration: Some(0.05),
+        ),
+        "pellet_blue": (
+            visual: "flowey_pellet",
+            collider: BoxCollider(6.0, 6.0),
+            damage: 1.0,
+            lifetime: 3.0,
+            z_index: 15.0,
+            scale: 1.0,
+            rotation: 0.0,
+            hit_behavior: DamageWhenMoving,
+            color_tint: (
+                hex: "#40FEFE",
+                rgba: None,
+            ),
+            flip_x: false,
+            flip_y: false,
+            frame_duration: Some(0.05),
+        ),
         "pellet_orange": (
             visual: "flowey_pellet",
             collider: BoxCollider(6.0, 6.0),
@@ -52,42 +86,15 @@
             flip_y: false,
             frame_duration: None,
         ),
-        "pellet_blue": (
-            visual: "flowey_pellet",
-            collider: BoxCollider(6.0, 6.0),
-            damage: 1.0,
-            lifetime: 3.0,
-            z_index: 15.0,
-            scale: 1.0,
-            rotation: 0.0,
-            hit_behavior: DamageWhenMoving,
-            color_tint: (
-                hex: "#40FEFE",
-                rgba: None,
-            ),
-            flip_x: false,
-            flip_y: false,
-            frame_duration: Some(0.05),
-        ),
-        "pellet": (
-            visual: "flowey_pellet",
-            collider: BoxCollider(6.0, 6.0),
-            damage: 1.0,
-            lifetime: 3.0,
-            z_index: 15.0,
-            scale: 1.0,
-            rotation: 0.0,
-            hit_behavior: Default,
-            color_tint: (
-                hex: "",
-                rgba: None,
-            ),
-            flip_x: false,
-            flip_y: false,
-            frame_duration: Some(0.05),
-        ),
     },
     behaviors: {
+        "aimed": Custom(
+            id: "aimed_spear",
+            props: {
+                "speed": 180.0,
+                "smoothness": 0.8,
+            },
+        ),
         "fade_in": Tween((
             target: Opacity,
             duration: 2.0,
@@ -97,18 +104,13 @@
             delay: 0.0,
             mode: Relative,
         )),
-        "spiral_in": Orbital((
-            angular_velocity: 0.8,
-            radial_velocity: -60.0,
-        )),
-        "wave_burst": Custom(
-            id: "wave_burst",
+        "spiral_homing": Custom(
+            id: "spiral_homing",
             props: {
-                "wave_amplitude": 30.0,
-                "wave_frequency": 4.0,
-                "base_speed": 120.0,
-                "burst_multiplier": 2.5,
-                "burst_time": 0.8,
+                "homing_delay": 0.5,
+                "spiral_speed": 80.0,
+                "homing_strength": 0.5,
+                "angular_velocity": 3.0,
             },
         ),
         "gravity_drop": Custom(
@@ -118,33 +120,31 @@
                 "gravity": 200.0,
             },
         ),
+        "move_down": Linear((
+            dir: (0.0, -1.0),
+            speed: 150.0,
+        )),
         "move_right": Linear((
             dir: (1.0, 0.0),
             speed: 200.0,
         )),
-        "aimed": Custom(
-            id: "aimed_spear",
-            props: {
-                "speed": 180.0,
-                "smoothness": 0.8,
-            },
-        ),
         "move_left": Linear((
             dir: (-1.0, 0.0),
             speed: 200.0,
         )),
-        "spiral_homing": Custom(
-            id: "spiral_homing",
+        "wave_burst": Custom(
+            id: "wave_burst",
             props: {
-                "homing_delay": 0.5,
-                "spiral_speed": 80.0,
-                "angular_velocity": 3.0,
-                "homing_strength": 0.5,
+                "burst_multiplier": 2.5,
+                "wave_amplitude": 30.0,
+                "base_speed": 120.0,
+                "wave_frequency": 4.0,
+                "burst_time": 0.8,
             },
         ),
-        "move_down": Linear((
-            dir: (0.0, -1.0),
-            speed: 150.0,
+        "spiral_in": Orbital((
+            angular_velocity: 0.8,
+            radial_velocity: -60.0,
         )),
     },
     timeline: [

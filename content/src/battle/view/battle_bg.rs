@@ -18,11 +18,22 @@ pub fn emit(reg: &mut Registry) -> Result<()> {
 ///
 /// 构建该资源的类型化值。
 pub fn asset() -> ViewLayoutAsset {
-    view_layout(vec![view_node("BattleBG").sprite(
-        view_sprite("assets/textures/battle/bg/0.png")
-            .translation(vector3(-305.5, -5.5, -1.0))
-            .scale(vector3(1.0, 1.0, 1.0))
-            .pivot(vector2(0.0, 0.0)),
-    )])
-    .world_space(true)
+    ViewLayout {
+        roots: Vec::from([ViewNodeDef {
+            name: "BattleBG".into(),
+            sprite: Some(SpriteDef {
+                visual: Visual("assets/textures/battle/bg/0.png".into()),
+                transform: Some(SerializableTransform {
+                    translation: Some(vector3(-305.5, -5.5, -1.0)),
+                    scale: Some(vector3(1.0, 1.0, 1.0)),
+                    ..Default::default()
+                }),
+                pivot: Some(vector2(0.0, 0.0)),
+                ..Default::default()
+            }),
+            ..Default::default()
+        }]),
+        world_space: true,
+        ..Default::default()
+    }
 }

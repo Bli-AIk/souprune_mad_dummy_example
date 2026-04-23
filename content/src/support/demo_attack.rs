@@ -12,13 +12,7 @@ struct DemoAttackStyle {
 }
 
 fn custom_behavior(id: &str, props: &[(&str, f32)]) -> BulletBehavior {
-    BulletBehavior::Custom {
-        id: id.to_string(),
-        props: props
-            .iter()
-            .map(|(key, value)| ((*key).to_string(), *value))
-            .collect(),
-    }
+    BulletBehavior::custom(id, props.iter().copied())
 }
 
 fn fade_in() -> BulletBehavior {
@@ -48,7 +42,7 @@ fn scale_pop() -> BulletBehavior {
 fn spear_prototype(style: DemoAttackStyle) -> BulletPrototype {
     BulletPrototype {
         visual: "spear".to_string(),
-        collider: rect(3.0, 12.0),
+        collider: ColliderShape::rectangle(3.0, 12.0),
         damage: 2.0,
         lifetime: 4.0,
         z_index: style.z_index,
@@ -61,7 +55,7 @@ fn spear_prototype(style: DemoAttackStyle) -> BulletPrototype {
 fn pellet_prototype(style: DemoAttackStyle) -> BulletPrototype {
     BulletPrototype {
         visual: "flowey_pellet".to_string(),
-        collider: rect(6.0, 6.0),
+        collider: ColliderShape::rectangle(6.0, 6.0),
         damage: 1.0,
         lifetime: 3.0,
         z_index: style.z_index,
@@ -78,10 +72,7 @@ fn tinted_pellet(
 ) -> BulletPrototype {
     BulletPrototype {
         hit_behavior,
-        color_tint: ColorTint {
-            hex: hex.to_string(),
-            rgba: None,
-        },
+        color_tint: ColorTint::hex(hex),
         ..pellet_prototype(style)
     }
 }
@@ -95,10 +86,10 @@ fn build_demo_attack(style: DemoAttackStyle) -> DanmakuPerformance {
             "pellet_blue" => tinted_pellet(style, HitBehaviorPreset::DamageWhenMoving, "#40FEFE"),
         }
         behaviors {
-            "move_right" => linear((1.0, 0.0), 200.0),
-            "move_left" => linear((-1.0, 0.0), 200.0),
-            "move_down" => linear((0.0, -1.0), 150.0),
-            "spiral_in" => orbital(0.8, -60.0),
+            "move_right" => BulletBehavior::linear((1.0, 0.0), 200.0),
+            "move_left" => BulletBehavior::linear((-1.0, 0.0), 200.0),
+            "move_down" => BulletBehavior::linear((0.0, -1.0), 150.0),
+            "spiral_in" => BulletBehavior::orbital(0.8, -60.0),
             "aimed" => custom_behavior("aimed_spear", &[("speed", 180.0), ("smoothness", 0.8)]),
             "fade_in" => fade_in(),
             "spiral_homing" => custom_behavior(
@@ -126,31 +117,56 @@ fn build_demo_attack(style: DemoAttackStyle) -> DanmakuPerformance {
             ),
         }
         timeline [
-            event_delta(0.0, "spear", edge(EdgeSide::Left, 5).spacing(35.0).margin(250.0).build())
-                .apply(&["move_right", "fade_in"])
-                .build(),
-            event_delta(1.5, "pellet_orange", ring(12, 100.0).build())
-                .apply(&["spiral_in", "fade_in"])
-                .build(),
-            event_delta(2.0, "spear", line(3).spacing(60.0).direction((0.0, -1.0)).build())
-                .apply(&["aimed", "fade_in"])
-                .build(),
-            event_delta(1.5, "pellet_blue", ring(16, 80.0).start_angle(0.785).build())
-                .apply(&["spiral_in"])
-                .behaviors(vec![scale_pop()])
-                .build(),
-            event_delta(1.5, "spear", edge(EdgeSide::Right, 7).spacing(30.0).margin(250.0).build())
-                .apply(&["move_left"])
-                .build(),
-            event_delta(2.0, "pellet_orange", ring(8, 60.0).build())
-                .apply(&["spiral_homing", "fade_in"])
-                .build(),
-            event_delta(2.0, "spear", line(5).spacing(40.0).direction((0.0, -1.0)).build())
-                .apply(&["wave_burst", "fade_in"])
-                .build(),
-            event_delta(2.0, "pellet_blue", line(6).spacing(50.0).direction((1.0, 0.0)).build())
-                .apply(&["gravity_drop", "fade_in"])
-                .build(),
+            TimelineEvent::delta(
+                0.0,
+                "spear",
+                SpawnPattern::edge(EdgeSide::Left, 5, 35.0, 250.0),
+                ["move_right", "fade_in"],
+            ),
+            TimelineEvent::delta(
+                1.5,
+                "pellet_orange",
+                SpawnPattern::ring(12, 100.0),
+                ["spiral_in", "fade_in"],
+            ),
+            TimelineEvent::delta(
+                2.0,
+                "spear",
+                SpawnPattern::line(3, 60.0, (0.0, -1.0)),
+                ["aimed", "fade_in"],
+            ),
+            TimelineEvent::delta_with(
+                1.5,
+                "pellet_blue",
+                SpawnPattern::ring_with_start_angle(16, 80.0, 0.785),
+                (0.0, 0.0),
+                ["spiral_in"],
+                [scale_pop()],
+            ),
+            TimelineEvent::delta(
+                1.5,
+                "spear",
+                SpawnPattern::edge(EdgeSide::Right, 7, 30.0, 250.0),
+                ["move_left"],
+            ),
+            TimelineEvent::delta(
+                2.0,
+                "pellet_orange",
+                SpawnPattern::ring(8, 60.0),
+                ["spiral_homing", "fade_in"],
+            ),
+            TimelineEvent::delta(
+                2.0,
+                "spear",
+                SpawnPattern::line(5, 40.0, (0.0, -1.0)),
+                ["wave_burst", "fade_in"],
+            ),
+            TimelineEvent::delta(
+                2.0,
+                "pellet_blue",
+                SpawnPattern::line(6, 50.0, (1.0, 0.0)),
+                ["gravity_drop", "fade_in"],
+            ),
         ]
     }
 }

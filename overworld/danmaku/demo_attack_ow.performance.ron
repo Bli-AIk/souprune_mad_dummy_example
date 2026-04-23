@@ -88,18 +88,6 @@
         ),
     },
     behaviors: {
-        "move_right": Linear((
-            dir: (1.0, 0.0),
-            speed: 200.0,
-        )),
-        "move_left": Linear((
-            dir: (-1.0, 0.0),
-            speed: 200.0,
-        )),
-        "spiral_in": Orbital((
-            angular_velocity: 0.8,
-            radial_velocity: -60.0,
-        )),
         "fade_in": Tween((
             target: Opacity,
             duration: 2.0,
@@ -109,6 +97,27 @@
             delay: 0.0,
             mode: Relative,
         )),
+        "move_down": Linear((
+            dir: (0.0, -1.0),
+            speed: 150.0,
+        )),
+        "spiral_in": Orbital((
+            angular_velocity: 0.8,
+            radial_velocity: -60.0,
+        )),
+        "spiral_homing": Custom(
+            id: "spiral_homing",
+            props: {
+                "angular_velocity": 3.0,
+                "homing_strength": 0.5,
+                "spiral_speed": 80.0,
+                "homing_delay": 0.5,
+            },
+        ),
+        "move_right": Linear((
+            dir: (1.0, 0.0),
+            speed: 200.0,
+        )),
         "aimed": Custom(
             id: "aimed_spear",
             props: {
@@ -116,34 +125,25 @@
                 "smoothness": 0.8,
             },
         ),
-        "move_down": Linear((
-            dir: (0.0, -1.0),
-            speed: 150.0,
-        )),
         "wave_burst": Custom(
             id: "wave_burst",
             props: {
                 "wave_amplitude": 30.0,
-                "burst_time": 0.8,
-                "burst_multiplier": 2.5,
                 "wave_frequency": 4.0,
                 "base_speed": 120.0,
+                "burst_time": 0.8,
+                "burst_multiplier": 2.5,
             },
         ),
+        "move_left": Linear((
+            dir: (-1.0, 0.0),
+            speed: 200.0,
+        )),
         "gravity_drop": Custom(
             id: "gravity_drop",
             props: {
-                "bounce_damping": 0.7,
                 "gravity": 200.0,
-            },
-        ),
-        "spiral_homing": Custom(
-            id: "spiral_homing",
-            props: {
-                "angular_velocity": 3.0,
-                "homing_delay": 0.5,
-                "homing_strength": 0.5,
-                "spiral_speed": 80.0,
+                "bounce_damping": 0.7,
             },
         ),
     },

@@ -37,22 +37,26 @@ fn round_2(value: f32) -> f32 {
 }
 
 fn dummy_prototype(visual: &str, lifetime: f32) -> BulletPrototype {
-    prototype(visual)
-        .collider(circle(0.1))
-        .damage(0.0)
-        .lifetime(lifetime)
-        .z_index(14.0)
-        .build()
+    BulletPrototype {
+        visual: visual.into(),
+        collider: ColliderShape::circle(0.1),
+        damage: 0.0,
+        lifetime,
+        z_index: 14.0,
+        ..Default::default()
+    }
 }
 
 fn cotton_prototype() -> BulletPrototype {
-    prototype("battle/bullets/dummy_shot")
-        .collider(rect(5.0, 5.0))
-        .damage(5.0)
-        .lifetime(4.0)
-        .z_index(15.0)
-        .frame_duration(0.08)
-        .build()
+    BulletPrototype {
+        visual: "battle/bullets/dummy_shot".into(),
+        collider: ColliderShape::rectangle(5.0, 5.0),
+        damage: 5.0,
+        lifetime: 4.0,
+        z_index: 15.0,
+        frame_duration: Some(0.08),
+        ..Default::default()
+    }
 }
 
 fn relative_tween(
@@ -73,6 +77,22 @@ fn relative_tween(
     })
 }
 
+fn battle_box_edge_event(
+    t: f32,
+    spawn: &str,
+    side: EdgeSide,
+    count: usize,
+    spacing: f32,
+    outside_margin: f32,
+) -> TimelineEvent {
+    TimelineEvent::absolute(
+        t,
+        spawn,
+        SpawnPattern::box_edge("BattleBox", side, count, spacing, outside_margin),
+        std::iter::empty::<&str>(),
+    )
+}
+
 /// Build the `cotton_top_sweep` performance.
 ///
 /// 构建 `cotton_top_sweep` 演出。
@@ -83,7 +103,7 @@ pub fn cotton_top_sweep() -> DanmakuPerformance {
             "cotton" => cotton_prototype(),
         }
         behaviors {
-            "aim_heart" => aimed(90.0),
+            "aim_heart" => BulletBehavior::aimed(90.0),
             "enter_from_top" => relative_tween(
                 DanmakuTweenTarget::PositionY,
                 0.7,
@@ -100,12 +120,18 @@ pub fn cotton_top_sweep() -> DanmakuPerformance {
             ),
         }
         timeline [
-            event_delta(0.0, "dummy", edge(EdgeSide::Top, 9).spacing(25.0).margin(250.0).build())
-                .apply(&["enter_from_top", "exit_to_top"])
-                .build(),
-            event_delta(1.0, "cotton", edge(EdgeSide::Top, 9).spacing(25.0).margin(80.0).build())
-                .apply(&["aim_heart"])
-                .build(),
+            TimelineEvent::delta(
+                0.0,
+                "dummy",
+                SpawnPattern::edge(EdgeSide::Top, 9, 25.0, 250.0),
+                ["enter_from_top", "exit_to_top"],
+            ),
+            TimelineEvent::delta(
+                1.0,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Top, 9, 25.0, 80.0),
+                ["aim_heart"],
+            ),
         ]
         duration: DurationExpr::Expr("@current + 4.0".into()),
     }
@@ -124,7 +150,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
             "cotton" => cotton_prototype(),
         }
         behaviors {
-            "aim_heart" => aimed(90.0),
+            "aim_heart" => BulletBehavior::aimed(90.0),
             "enter_from_left" => relative_tween(
                 DanmakuTweenTarget::PositionX,
                 0.7,
@@ -183,30 +209,54 @@ pub fn cotton_surround() -> DanmakuPerformance {
             ),
         }
         timeline [
-            event_delta(0.0, "dummy_right", edge(EdgeSide::Left, 2).spacing(40.0).margin(250.0).build())
-                .apply(&["enter_from_left", "exit_to_left"])
-                .build(),
-            event_delta(0.0, "dummy_left", edge(EdgeSide::Right, 2).spacing(40.0).margin(250.0).build())
-                .apply(&["enter_from_right", "exit_to_right"])
-                .build(),
-            event_delta(0.0, "dummy_down", edge(EdgeSide::Top, 5).spacing(25.0).margin(250.0).build())
-                .apply(&["enter_from_top", "exit_to_top"])
-                .build(),
-            event_delta(0.0, "dummy_up", edge(EdgeSide::Bottom, 5).spacing(25.0).margin(250.0).build())
-                .apply(&["enter_from_bottom", "exit_to_bottom"])
-                .build(),
-            event_delta(1.0, "cotton", edge(EdgeSide::Left, 2).spacing(40.0).margin(80.0).build())
-                .apply(&["aim_heart"])
-                .build(),
-            event_delta(0.0, "cotton", edge(EdgeSide::Right, 2).spacing(40.0).margin(80.0).build())
-                .apply(&["aim_heart"])
-                .build(),
-            event_delta(0.0, "cotton", edge(EdgeSide::Top, 5).spacing(25.0).margin(80.0).build())
-                .apply(&["aim_heart"])
-                .build(),
-            event_delta(0.0, "cotton", edge(EdgeSide::Bottom, 5).spacing(25.0).margin(80.0).build())
-                .apply(&["aim_heart"])
-                .build(),
+            TimelineEvent::delta(
+                0.0,
+                "dummy_right",
+                SpawnPattern::edge(EdgeSide::Left, 2, 40.0, 250.0),
+                ["enter_from_left", "exit_to_left"],
+            ),
+            TimelineEvent::delta(
+                0.0,
+                "dummy_left",
+                SpawnPattern::edge(EdgeSide::Right, 2, 40.0, 250.0),
+                ["enter_from_right", "exit_to_right"],
+            ),
+            TimelineEvent::delta(
+                0.0,
+                "dummy_down",
+                SpawnPattern::edge(EdgeSide::Top, 5, 25.0, 250.0),
+                ["enter_from_top", "exit_to_top"],
+            ),
+            TimelineEvent::delta(
+                0.0,
+                "dummy_up",
+                SpawnPattern::edge(EdgeSide::Bottom, 5, 25.0, 250.0),
+                ["enter_from_bottom", "exit_to_bottom"],
+            ),
+            TimelineEvent::delta(
+                1.0,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Left, 2, 40.0, 80.0),
+                ["aim_heart"],
+            ),
+            TimelineEvent::delta(
+                0.0,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Right, 2, 40.0, 80.0),
+                ["aim_heart"],
+            ),
+            TimelineEvent::delta(
+                0.0,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Top, 5, 25.0, 80.0),
+                ["aim_heart"],
+            ),
+            TimelineEvent::delta(
+                0.0,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Bottom, 5, 25.0, 80.0),
+                ["aim_heart"],
+            ),
         ]
         duration: DurationExpr::Expr("@current + 6.0".into()),
     }
@@ -223,7 +273,7 @@ pub fn cotton_side_pincer() -> DanmakuPerformance {
             "cotton" => cotton_prototype(),
         }
         behaviors {
-            "aim_heart" => aimed(90.0),
+            "aim_heart" => BulletBehavior::aimed(90.0),
             "enter_from_left" => relative_tween(
                 DanmakuTweenTarget::PositionX,
                 0.7,
@@ -254,18 +304,30 @@ pub fn cotton_side_pincer() -> DanmakuPerformance {
             ),
         }
         timeline [
-            event_delta(0.0, "dummy_right", edge(EdgeSide::Left, 5).spacing(25.0).margin(250.0).build())
-                .apply(&["enter_from_left", "exit_to_left"])
-                .build(),
-            event_delta(0.0, "dummy_left", edge(EdgeSide::Right, 5).spacing(25.0).margin(250.0).build())
-                .apply(&["enter_from_right", "exit_to_right"])
-                .build(),
-            event_delta(1.0, "cotton", edge(EdgeSide::Left, 5).spacing(25.0).margin(80.0).build())
-                .apply(&["aim_heart"])
-                .build(),
-            event_delta(0.0, "cotton", edge(EdgeSide::Right, 5).spacing(25.0).margin(80.0).build())
-                .apply(&["aim_heart"])
-                .build(),
+            TimelineEvent::delta(
+                0.0,
+                "dummy_right",
+                SpawnPattern::edge(EdgeSide::Left, 5, 25.0, 250.0),
+                ["enter_from_left", "exit_to_left"],
+            ),
+            TimelineEvent::delta(
+                0.0,
+                "dummy_left",
+                SpawnPattern::edge(EdgeSide::Right, 5, 25.0, 250.0),
+                ["enter_from_right", "exit_to_right"],
+            ),
+            TimelineEvent::delta(
+                1.0,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Left, 5, 25.0, 80.0),
+                ["aim_heart"],
+            ),
+            TimelineEvent::delta(
+                0.0,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Right, 5, 25.0, 80.0),
+                ["aim_heart"],
+            ),
         ]
         duration: DurationExpr::Expr("@current + 5.0".into()),
     }
@@ -281,7 +343,7 @@ pub fn cotton_bottom_wave() -> DanmakuPerformance {
             "cotton" => cotton_prototype(),
         }
         behaviors {
-            "aim_heart" => aimed(90.0),
+            "aim_heart" => BulletBehavior::aimed(90.0),
             "enter_row1" => relative_tween(
                 DanmakuTweenTarget::PositionY,
                 0.7,
@@ -312,18 +374,30 @@ pub fn cotton_bottom_wave() -> DanmakuPerformance {
             ),
         }
         timeline [
-            event_delta(0.0, "dummy", edge(EdgeSide::Bottom, 9).spacing(22.0).margin(230.0).build())
-                .apply(&["enter_row1", "exit_row1"])
-                .build(),
-            event_delta(0.15, "dummy", edge(EdgeSide::Bottom, 9).spacing(22.0).margin(280.0).build())
-                .apply(&["enter_row2", "exit_row2"])
-                .build(),
-            event_delta(0.85, "cotton", edge(EdgeSide::Bottom, 9).spacing(22.0).margin(80.0).build())
-                .apply(&["aim_heart"])
-                .build(),
-            event_delta(0.15, "cotton", edge(EdgeSide::Bottom, 9).spacing(22.0).margin(110.0).build())
-                .apply(&["aim_heart"])
-                .build(),
+            TimelineEvent::delta(
+                0.0,
+                "dummy",
+                SpawnPattern::edge(EdgeSide::Bottom, 9, 22.0, 230.0),
+                ["enter_row1", "exit_row1"],
+            ),
+            TimelineEvent::delta(
+                0.15,
+                "dummy",
+                SpawnPattern::edge(EdgeSide::Bottom, 9, 22.0, 280.0),
+                ["enter_row2", "exit_row2"],
+            ),
+            TimelineEvent::delta(
+                0.85,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Bottom, 9, 22.0, 80.0),
+                ["aim_heart"],
+            ),
+            TimelineEvent::delta(
+                0.15,
+                "cotton",
+                SpawnPattern::edge(EdgeSide::Bottom, 9, 22.0, 110.0),
+                ["aim_heart"],
+            ),
         ]
         duration: DurationExpr::Expr("@current + 4.85".into()),
     }
@@ -343,7 +417,7 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
 
         top_behaviors.insert(
             format!("top{}_enter", index + 1),
-            tween(
+            BulletBehavior::tween(
                 DanmakuTweenTarget::PositionY,
                 enter_duration,
                 Easing::Linear,
@@ -352,7 +426,7 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
         );
         top_behaviors.insert(
             format!("top{}_exit", index + 1),
-            tween_delayed(
+            BulletBehavior::tween_delayed(
                 DanmakuTweenTarget::PositionY,
                 EXIT_DURATION,
                 Easing::Linear,
@@ -369,7 +443,7 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
 
         bot_behaviors.insert(
             format!("bot{}_enter", index + 1),
-            tween(
+            BulletBehavior::tween(
                 DanmakuTweenTarget::PositionY,
                 enter_duration,
                 Easing::Linear,
@@ -378,7 +452,7 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
         );
         bot_behaviors.insert(
             format!("bot{}_exit", index + 1),
-            tween_delayed(
+            BulletBehavior::tween_delayed(
                 DanmakuTweenTarget::PositionY,
                 EXIT_DURATION,
                 Easing::Linear,
@@ -391,92 +465,64 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
     let mut top_dummy_events = Vec::new();
 
     for &_margin in &TOP_MARGINS {
-        top_dummy_events.push(
-            event_at(
-                0.0,
-                "dummy_down",
-                box_edge("BattleBox", EdgeSide::Top, 3)
-                    .spacing(55.0)
-                    .outside(0.0)
-                    .build(),
-            )
-            .build(),
-        );
+        top_dummy_events.push(battle_box_edge_event(
+            0.0,
+            "dummy_down",
+            EdgeSide::Top,
+            3,
+            55.0,
+            0.0,
+        ));
     }
 
     let mut bot_dummy_events = Vec::new();
     for &margin in &BOT_MARGINS {
-        bot_dummy_events.push(
-            event_at(
-                0.0,
-                "dummy_up",
-                box_edge("BattleBox", EdgeSide::Bottom, 6)
-                    .spacing(20.0)
-                    .outside(margin)
-                    .build(),
-            )
-            .build(),
-        );
+        bot_dummy_events.push(battle_box_edge_event(
+            0.0,
+            "dummy_up",
+            EdgeSide::Bottom,
+            6,
+            20.0,
+            margin,
+        ));
     }
 
     let mut top_fire_events = Vec::new();
     for &margin in &TOP_MARGINS {
         let enter_duration = round_2((margin + TOP_PEN) / SPEED);
         let fire_time = round_2(enter_duration + PAUSE);
-        top_fire_events.push(
-            event_at(
-                fire_time,
-                "cotton",
-                box_edge("BattleBox", EdgeSide::Top, 3)
-                    .spacing(55.0)
-                    .outside(-TOP_PEN)
-                    .build(),
-            )
-            .build(),
-        );
+        top_fire_events.push(battle_box_edge_event(
+            fire_time,
+            "cotton",
+            EdgeSide::Top,
+            3,
+            55.0,
+            -TOP_PEN,
+        ));
     }
 
     let mut bot_fire_events = Vec::new();
     for &margin in &BOT_MARGINS {
         let enter_duration = round_2((margin + BOT_PEN) / SPEED);
         let fire_time = round_2(enter_duration + PAUSE);
-        bot_fire_events.push(
-            event_at(
-                fire_time,
-                "cotton",
-                box_edge("BattleBox", EdgeSide::Bottom, 6)
-                    .spacing(20.0)
-                    .outside(-BOT_PEN)
-                    .build(),
-            )
-            .build(),
-        );
+        bot_fire_events.push(battle_box_edge_event(
+            fire_time,
+            "cotton",
+            EdgeSide::Bottom,
+            6,
+            20.0,
+            -BOT_PEN,
+        ));
     }
 
     performance! {
         prototypes {
-            "dummy_down" => prototype("battle/bullets/dummy_bullet/down.png")
-                .collider(circle(0.1))
-                .damage(0.0)
-                .lifetime(6.0)
-                .z_index(14.0)
-                .build(),
-            "dummy_up" => prototype("battle/bullets/dummy_bullet/up.png")
-                .collider(circle(0.1))
-                .damage(0.0)
-                .lifetime(6.0)
-                .z_index(14.0)
-                .build(),
-            "cotton" => prototype("battle/bullets/dummy_shot")
-                .collider(rect(5.0, 5.0))
-                .damage(5.0)
-                .lifetime(4.0)
-                .z_index(15.0)
-                .frame_duration(0.08)
-                .build(),
+            "dummy_down" => dummy_prototype("battle/bullets/dummy_bullet/down.png", 6.0),
+            "dummy_up" => dummy_prototype("battle/bullets/dummy_bullet/up.png", 6.0),
+            "cotton" => cotton_prototype(),
         }
         behaviors {
-            "aim_heart" => aimed(COTTON_SPEED),
+            "aim_heart" => BulletBehavior::aimed(COTTON_SPEED),
             ..top_behaviors,
             ..bot_behaviors,
         }

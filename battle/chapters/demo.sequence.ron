@@ -56,8 +56,8 @@
             path: Some("battle/templates/undertale_battle.sequence.ron"),
             path_fact: None,
             params: {
-                "enemy_id": String("mad_dummy"),
                 "turn_narration": String("battle/chapters/demo_turn_narration.sequence.ron"),
+                "enemy_id": String("mad_dummy"),
             },
         ),
     ],

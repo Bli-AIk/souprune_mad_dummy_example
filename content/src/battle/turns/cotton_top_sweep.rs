@@ -19,11 +19,8 @@ pub fn asset() -> SequenceAsset {
         exits: vec![].into_iter().collect(),
         chapters: vec![
             Chapter::SetViewElement {
-                selector: ElementSelector::LocalName("BattleBox".into()),
-                target: TweenTarget::BoxSize {
-                    from: None,
-                    to: Vec2Tuple::Positional(Val::Static(130.0), Val::Expr("@current".into())),
-                },
+                selector: ElementSelector::local("BattleBox"),
+                target: TweenTarget::box_size(Vec2Tuple::positional(130.0, Val::expr("@current"))),
                 duration: Some(0.85),
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: false,
@@ -33,11 +30,8 @@ pub fn asset() -> SequenceAsset {
                 translation: Some((0.0, 50.0)),
             },
             Chapter::SetViewElement {
-                selector: ElementSelector::LocalName("BattleBox".into()),
-                target: TweenTarget::BoxSize {
-                    from: None,
-                    to: Vec2Tuple::Positional(Val::Static(566.0), Val::Static(130.0)),
-                },
+                selector: ElementSelector::local("BattleBox"),
+                target: TweenTarget::box_size(Vec2Tuple::positional(566.0, 130.0)),
                 duration: Some(0.6),
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: false,
