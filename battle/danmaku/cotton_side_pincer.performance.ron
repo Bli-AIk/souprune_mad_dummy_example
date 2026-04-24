@@ -15,6 +15,7 @@
 //    structure globally, please edit the Vessel source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
+// Generated at: 2026-04-24 07:06:01 +08:00
 
 (
     prototypes: {
@@ -35,8 +36,8 @@
             flip_y: false,
             frame_duration: Some(0.08),
         ),
-        "dummy_right": (
-            visual: "battle/bullets/dummy_bullet/right.png",
+        "dummy_left": (
+            visual: "battle/bullets/dummy_bullet/left.png",
             collider: CircleCollider(0.1),
             damage: 0.0,
             lifetime: 3.0,
@@ -52,8 +53,8 @@
             flip_y: false,
             frame_duration: None,
         ),
-        "dummy_left": (
-            visual: "battle/bullets/dummy_bullet/left.png",
+        "dummy_right": (
+            visual: "battle/bullets/dummy_bullet/right.png",
             collider: CircleCollider(0.1),
             damage: 0.0,
             lifetime: 3.0,
@@ -75,15 +76,6 @@
             speed: 90.0,
             angle_offset: 0.0,
         )),
-        "exit_to_left": Tween((
-            target: PositionX,
-            duration: 0.5,
-            ease: QuadIn,
-            from: 0.0,
-            to: -170.0,
-            delay: 1.3,
-            mode: Relative,
-        )),
         "enter_from_left": Tween((
             target: PositionX,
             duration: 0.7,
@@ -100,6 +92,15 @@
             from: 0.0,
             to: -170.0,
             delay: 0.0,
+            mode: Relative,
+        )),
+        "exit_to_left": Tween((
+            target: PositionX,
+            duration: 0.5,
+            ease: QuadIn,
+            from: 0.0,
+            to: -170.0,
+            delay: 1.3,
             mode: Relative,
         )),
         "exit_to_right": Tween((

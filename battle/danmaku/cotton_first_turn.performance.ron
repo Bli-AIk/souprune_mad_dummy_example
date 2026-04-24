@@ -15,9 +15,27 @@
 //    structure globally, please edit the Vessel source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
+// Generated at: 2026-04-24 07:06:01 +08:00
 
 (
     prototypes: {
+        "cotton": (
+            visual: "battle/bullets/dummy_shot",
+            collider: BoxCollider(5.0, 5.0),
+            damage: 5.0,
+            lifetime: 4.0,
+            z_index: 15.0,
+            scale: 1.0,
+            rotation: 0.0,
+            hit_behavior: Default,
+            color_tint: (
+                hex: "",
+                rgba: None,
+            ),
+            flip_x: false,
+            flip_y: false,
+            frame_duration: Some(0.08),
+        ),
         "dummy_down": (
             visual: "battle/bullets/dummy_bullet/down.png",
             collider: CircleCollider(0.1),
@@ -52,50 +70,37 @@
             flip_y: false,
             frame_duration: None,
         ),
-        "cotton": (
-            visual: "battle/bullets/dummy_shot",
-            collider: BoxCollider(5.0, 5.0),
-            damage: 5.0,
-            lifetime: 4.0,
-            z_index: 15.0,
-            scale: 1.0,
-            rotation: 0.0,
-            hit_behavior: Default,
-            color_tint: (
-                hex: "",
-                rgba: None,
-            ),
-            flip_x: false,
-            flip_y: false,
-            frame_duration: Some(0.08),
-        ),
     },
     behaviors: {
-        "top1_exit": Tween((
+        "aim_heart": Aimed((
+            speed: 90.0,
+            angle_offset: 0.0,
+        )),
+        "bot1_enter": Tween((
             target: PositionY,
-            duration: 1.0,
+            duration: 2.77,
             ease: Linear,
             from: 0.0,
-            to: 120.0,
-            delay: 1.08,
+            to: 332.0,
+            delay: 0.0,
             mode: Relative,
         )),
-        "top3_exit": Tween((
+        "bot1_exit": Tween((
             target: PositionY,
             duration: 1.0,
             ease: Linear,
             from: 0.0,
-            to: 120.0,
-            delay: 2.58,
+            to: -120.0,
+            delay: 3.44,
             mode: Relative,
         )),
-        "top2_exit": Tween((
+        "bot2_enter": Tween((
             target: PositionY,
-            duration: 1.0,
+            duration: 3.18,
             ease: Linear,
             from: 0.0,
-            to: 120.0,
-            delay: 1.83,
+            to: 382.0,
+            delay: 0.0,
             mode: Relative,
         )),
         "bot2_exit": Tween((
@@ -116,6 +121,15 @@
             delay: 0.0,
             mode: Relative,
         )),
+        "bot3_exit": Tween((
+            target: PositionY,
+            duration: 1.0,
+            ease: Linear,
+            from: 0.0,
+            to: -120.0,
+            delay: 4.27,
+            mode: Relative,
+        )),
         "top1_enter": Tween((
             target: PositionY,
             duration: 0.41,
@@ -125,18 +139,14 @@
             delay: 0.0,
             mode: Relative,
         )),
-        "bot2_enter": Tween((
+        "top1_exit": Tween((
             target: PositionY,
-            duration: 3.18,
+            duration: 1.0,
             ease: Linear,
             from: 0.0,
-            to: 382.0,
-            delay: 0.0,
+            to: 120.0,
+            delay: 1.08,
             mode: Relative,
-        )),
-        "aim_heart": Aimed((
-            speed: 90.0,
-            angle_offset: 0.0,
         )),
         "top2_enter": Tween((
             target: PositionY,
@@ -145,6 +155,15 @@
             from: 0.0,
             to: -139.0,
             delay: 0.0,
+            mode: Relative,
+        )),
+        "top2_exit": Tween((
+            target: PositionY,
+            duration: 1.0,
+            ease: Linear,
+            from: 0.0,
+            to: 120.0,
+            delay: 1.83,
             mode: Relative,
         )),
         "top3_enter": Tween((
@@ -156,31 +175,13 @@
             delay: 0.0,
             mode: Relative,
         )),
-        "bot1_exit": Tween((
+        "top3_exit": Tween((
             target: PositionY,
             duration: 1.0,
             ease: Linear,
             from: 0.0,
-            to: -120.0,
-            delay: 3.44,
-            mode: Relative,
-        )),
-        "bot1_enter": Tween((
-            target: PositionY,
-            duration: 2.77,
-            ease: Linear,
-            from: 0.0,
-            to: 332.0,
-            delay: 0.0,
-            mode: Relative,
-        )),
-        "bot3_exit": Tween((
-            target: PositionY,
-            duration: 1.0,
-            ease: Linear,
-            from: 0.0,
-            to: -120.0,
-            delay: 4.27,
+            to: 120.0,
+            delay: 2.58,
             mode: Relative,
         )),
     },

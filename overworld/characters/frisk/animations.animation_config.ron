@@ -15,30 +15,31 @@
 //    structure globally, please edit the Vessel source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
+// Generated at: 2026-04-24 07:06:01 +08:00
 
 (
     sprite_source: "overworld",
     default_frame_duration: 0.15,
     default_looping: true,
     states: {
-        "Run": Directional(
-            up: "characters/frisk/run/up",
-            down: "characters/frisk/run/down",
-            left: "characters/frisk/run/side",
-            right: (
-                path: "characters/frisk/run/side",
-                flip_x: true,
-                flip_y: false,
-                frame_duration: None,
-                looping: None,
-            ),
-        ),
         "Idle": Directional(
             up: "characters/frisk/walk/up/0.png",
             down: "characters/frisk/walk/down/0.png",
             left: "characters/frisk/walk/side/0.png",
             right: (
                 path: "characters/frisk/walk/side/0.png",
+                flip_x: true,
+                flip_y: false,
+                frame_duration: None,
+                looping: None,
+            ),
+        ),
+        "Run": Directional(
+            up: "characters/frisk/run/up",
+            down: "characters/frisk/run/down",
+            left: "characters/frisk/run/side",
+            right: (
+                path: "characters/frisk/run/side",
                 flip_x: true,
                 flip_y: false,
                 frame_duration: None,
