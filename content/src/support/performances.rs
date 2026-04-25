@@ -111,7 +111,7 @@ pub fn cotton_top_sweep() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     -170.0,
                     0.0,
                 ),
@@ -121,7 +121,7 @@ pub fn cotton_top_sweep() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     170.0,
                     1.3,
                 ),
@@ -176,7 +176,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionX,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     170.0,
                     0.0,
                 ),
@@ -186,7 +186,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionX,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     -170.0,
                     1.3,
                 ),
@@ -196,7 +196,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionX,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     -170.0,
                     0.0,
                 ),
@@ -206,7 +206,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionX,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     170.0,
                     1.3,
                 ),
@@ -216,7 +216,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     -170.0,
                     0.0,
                 ),
@@ -226,7 +226,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     170.0,
                     1.3,
                 ),
@@ -236,7 +236,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     170.0,
                     0.0,
                 ),
@@ -246,7 +246,7 @@ pub fn cotton_surround() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     -170.0,
                     1.3,
                 ),
@@ -329,7 +329,7 @@ pub fn cotton_side_pincer() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionX,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     170.0,
                     0.0,
                 ),
@@ -339,7 +339,7 @@ pub fn cotton_side_pincer() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionX,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     -170.0,
                     1.3,
                 ),
@@ -349,7 +349,7 @@ pub fn cotton_side_pincer() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionX,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     -170.0,
                     0.0,
                 ),
@@ -359,7 +359,7 @@ pub fn cotton_side_pincer() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionX,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     170.0,
                     1.3,
                 ),
@@ -414,7 +414,7 @@ pub fn cotton_bottom_wave() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     150.0,
                     0.0,
                 ),
@@ -424,7 +424,7 @@ pub fn cotton_bottom_wave() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     -150.0,
                     1.3,
                 ),
@@ -434,7 +434,7 @@ pub fn cotton_bottom_wave() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.7,
-                    Easing::QuadOut,
+                    Easing::OutQuad,
                     120.0,
                     0.0,
                 ),
@@ -444,7 +444,7 @@ pub fn cotton_bottom_wave() -> DanmakuPerformance {
                 relative_tween(
                     DanmakuTweenTarget::PositionY,
                     0.5,
-                    Easing::QuadIn,
+                    Easing::InQuad,
                     -120.0,
                     1.3,
                 ),
