@@ -4,7 +4,6 @@
 
 use anyhow::Result;
 use souprune_schema::sequence::*;
-use souprune_schema::val::*;
 use souprune_vessel::prelude::*;
 
 pub fn emit(reg: &mut Registry) -> Result<()> {
@@ -27,20 +26,14 @@ pub fn asset() -> SequenceAsset {
             },
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
-                target: TweenTarget::box_size(Vec2Tuple::positional(
-                    175.0,
-                    expr::current().into_schema(),
-                )),
+                target: TweenTarget::box_size((175.0, expr::current())),
                 duration: Some(0.85),
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: true,
             },
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
-                target: TweenTarget::box_size(Vec2Tuple::positional(
-                    expr::current().into_schema(),
-                    180.0,
-                )),
+                target: TweenTarget::box_size((expr::current(), 180.0)),
                 duration: Some(0.85),
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: true,
@@ -51,7 +44,7 @@ pub fn asset() -> SequenceAsset {
             },
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
-                target: TweenTarget::box_size(Vec2Tuple::positional(566.0, 130.0)),
+                target: TweenTarget::box_size((566.0, 130.0)),
                 duration: Some(0.6),
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: true,

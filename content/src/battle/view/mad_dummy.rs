@@ -42,7 +42,7 @@ pub fn asset() -> ViewLayoutAsset {
                             visual: Visual("assets/textures/battle/mad_dummy/base/0.png".into()),
                             transform: Some(SerializableTransform {
                                 translation: Some(vector3(5.0, 75.0, 0.0)),
-                                rotation: Some((-dummy_sway() * 3.0).into_schema()),
+                                rotation: (-dummy_sway() * 3.0).into(),
                                 scale: Some(vector3(2.0, 2.0, 2.0)),
                             }),
                             pivot: Some(vector2(0.476, 0.0)),
@@ -55,12 +55,8 @@ pub fn asset() -> ViewLayoutAsset {
                         sprite: Some(SpriteDef {
                             visual: Visual("assets/textures/battle/mad_dummy/torso/0.png".into()),
                             transform: Some(SerializableTransform {
-                                translation: Some(vector3_value(
-                                    static_float(0.0),
-                                    (expr::literal(35.0) + dummy_sway() * 0.75).into_schema(),
-                                    static_float(0.1),
-                                )),
-                                rotation: Some((dummy_sway() * 1.5).into_schema()),
+                                translation: Some(vector3(0.0, 35.0 + dummy_sway() * 0.75, 0.1)),
+                                rotation: (dummy_sway() * 1.5).into(),
                                 scale: Some(vector3(2.0, 2.0, 2.0)),
                             }),
                             pivot: Some(vector2(0.474, 0.5)),
@@ -74,7 +70,7 @@ pub fn asset() -> ViewLayoutAsset {
                             visual: Visual("assets/textures/battle/mad_dummy/leg/0.png".into()),
                             transform: Some(SerializableTransform {
                                 translation: Some(vector3(5.0, 65.0, 0.2)),
-                                rotation: Some((dummy_sway() * 1.0).into_schema()),
+                                rotation: (dummy_sway() * 1.0).into(),
                                 scale: Some(vector3(2.0, 2.0, 2.0)),
                             }),
                             pivot: Some(vector2(0.48, 0.462)),
@@ -87,12 +83,12 @@ pub fn asset() -> ViewLayoutAsset {
                         sprite: Some(SpriteDef {
                             visual: Visual("assets/textures/battle/mad_dummy/head/0.png".into()),
                             transform: Some(SerializableTransform {
-                                translation: Some(vector3_value(
-                                    (-dummy_sway() * 1.0).into_schema(),
-                                    (dummy_sway() * 1.0).into_schema(),
-                                    static_float(0.3),
+                                translation: Some(vector3(
+                                    -dummy_sway() * 1.0,
+                                    dummy_sway() * 1.0,
+                                    0.3,
                                 )),
-                                rotation: Some((dummy_sway() * 3.0).into_schema()),
+                                rotation: (dummy_sway() * 3.0).into(),
                                 scale: Some(vector3(2.0, 2.0, 2.0)),
                             }),
                             pivot: Some(vector2(0.516, 0.471)),
