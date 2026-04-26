@@ -20,7 +20,10 @@ pub fn asset() -> SequenceAsset {
         chapters: vec![
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
-                target: TweenTarget::box_size(Vec2Tuple::positional(130.0, Val::expr("@current"))),
+                target: TweenTarget::box_size(Vec2Tuple::positional(
+                    130.0,
+                    expr::current().into_schema(),
+                )),
                 duration: Some(0.85),
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: false,

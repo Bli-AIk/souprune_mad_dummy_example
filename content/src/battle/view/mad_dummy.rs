@@ -14,6 +14,10 @@ pub fn emit(reg: &mut Registry) -> Result<()> {
     Ok(())
 }
 
+fn dummy_sway() -> expr::Expression {
+    expr::sin(expr::snap(expr::time(), expr::frame_step(30.0)) * 4.0)
+}
+
 /// Build the typed asset value.
 ///
 /// 构建该资源的类型化值。
@@ -38,9 +42,7 @@ pub fn asset() -> ViewLayoutAsset {
                             visual: Visual("assets/textures/battle/mad_dummy/base/0.png".into()),
                             transform: Some(SerializableTransform {
                                 translation: Some(vector3(5.0, 75.0, 0.0)),
-                                rotation: Some(expression(
-                                    "-sin(snap(@time, 1.0/30.0) * 4.0) * 3.0",
-                                )),
+                                rotation: Some((-dummy_sway() * 3.0).into_schema()),
                                 scale: Some(vector3(2.0, 2.0, 2.0)),
                             }),
                             pivot: Some(vector2(0.476, 0.0)),
@@ -55,12 +57,10 @@ pub fn asset() -> ViewLayoutAsset {
                             transform: Some(SerializableTransform {
                                 translation: Some(vector3_value(
                                     static_float(0.0),
-                                    expression("35.0 + sin(snap(@time, 1.0/30.0) * 4.0) * 0.75"),
+                                    (expr::literal(35.0) + dummy_sway() * 0.75).into_schema(),
                                     static_float(0.1),
                                 )),
-                                rotation: Some(expression(
-                                    "sin(snap(@time, 1.0/30.0) * 4.0) * 1.5",
-                                )),
+                                rotation: Some((dummy_sway() * 1.5).into_schema()),
                                 scale: Some(vector3(2.0, 2.0, 2.0)),
                             }),
                             pivot: Some(vector2(0.474, 0.5)),
@@ -74,9 +74,7 @@ pub fn asset() -> ViewLayoutAsset {
                             visual: Visual("assets/textures/battle/mad_dummy/leg/0.png".into()),
                             transform: Some(SerializableTransform {
                                 translation: Some(vector3(5.0, 65.0, 0.2)),
-                                rotation: Some(expression(
-                                    "sin(snap(@time, 1.0/30.0) * 4.0) * 1.0",
-                                )),
+                                rotation: Some((dummy_sway() * 1.0).into_schema()),
                                 scale: Some(vector3(2.0, 2.0, 2.0)),
                             }),
                             pivot: Some(vector2(0.48, 0.462)),
@@ -90,13 +88,11 @@ pub fn asset() -> ViewLayoutAsset {
                             visual: Visual("assets/textures/battle/mad_dummy/head/0.png".into()),
                             transform: Some(SerializableTransform {
                                 translation: Some(vector3_value(
-                                    expression("-sin(snap(@time, 1.0/30.0) * 4.0) * 1.0"),
-                                    expression("sin(snap(@time, 1.0/30.0) * 4.0) * 1.0"),
+                                    (-dummy_sway() * 1.0).into_schema(),
+                                    (dummy_sway() * 1.0).into_schema(),
                                     static_float(0.3),
                                 )),
-                                rotation: Some(expression(
-                                    "sin(snap(@time, 1.0/30.0) * 4.0) * 3.0",
-                                )),
+                                rotation: Some((dummy_sway() * 3.0).into_schema()),
                                 scale: Some(vector3(2.0, 2.0, 2.0)),
                             }),
                             pivot: Some(vector2(0.516, 0.471)),

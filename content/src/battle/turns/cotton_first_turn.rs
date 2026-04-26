@@ -27,14 +27,20 @@ pub fn asset() -> SequenceAsset {
             },
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
-                target: TweenTarget::box_size(Vec2Tuple::positional(175.0, Val::expr("@current"))),
+                target: TweenTarget::box_size(Vec2Tuple::positional(
+                    175.0,
+                    expr::current().into_schema(),
+                )),
                 duration: Some(0.85),
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: true,
             },
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
-                target: TweenTarget::box_size(Vec2Tuple::positional(Val::expr("@current"), 180.0)),
+                target: TweenTarget::box_size(Vec2Tuple::positional(
+                    expr::current().into_schema(),
+                    180.0,
+                )),
                 duration: Some(0.85),
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: true,
