@@ -28,13 +28,6 @@ const TOP_MARGINS: [f32; 3] = [45.0, 135.0, 225.0];
 /// 底部分组的外侧距离。
 const BOT_MARGINS: [f32; 3] = [310.0, 360.0, 410.0];
 
-/// Round to 2 decimal places to match the hand-written asset precision.
-///
-/// 保留两位小数，以匹配手写资源的精度。
-fn round_2(value: f32) -> f32 {
-    (value * 100.0).round() / 100.0
-}
-
 fn dummy_prototype(visual: &str, lifetime: f32) -> BulletPrototype {
     BulletPrototype {
         visual: visual.into(),
@@ -488,9 +481,9 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
     let mut bot_behaviors = HashMap::new();
 
     for (index, &margin) in TOP_MARGINS.iter().enumerate() {
-        let travel = round_2(margin + TOP_PEN);
-        let enter_duration = round_2(travel / SPEED);
-        let fire_time = round_2(enter_duration + PAUSE);
+        let travel = margin + TOP_PEN;
+        let enter_duration = travel / SPEED;
+        let fire_time = enter_duration + PAUSE;
 
         top_behaviors.insert(
             format!("top{}_enter", index + 1),
@@ -514,9 +507,9 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
     }
 
     for (index, &margin) in BOT_MARGINS.iter().enumerate() {
-        let travel = round_2(margin + BOT_PEN);
-        let enter_duration = round_2(travel / SPEED);
-        let fire_time = round_2(enter_duration + PAUSE);
+        let travel = margin + BOT_PEN;
+        let enter_duration = travel / SPEED;
+        let fire_time = enter_duration + PAUSE;
 
         bot_behaviors.insert(
             format!("bot{}_enter", index + 1),
@@ -566,8 +559,8 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
 
     let mut top_fire_events = Vec::new();
     for &margin in &TOP_MARGINS {
-        let enter_duration = round_2((margin + TOP_PEN) / SPEED);
-        let fire_time = round_2(enter_duration + PAUSE);
+        let enter_duration = (margin + TOP_PEN) / SPEED;
+        let fire_time = enter_duration + PAUSE;
         top_fire_events.push(battle_box_edge_event(
             fire_time,
             "cotton",
@@ -580,8 +573,8 @@ pub fn cotton_first_turn() -> DanmakuPerformance {
 
     let mut bot_fire_events = Vec::new();
     for &margin in &BOT_MARGINS {
-        let enter_duration = round_2((margin + BOT_PEN) / SPEED);
-        let fire_time = round_2(enter_duration + PAUSE);
+        let enter_duration = (margin + BOT_PEN) / SPEED;
+        let fire_time = enter_duration + PAUSE;
         bot_fire_events.push(battle_box_edge_event(
             fire_time,
             "cotton",

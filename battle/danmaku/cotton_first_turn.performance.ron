@@ -15,7 +15,7 @@
 //    structure globally, please edit the Vessel source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
-// Generated at: 2026-04-26 20:23:14 +08:00
+// Generated at: 2026-04-28 21:26:05 +08:00
 
 (
     prototypes: {
@@ -91,7 +91,7 @@
             ease: Linear,
             from: 0.0,
             to: -120.0,
-            delay: 3.44,
+            delay: 3.43,
             mode: Relative,
         )),
         "bot2_enter": Tween((
@@ -331,7 +331,7 @@
             behaviors: [],
         ),
         (
-            t: 3.44,
+            t: 3.43,
             time_mode: Absolute,
             spawn: "cotton",
             pattern: BoxEdgeGenerator(
