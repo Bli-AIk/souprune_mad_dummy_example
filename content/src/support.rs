@@ -2,5 +2,5 @@
 //!
 //! 当前内容 guest 的共享辅助模块。
 
+pub(crate) mod cotton_danmaku;
 pub mod demo_attack;
-pub mod performances;
