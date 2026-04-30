@@ -31,6 +31,30 @@ pub fn asset() -> SequenceAsset {
                 easing: EaseKindRepr::InOutQuad,
                 wait_for_completion: true,
             },
+            Chapter::Custom {
+                action_type: "battle:speech_bubble".into(),
+                params: vec![
+                    ("channel".into(), "battle_enemy_speech".into()),
+                    (
+                        "mortar_path".into(),
+                        "battle/enemies/mad_dummy.mortar".into(),
+                    ),
+                    ("mortar_node".into(), "enemy_speech_manual_intro".into()),
+                    ("bubble_profile".into(), "mad_dummy_wide".into()),
+                    ("advance_mode".into(), "Manual".into()),
+                    ("hide_on_finish".into(), "true".into()),
+                ]
+                .into_iter()
+                .collect(),
+            },
+            Chapter::AwaitFact {
+                condition: "$dialogue:battle_enemy_speech:active == true".into(),
+                local: false,
+            },
+            Chapter::AwaitFact {
+                condition: "$dialogue:battle_enemy_speech:active == false".into(),
+                local: false,
+            },
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
                 target: TweenTarget::box_size((expr::current(), 180.0)),

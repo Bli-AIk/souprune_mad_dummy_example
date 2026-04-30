@@ -65,6 +65,10 @@ pub fn asset() -> SequenceAsset {
             Chapter::ModifyFact {
                 modifications: vec![
                     FactModificationDef::Set {
+                        key: "dialogue:pending_channel".into(),
+                        value: FactValueMatch::String("battle_narration".into()),
+                    },
+                    FactModificationDef::Set {
                         key: "dialogue:pending_mortar_path".into(),
                         value: FactValueMatch::String("battle/ui.mortar".into()),
                     },
@@ -73,15 +77,15 @@ pub fn asset() -> SequenceAsset {
                         value: FactValueMatch::Bool(true),
                     },
                     FactModificationDef::Set {
-                        key: "dialogue:has_typewriter".into(),
+                        key: "dialogue:battle_narration:has_typewriter".into(),
                         value: FactValueMatch::Bool(true),
                     },
                     FactModificationDef::Set {
-                        key: "dialogue:has_focus".into(),
+                        key: "dialogue:battle_narration:has_focus".into(),
                         value: FactValueMatch::Bool(false),
                     },
                     FactModificationDef::Set {
-                        key: "dialogue:voice".into(),
+                        key: "dialogue:battle_narration:voice".into(),
                         value: FactValueMatch::String(
                             "assets/audios/voice/voice_typewriter_default.wav".into(),
                         ),

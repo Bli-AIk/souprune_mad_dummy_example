@@ -15,3 +15,11 @@ node act_talk {
 node mercy_spare {
     text: "* 你无法饶恕愤怒假人。"
 }
+
+node enemy_speech_manual_intro {
+    text: "愚蠢。\n愚蠢！\n愚蠢！"
+}
+
+node enemy_speech_timed_wave {
+    text: "嘿！\n看准你\n瞄的方向！"
+}

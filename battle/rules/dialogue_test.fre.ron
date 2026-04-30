@@ -33,6 +33,7 @@
             ],
             actions: [
                 StartDialogue(
+                    channel: Some("battle_narration"),
                     mortar: "battle/ui.mortar",
                     node: "encounter_intro",
                     view: None,
@@ -63,6 +64,7 @@
             ],
             actions: [
                 StartDialogue(
+                    channel: Some("battle_narration"),
                     mortar: "dialogue/test/battle_test.mortar",
                     node: "act_greeting",
                     view: None,
@@ -129,6 +131,7 @@
             ],
             actions: [
                 StartDialogue(
+                    channel: Some("battle_narration"),
                     mortar: "dialogue/enemies/dummy.mortar",
                     node: "check",
                     view: None,

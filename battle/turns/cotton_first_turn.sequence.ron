@@ -15,7 +15,7 @@
 //    structure globally, please edit the Vessel source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
-// Generated at: 2026-04-26 20:23:14 +08:00
+// Generated at: 2026-04-30 17:22:01 +08:00
 
 (
     mode: None,
@@ -38,6 +38,25 @@
             duration: Some(0.85),
             easing: InOutQuad,
             wait_for_completion: true,
+        ),
+        Custom(
+            action_type: "battle:speech_bubble",
+            params: {
+                "advance_mode": "Manual",
+                "bubble_profile": "mad_dummy_wide",
+                "channel": "battle_enemy_speech",
+                "hide_on_finish": "true",
+                "mortar_node": "enemy_speech_manual_intro",
+                "mortar_path": "battle/enemies/mad_dummy.mortar",
+            },
+        ),
+        AwaitFact(
+            condition: "$dialogue:battle_enemy_speech:active == true",
+            local: false,
+        ),
+        AwaitFact(
+            condition: "$dialogue:battle_enemy_speech:active == false",
+            local: false,
         ),
         SetViewElement(
             selector: LocalName("BattleBox"),

@@ -17,3 +17,11 @@ node act_talk {
 node mercy_spare {
     text: "* You can't spare Mad Dummy."
 }
+
+node enemy_speech_manual_intro {
+    text: "Foolish.\nFoolish!\nFOOLISH!"
+}
+
+node enemy_speech_timed_wave {
+    text: "HEY!\nWatch where\nyou're aiming!"
+}

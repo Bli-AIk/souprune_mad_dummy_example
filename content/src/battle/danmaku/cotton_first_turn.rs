@@ -163,6 +163,19 @@ pub fn asset() -> DanmakuPerformance {
     let mut timeline = Vec::new();
     timeline.extend(top_dummy_events);
     timeline.extend(bottom_dummy_events);
+    timeline.push(TimelineEvent::absolute_cue(
+        1.0,
+        "battle:speech_bubble",
+        [
+            ("channel", "battle_enemy_speech"),
+            ("mortar_path", "battle/enemies/mad_dummy.mortar"),
+            ("mortar_node", "enemy_speech_timed_wave"),
+            ("bubble_profile", "mad_dummy_wide"),
+            ("advance_mode", "Timed"),
+            ("duration", "2.0"),
+            ("hide_on_finish", "true"),
+        ],
+    ));
     timeline.extend(top_fire_events);
     timeline.extend(bottom_fire_events);
 

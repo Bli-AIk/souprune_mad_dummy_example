@@ -28,6 +28,7 @@ pub fn asset() -> FreAsset {
                 conditions: vec!["$battle:intro_shown == false".into()],
                 actions: vec![
                     RuleActionDef::StartDialogue {
+                        channel: Some("battle_narration".into()),
                         mortar: "battle/ui.mortar".into(),
                         node: "encounter_intro".into(),
                         view: None,
@@ -53,6 +54,7 @@ pub fn asset() -> FreAsset {
                 event: RuleEventDef::Event("test_mortar_dialogue".into()),
                 conditions: vec!["$test_mortar_shown == false".into()],
                 actions: vec![RuleActionDef::StartDialogue {
+                    channel: Some("battle_narration".into()),
                     mortar: "dialogue/test/battle_test.mortar".into(),
                     node: "act_greeting".into(),
                     view: None,
@@ -111,6 +113,7 @@ pub fn asset() -> FreAsset {
                 event: RuleEventDef::Event("battle:execute_act".into()),
                 conditions: vec!["$act_type == 'check'".into()],
                 actions: vec![RuleActionDef::StartDialogue {
+                    channel: Some("battle_narration".into()),
                     mortar: "dialogue/enemies/dummy.mortar".into(),
                     node: "check".into(),
                     view: None,
