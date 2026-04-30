@@ -15,25 +15,23 @@
 //    structure globally, please edit the Vessel source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
-// Generated at: 2026-04-30 07:28:06 +08:00
+// Generated at: 2026-04-30 20:19:31 +08:00
 
 (
     mode: None,
     rules_file: None,
     exits: {},
     chapters: [
-        Custom(
-            action_type: "battle:speech_bubble",
-            params: {
-                "advance_mode": "$_param_advance_mode",
-                "bubble_profile": "mad_dummy_wide",
-                "channel": "battle_enemy_speech",
-                "duration": "$_param_duration",
-                "hide_on_finish": "$_param_hide_on_finish",
-                "mortar_node": "$_param_mortar_node",
-                "mortar_path": "$_param_mortar_path",
-            },
-        ),
+        BattleSpeechBubble((
+            channel: "battle_enemy_speech",
+            mortar_path: "battle/enemies/mad_dummy.mortar",
+            mortar_node: "enemy_speech_manual_intro",
+            frame: MadDummyWide,
+            advance: Manual,
+            hide_on_finish: true,
+            voice: None,
+            typewriter_speed: None,
+        )),
         AwaitFact(
             condition: "$dialogue:battle_enemy_speech:active == true",
             local: false,

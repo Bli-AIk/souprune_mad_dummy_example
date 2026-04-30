@@ -15,7 +15,7 @@
 //    structure globally, please edit the Vessel source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
-// Generated at: 2026-04-30 17:22:01 +08:00
+// Generated at: 2026-04-30 20:19:31 +08:00
 
 (
     mode: None,
@@ -39,17 +39,16 @@
             easing: InOutQuad,
             wait_for_completion: true,
         ),
-        Custom(
-            action_type: "battle:speech_bubble",
-            params: {
-                "advance_mode": "Manual",
-                "bubble_profile": "mad_dummy_wide",
-                "channel": "battle_enemy_speech",
-                "hide_on_finish": "true",
-                "mortar_node": "enemy_speech_manual_intro",
-                "mortar_path": "battle/enemies/mad_dummy.mortar",
-            },
-        ),
+        BattleSpeechBubble((
+            channel: "battle_enemy_speech",
+            mortar_path: "battle/enemies/mad_dummy.mortar",
+            mortar_node: "enemy_speech_manual_intro",
+            frame: MadDummyWide,
+            advance: Manual,
+            hide_on_finish: true,
+            voice: None,
+            typewriter_speed: None,
+        )),
         AwaitFact(
             condition: "$dialogue:battle_enemy_speech:active == true",
             local: false,
@@ -71,6 +70,26 @@
         DanmakuPerformance(
             performance: "battle/danmaku/cotton_first_turn.performance.ron",
             translation: Some((0.0, 50.0)),
+        ),
+        BattleSpeechBubble((
+            channel: "battle_enemy_speech",
+            mortar_path: "battle/enemies/mad_dummy.mortar",
+            mortar_node: "enemy_speech_timed_wave",
+            frame: MadDummyWide,
+            advance: Timed(
+                duration: 2.0,
+            ),
+            hide_on_finish: true,
+            voice: None,
+            typewriter_speed: None,
+        )),
+        AwaitFact(
+            condition: "$dialogue:battle_enemy_speech:active == true",
+            local: false,
+        ),
+        AwaitFact(
+            condition: "$dialogue:battle_enemy_speech:active == false",
+            local: false,
         ),
         SetViewElement(
             selector: LocalName("BattleBox"),

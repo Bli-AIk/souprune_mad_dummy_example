@@ -4,3 +4,4 @@
 
 pub(crate) mod cotton_danmaku;
 pub mod demo_attack;
+pub(crate) mod enemy_speech;
