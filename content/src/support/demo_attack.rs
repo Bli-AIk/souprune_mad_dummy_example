@@ -1,6 +1,6 @@
-//! Demo danmaku performance for `example_mod`.
+//! Demo danmaku performance for `mad_dummy_example`.
 //!
-//! `example_mod` 的演示弹幕演出。
+//! `mad_dummy_example` 的演示弹幕演出。
 
 use souprune_schema::danmaku::*;
 use std::collections::HashMap;
@@ -199,9 +199,9 @@ fn build_demo_attack(style: DemoAttackStyle) -> DanmakuPerformance {
     }
 }
 
-/// Build the demo attack performance used by `example_mod`.
+/// Build the demo attack performance used by `mad_dummy_example`.
 ///
-/// 构建 `example_mod` 使用的演示攻击演出。
+/// 构建 `mad_dummy_example` 使用的演示攻击演出。
 pub fn demo_attack() -> DanmakuPerformance {
     build_demo_attack(DemoAttackStyle {
         scale: 1.0,
@@ -209,9 +209,9 @@ pub fn demo_attack() -> DanmakuPerformance {
     })
 }
 
-/// Build the overworld-scaled demo attack performance used by `example_mod`.
+/// Build the overworld-scaled demo attack performance used by `mad_dummy_example`.
 ///
-/// 构建 `example_mod` 在大地图里使用的缩放版演示攻击演出。
+/// 构建 `mad_dummy_example` 在大地图里使用的缩放版演示攻击演出。
 pub fn demo_attack_overworld() -> DanmakuPerformance {
     build_demo_attack(DemoAttackStyle {
         scale: 0.5,

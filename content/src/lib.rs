@@ -1,6 +1,6 @@
-//! Cauld-ron content guest for `example_mod`.
+//! Cauld-ron content guest for `mad_dummy_example`.
 //!
-//! `example_mod` 的 Cauld-ron 内容 guest。
+//! `mad_dummy_example` 的 Cauld-ron 内容 guest。
 
 use anyhow::Result;
 use souprune_cauld_ron::prelude::*;
