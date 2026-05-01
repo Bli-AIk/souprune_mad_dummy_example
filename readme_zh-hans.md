@@ -67,7 +67,7 @@ cd example_mod
 example_mod/
 ├── mod.toml              # 模组配置
 ├── runtime/              # 运行时 WASM mod
-├── content/              # Vessel 内容 guest
+├── content/              # Cauld-ron 内容 guest
 ├── .build/               # runtime/content 构建产物
 ├── app/                  # 项目流程与输入配置
 ├── battle/               # 战斗内容

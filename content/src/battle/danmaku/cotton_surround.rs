@@ -4,7 +4,7 @@
 
 use anyhow::Result;
 use souprune_schema::danmaku::*;
-use souprune_vessel::prelude::*;
+use souprune_cauld_ron::prelude::*;
 use std::collections::HashMap;
 
 use crate::support::cotton_danmaku::{cotton_prototype, dummy_prototype, relative_tween};

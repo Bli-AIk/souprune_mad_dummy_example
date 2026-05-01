@@ -4,7 +4,7 @@
 
 use anyhow::Result;
 use souprune_schema::danmaku::DanmakuPerformance;
-use souprune_vessel::prelude::*;
+use souprune_cauld_ron::prelude::*;
 
 use crate::support::demo_attack;
 

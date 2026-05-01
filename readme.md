@@ -67,7 +67,7 @@ cd example_mod
 example_mod/
 ├── mod.toml              # Mod configuration
 ├── runtime/              # Runtime WASM mod
-├── content/              # Vessel content guest
+├── content/              # Cauld-ron content guest
 ├── .build/               # Built runtime/content wasm artifacts
 ├── app/                  # Project flow and input config
 ├── battle/               # Battle content
