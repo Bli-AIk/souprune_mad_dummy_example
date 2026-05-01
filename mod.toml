@@ -1,7 +1,7 @@
-name = "example_mod"
+name = "mad_dummy_example"
 version = "0.1.0"
-authors = ["Your Name"]
-description = "An example mod for SoupRune."
+authors = ["SoupRune Contributors"]
+description = "Mad Dummy example project for SoupRune."
 
 # Resource directories configuration
 # 资源目录配置

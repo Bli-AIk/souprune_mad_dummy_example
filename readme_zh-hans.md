@@ -1,90 +1,60 @@
-# souprune_example_mods
+# souprune_mad_dummy_example
 
-[![license](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)](LICENSE-APACHE) <img src="https://img.shields.io/github/repo-size/Bli-AIk/souprune_example_mods.svg"/> <img src="https://img.shields.io/github/last-commit/Bli-AIk/souprune_example_mods.svg"/>
+[![license](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)](LICENSE-APACHE) <img src="https://img.shields.io/github/repo-size/Bli-AIk/souprune_mad_dummy_example.svg"/> <img src="https://img.shields.io/github/last-commit/Bli-AIk/souprune_mad_dummy_example.svg"/>
 
-**souprune_example_mods** — SoupRune 示例模组集合，演示大地图、战斗系统和 Alight Motion 动画集成。
+**souprune_mad_dummy_example** 是 SoupRune 维护中的 Mad Dummy 示例项目。
 
-| English         | Simplified Chinese                 |
-|-----------------|-----------------------------------|
+| 英语 | 简体中文 |
+|------|----------|
 | [English](./readme.md) | 简体中文 |
 
 ## 简介
 
-`souprune_example_mods` 是 SoupRune 游戏引擎的示例模组集合。  
-它提供了开箱即用的模组模板，演示了：
+本项目演示了一个基于 `undertale_preset` 的完整 SoupRune mod。
+它包含大地图入口流程、Mad Dummy 战斗、本地化对话、RON 编写的资源，以及 WASM runtime/content guest。
 
-- 基于瓦片的大地图探索玩法
-- 战斗系统集成
-- Alight Motion 动画支持
+如果你想学习一个可运行的完整项目，请使用此仓库。如果你需要可复用的 Undertale 风格预设库，请使用 `souprune_undertale_preset`。
 
-使用这些示例，你只需复制相应的模组结构并自定义内容。  
-每个模组都在独立分支中维护，便于克隆。
+## 使用方法
 
-## 包含的模组
-
-| 分支 | 描述 |
-|------|------|
-| `mod/example_mod` | 完整示例，包含大地图探索和战斗序列 |
-| `mod/example_battle_mod` | 战斗焦点示例，演示战斗系统 |
-| `mod/example_am_mod` | Alight Motion 动画集成示例 |
-
-## 如何使用
-
-### 克隆特定模组
+推荐克隆主 SoupRune 仓库并初始化子模块：
 
 ```bash
-# 克隆 example_mod
-git clone -b mod/example_mod --single-branch https://github.com/Bli-AIk/souprune_example_mods.git example_mod
-
-# 克隆 example_battle_mod
-git clone -b mod/example_battle_mod --single-branch https://github.com/Bli-AIk/souprune_example_mods.git example_battle_mod
-
-# 克隆 example_am_mod
-git clone -b mod/example_am_mod --single-branch https://github.com/Bli-AIk/souprune_example_mods.git example_am_mod
+git clone https://github.com/Bli-AIk/souprune.git
+cd souprune
+git submodule update --init --recursive
 ```
 
-### 添加到 SoupRune 项目
+主项目会将此仓库挂载到：
 
-1. 将克隆的目录放入 SoupRune 的 `projects/` 文件夹
-2. 更新 `projects/config.toml` 指向你的模组：
-   ```toml
-   [project]
-   mod_name = "example_mod"
-   language = "en-US"
-   ```
-
-### 构建 C# 代码（如已修改）
-
-```bash
-cd example_mod
-./build.sh        # Linux/macOS
-./build.ps1       # Windows PowerShell
+```text
+projects/mad_dummy_example
 ```
 
-## 模组结构
+要将它设为当前项目，请使用：
 
-```
-example_mod/
-├── mod.toml              # 模组配置
-├── runtime/              # 运行时 WASM mod
-├── content/              # Cauld-ron 内容 guest
-├── .build/               # runtime/content 构建产物
-├── app/                  # 项目流程与输入配置
-├── battle/               # 战斗内容
-├── overworld/            # 大地图内容（如适用）
-├── actors/               # 实体定义（如适用）
-├── narrative/            # 对话与叙事配置
-├── view/                 # 视图结构与触控布局
-└── assets/               # 纹理、音频、地图、本地化等资源
+```toml
+[project]
+mod_name = "mad_dummy_example"
+language = "en-US"
 ```
 
-## 贡献
+## Mod 结构
 
-欢迎贡献！
-无论是修复 bug、添加功能还是改进文档：
-
-* 提交 **Issue** 或 **Pull Request**
-* 分享想法、讨论设计或架构
+```text
+mad_dummy_example/
+├── mod.toml
+├── runtime/
+├── content/
+├── .build/
+├── app/
+├── battle/
+├── overworld/
+├── actors/
+├── narrative/
+├── view/
+└── assets/
+```
 
 ## 许可证
 

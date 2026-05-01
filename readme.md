@@ -1,94 +1,64 @@
-# souprune_example_mods
+# souprune_mad_dummy_example
 
-[![license](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)](LICENSE-APACHE) <img src="https://img.shields.io/github/repo-size/Bli-AIk/souprune_example_mods.svg"/> <img src="https://img.shields.io/github/last-commit/Bli-AIk/souprune_example_mods.svg"/>
+[![license](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue)](LICENSE-APACHE) <img src="https://img.shields.io/github/repo-size/Bli-AIk/souprune_mad_dummy_example.svg"/> <img src="https://img.shields.io/github/last-commit/Bli-AIk/souprune_mad_dummy_example.svg"/>
 
-**souprune_example_mods** — Example mods for SoupRune, demonstrating overworld, battle, and Alight Motion integration.
+**souprune_mad_dummy_example** is the maintained Mad Dummy example project for SoupRune.
 
-| English         | Simplified Chinese                 |
-|-----------------|-----------------------------------|
-| English         | [简体中文](./readme_zh-hans.md)    |
+| English | Simplified Chinese |
+|---------|--------------------|
+| English | [简体中文](./readme_zh-hans.md) |
 
 ## Introduction
 
-`souprune_example_mods` is a collection of example mods for the SoupRune game engine.  
-It provides ready-to-use templates for creating your own mods, demonstrating:
+This project demonstrates a concrete SoupRune mod built on top of `undertale_preset`.
+It includes an overworld entry flow, a Mad Dummy battle, localized dialogue, RON-authored assets, and WASM runtime/content guests.
 
-- Overworld gameplay with tile-based maps
-- Battle system integration
-- Alight Motion animation support
-
-With these examples, you only need to copy the relevant mod structure and customize the content.  
-Each mod is maintained in a separate branch for easy cloning.
-
-## Included Mods
-
-| Branch | Description |
-|--------|-------------|
-| `mod/example_mod` | Full-featured example with overworld exploration and battle sequences |
-| `mod/example_battle_mod` | Battle-focused example demonstrating the combat system |
-| `mod/example_am_mod` | Alight Motion animation integration example |
+Use this repository when you want to study a complete runnable project. Use `souprune_undertale_preset` when you need the reusable Undertale-style preset library.
 
 ## How to Use
 
-### Clone a specific mod
+The recommended path is to clone the main SoupRune repository and initialize submodules:
 
 ```bash
-# Clone example_mod
-git clone -b mod/example_mod --single-branch https://github.com/Bli-AIk/souprune_example_mods.git example_mod
-
-# Clone example_battle_mod
-git clone -b mod/example_battle_mod --single-branch https://github.com/Bli-AIk/souprune_example_mods.git example_battle_mod
-
-# Clone example_am_mod
-git clone -b mod/example_am_mod --single-branch https://github.com/Bli-AIk/souprune_example_mods.git example_am_mod
+git clone https://github.com/Bli-AIk/souprune.git
+cd souprune
+git submodule update --init --recursive
 ```
 
-### Add to SoupRune project
+This repository is mounted by the main project at:
 
-1. Place the cloned directory in SoupRune's `projects/` folder
-2. Update `projects/config.toml` to point to your mod:
-   ```toml
-   [project]
-   mod_name = "example_mod"
-   language = "en-US"
-   ```
+```text
+projects/mad_dummy_example
+```
 
-### Build C# code (if modified)
+To make it the active project, use:
 
-```bash
-cd example_mod
-./build.sh        # Linux/macOS
-./build.ps1       # Windows PowerShell
+```toml
+[project]
+mod_name = "mad_dummy_example"
+language = "en-US"
 ```
 
 ## Mod Structure
 
+```text
+mad_dummy_example/
+├── mod.toml
+├── runtime/
+├── content/
+├── .build/
+├── app/
+├── battle/
+├── overworld/
+├── actors/
+├── narrative/
+├── view/
+└── assets/
 ```
-example_mod/
-├── mod.toml              # Mod configuration
-├── runtime/              # Runtime WASM mod
-├── content/              # Cauld-ron content guest
-├── .build/               # Built runtime/content wasm artifacts
-├── app/                  # Project flow and input config
-├── battle/               # Battle content
-├── overworld/            # Overworld content (if used)
-├── actors/               # Actor definitions (if used)
-├── narrative/            # Dialogue and narrative config
-├── view/                 # View structures and touch layout
-└── assets/               # Textures, audio, maps, locales, etc.
-```
-
-## Contributing
-
-Contributions are welcome!
-Whether you want to fix a bug, add a feature, or improve documentation:
-
-* Submit an **Issue** or **Pull Request**.
-* Share ideas and discuss design or architecture.
 
 ## License
 
-This project is licensed under either of
+This project is licensed under either of:
 
 * Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0))
 * MIT license ([LICENSE-MIT](LICENSE-MIT) or [http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT))
