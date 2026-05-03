@@ -19,6 +19,7 @@ pub fn mad_dummy_manual_speech(mortar_node: impl Into<String>) -> BattleSpeechBu
         hide_on_finish: true,
         voice: None,
         typewriter_speed: None,
+        text_style: Some("mad_dummy".into()),
     }
 }
 
