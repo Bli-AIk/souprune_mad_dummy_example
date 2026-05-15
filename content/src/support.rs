@@ -2,6 +2,7 @@
 //!
 //! 当前内容 guest 的共享辅助模块。
 
+pub(crate) mod battle_box;
 pub(crate) mod cotton_danmaku;
 pub mod demo_attack;
 pub(crate) mod enemy_speech;

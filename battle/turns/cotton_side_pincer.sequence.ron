@@ -15,13 +15,24 @@
 //    structure globally, please edit the Cauld-ron source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
-// Generated at: 2026-04-26 20:23:14 +08:00
+// Generated at: 2026-05-15 02:04:44 +00:00
 
 (
     mode: None,
     rules_file: None,
     exits: {},
     chapters: [
+        Custom(
+            action_type: "SetBattleBoxBounds",
+            params: {
+                "center_x": "-0.5",
+                "center_y": "-80",
+                "duration": "0.85",
+                "height": "130",
+                "id": "main",
+                "width": "130",
+            },
+        ),
         SetViewElement(
             selector: LocalName("BattleBox"),
             target: BoxSize(
@@ -35,6 +46,17 @@
         DanmakuPerformance(
             performance: "battle/danmaku/cotton_side_pincer.performance.ron",
             translation: Some((0.0, 50.0)),
+        ),
+        Custom(
+            action_type: "SetBattleBoxBounds",
+            params: {
+                "center_x": "-0.5",
+                "center_y": "-80",
+                "duration": "0.6",
+                "height": "130",
+                "id": "main",
+                "width": "566",
+            },
         ),
         SetViewElement(
             selector: LocalName("BattleBox"),

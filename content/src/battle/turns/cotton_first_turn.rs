@@ -6,6 +6,7 @@ use anyhow::Result;
 use souprune_schema::sequence::*;
 use souprune_cauld_ron::prelude::*;
 
+use crate::support::battle_box::set_battle_box_bounds;
 use crate::support::enemy_speech::{mad_dummy_manual_speech, mad_dummy_timed_speech};
 
 pub fn emit(reg: &mut Registry) -> Result<()> {
@@ -26,6 +27,7 @@ pub fn asset() -> SequenceAsset {
                 easing: EaseKindRepr::Linear,
                 wait_for_completion: false,
             },
+            set_battle_box_bounds(-0.5, -80.0, 175.0, 130.0, 0.85),
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
                 target: TweenTarget::box_size((175.0, expr::current())),
@@ -42,6 +44,7 @@ pub fn asset() -> SequenceAsset {
                 condition: "$dialogue:battle_enemy_speech:active == false".into(),
                 local: false,
             },
+            set_battle_box_bounds(-0.5, -55.0, 175.0, 180.0, 0.85),
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
                 target: TweenTarget::box_size((expr::current(), 180.0)),
@@ -62,6 +65,7 @@ pub fn asset() -> SequenceAsset {
                 condition: "$dialogue:battle_enemy_speech:active == false".into(),
                 local: false,
             },
+            set_battle_box_bounds(-0.5, -80.0, 566.0, 130.0, 0.6),
             Chapter::SetViewElement {
                 selector: ElementSelector::local("BattleBox"),
                 target: TweenTarget::box_size((566.0, 130.0)),

@@ -15,7 +15,7 @@
 //    structure globally, please edit the Cauld-ron source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
-// Generated at: 2026-05-03 18:44:25 +08:00
+// Generated at: 2026-05-15 02:04:44 +00:00
 
 (
     mode: None,
@@ -28,6 +28,17 @@
             duration: None,
             easing: Linear,
             wait_for_completion: false,
+        ),
+        Custom(
+            action_type: "SetBattleBoxBounds",
+            params: {
+                "center_x": "-0.5",
+                "center_y": "-80",
+                "duration": "0.85",
+                "height": "130",
+                "id": "main",
+                "width": "175",
+            },
         ),
         SetViewElement(
             selector: LocalName("BattleBox"),
@@ -57,6 +68,17 @@
         AwaitFact(
             condition: "$dialogue:battle_enemy_speech:active == false",
             local: false,
+        ),
+        Custom(
+            action_type: "SetBattleBoxBounds",
+            params: {
+                "center_x": "-0.5",
+                "center_y": "-55",
+                "duration": "0.85",
+                "height": "180",
+                "id": "main",
+                "width": "175",
+            },
         ),
         SetViewElement(
             selector: LocalName("BattleBox"),
@@ -92,6 +114,17 @@
         AwaitFact(
             condition: "$dialogue:battle_enemy_speech:active == false",
             local: false,
+        ),
+        Custom(
+            action_type: "SetBattleBoxBounds",
+            params: {
+                "center_x": "-0.5",
+                "center_y": "-80",
+                "duration": "0.6",
+                "height": "130",
+                "id": "main",
+                "width": "566",
+            },
         ),
         SetViewElement(
             selector: LocalName("BattleBox"),
