@@ -13,7 +13,7 @@
 本项目演示了一个基于 `undertale_preset` 的完整 SoupRune mod。
 它包含大地图入口流程、Mad Dummy 战斗、本地化对话、RON 编写的资源，以及 WASM runtime/content guest。
 
-如果你想学习一个可运行的完整项目，请使用此仓库。如果你需要可复用的 Undertale 风格预设库，请使用 `souprune_undertale_preset`。
+如果你想学习一个可运行的完整项目，请使用此仓库。如果你需要可复用的 Undertale 风格库 mod，请使用 `souprune_undertale_preset`。
 
 ## 使用方法
 
