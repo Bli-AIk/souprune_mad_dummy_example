@@ -50,7 +50,8 @@ primitives = [
     "danmaku",
     "alight_motion",
     "speech_bubble",
-    "battle_menu_state",
+    "menu_projection",
 ]
 entry_sequence = "battle/chapters/demo.sequence.ron"
 fixed_camera_zoom = 2.0
+alight_motion_config = "battle/alight_motion_config.ron"
