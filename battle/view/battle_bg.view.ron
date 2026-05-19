@@ -15,7 +15,7 @@
 //    structure globally, please edit the Cauld-ron source schema/configuration
 //    instead of modifying this file directly.
 // =============================================================================
-// Generated at: 2026-04-26 20:23:14 +08:00
+// Generated at: 2026-05-19 00:23:12 +00:00
 
 (
     roots: [
@@ -33,6 +33,14 @@
                 flex_direction: None,
                 justify_content: None,
                 align_items: None,
+                align_self: None,
+                margin: None,
+                padding: None,
+                border: None,
+                gap: None,
+                display: None,
+                overflow: None,
+                sizing: None,
             ),
             visible_when: None,
             background_color: None,
@@ -63,6 +71,6 @@
     ],
     requires: [],
     facts: None,
-    world_space: true,
+    space: Some(World2d),
     coordinate_system: Standard,
 )
