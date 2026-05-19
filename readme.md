@@ -13,7 +13,7 @@
 This project demonstrates a concrete SoupRune mod built on top of `undertale_preset`.
 It includes an overworld entry flow, a Mad Dummy battle, localized dialogue, RON-authored assets, and WASM runtime/content guests.
 
-Use this repository when you want to study a complete runnable project. Use `souprune_undertale_preset` when you need the reusable Undertale-style preset library.
+Use this repository when you want to study a complete runnable project. Use `souprune_undertale_preset` when you need the reusable Undertale-style library mod.
 
 ## How to Use
 

@@ -22,10 +22,36 @@ wasm = ".build/runtime.wasm"
 wasm = ".build/content.wasm"
 
 [game]
-initial_sequence_path = "overworld/entry.sequence.ron"
-initial_battle_path = "battle/chapters/demo.sequence.ron"
+initial_mode = "overworld"
 chase_config = "overworld/chase_config.ron"
 enemy_directory = "actors/enemies"
 locales_directory = "assets/locales"
 # rng_seed = 42  # Optional: fixed seed for deterministic random behavior (testing/replay)
-# battle_camera_zoom = 2.0  # Camera zoom when entering battle (default: 2.0)
+
+[game.modes.overworld]
+primitives = [
+    "top_down_map",
+    "top_down_player",
+    "interaction_zones",
+    "view_runtime",
+    "fre_rules",
+    "sequencer",
+    "danmaku",
+    "chase",
+]
+entry_sequence = "overworld/entry.sequence.ron"
+
+[game.modes.battle]
+primitives = [
+    "fixed_scene",
+    "view_runtime",
+    "fre_rules",
+    "sequencer",
+    "danmaku",
+    "alight_motion",
+    "speech_bubble",
+    "menu_projection",
+]
+entry_sequence = "battle/chapters/demo.sequence.ron"
+fixed_camera_zoom = 2.0
+alight_motion_config = "battle/alight_motion_config.ron"
