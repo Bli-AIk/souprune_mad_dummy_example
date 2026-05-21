@@ -33,7 +33,7 @@ pub fn asset() -> ViewLayoutAsset {
             }),
             ..Default::default()
         }]),
-        world_space: true,
+        space: Some(ViewSpaceDef::World2d),
         ..Default::default()
     }
 }
